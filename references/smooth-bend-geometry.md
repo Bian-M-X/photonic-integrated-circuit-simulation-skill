@@ -126,6 +126,48 @@ Recent LT-aMZI Design4 lesson: analytic smooth bends are a better geometry basel
 - For interferometers, explicitly report `L1`, `L2`, `DeltaL`, and the FSR formula used.
 - Do not claim that more arc steps or smoother geometry necessarily means lower loss; verify it with the same port, mesh, boundary, and sweep settings.
 
+### Offline return-to-center control
+
+`examples/comsol-device-canary/bend_profile.py` composes four existing Euler
+recipe results and straight leads, including a zero-angle rectangle control.
+The recipe integrates midpoint headings in fixed arc-length steps: the sum of
+the exported chords can equal its declared arc length without proving endpoint
+accuracy. Compare endpoints with independent quadrature under sample refinement.
+The central straight uses the sampled x displacement, so the total intended
+route length and strip area inherit that sampling dependence.
+
+`InterpolationCurve` with `type=solid` and `rtol=0` interpolates its points but
+closes the full perimeter smoothly. Flat ideal end caps and a sampled simple
+boundary therefore do not establish the actual solid's topology, join geometry
+or area. Verify native connectivity, areas/bounds, material selections and port
+spans before using the bend as a mode or driven model. This follows the
+[official API properties](https://doc.comsol.com/6.4/doc/com.comsol.help.comsol/comsol_api_geom.48.102.html)
+and the [geometry manual's closure and self-intersection guidance](https://doc.comsol.com/6.4/doc/com.comsol.help.comsol/comsol_ref_geometry.23.050.html).
+
+For an identified geometry-only native probe, use the separate
+`examples/comsol-device-canary/bend_geometry.py` prepare/verify route. Its Java
+adds the exterior and semantic material selections around the unchanged bend
+fragment, then reads finalized entities, measurements and edge coordinates.
+Core end sections use actual domain-adjacent boundaries intersected with the
+end windows. Keep this geometry checkpoint separate from mode checkpoints.
+Area/length readbacks include a rendering-mesh approximation; inspect units,
+coverage and native topology before interpreting agreement with an intended
+strip or sampled polygon. See the
+[official measurement-method limits](https://doc.comsol.com/6.4/doc/com.comsol.help.comsol/comsol_api_geom.48.047.html).
+
+The bounded return-to-center probe supplies a concrete counterexample to
+accepting a closed interpolating solid from its point table alone. Its zero-angle
+rectangle passed final geometry/material/end-window checks. The default four
+closed Euler solids formed one core domain and retained 0.3 um end widths, but
+a finalized edge point at x=10.9909846721 um reached y=-0.1505189073 um. That
+is about 0.52 nm beyond the intended lower edge, exceeding the declared 0.1 nm
+contour tolerance. The area check passed independently. At least this lower-edge
+offset is present in actual edge coordinates; the upper measurement-box versus
+65-point sample discrepancy remains unresolved. Keep the nonzero construction
+rejected for that precision target. Open offset curves and explicit flat caps
+are a next construction hypothesis requiring their own native test, not an
+already accepted repair or a universal verdict on Euler bends.
+
 ## Sources
 
 - COMSOL Java API geometry documentation: `Circle` supports sector angle and rotation properties; `Difference` supports `input` and `input2` Boolean selections.

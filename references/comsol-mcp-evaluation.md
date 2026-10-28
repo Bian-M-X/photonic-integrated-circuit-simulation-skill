@@ -9,7 +9,7 @@ interactive vendor APIs, the `photonic` CLI, and the local MCP transport.
 |---|---|---|
 | `photonic` CLI | Workflow authority for contracts, status, validation, composition, audit, and bounded plans | A successful command is workflow evidence, not solver or physics evidence |
 | Java API source + `comsolcompile` + `comsolbatch` | Trusted local COMSOL execution route after explicit review and authorization | Requires declared outputs, logs, convergence, mesh/boundary/mode checks, and independent acceptance |
-| `photonic-workflow` MCP 0.6.0 | Narrow assistant integration for resources and non-executing package services | No COMSOL, MATLAB, instrument, Python, or shell execution |
+| `photonic-workflow` MCP 0.7.0 | Narrow assistant integration for resources and non-executing package services | No COMSOL, MATLAB, instrument, Python, or shell execution |
 | `mphserver` / LiveLink-style control | Optional stateful Phase C integration | Unverified until version, lifecycle, cleanup, redaction, failure, and parity adoption gates pass |
 
 MCP is a transport over the same package services used by the CLI. It is not a
@@ -19,7 +19,7 @@ second workflow authority and does not replace direct batch execution.
 
 The compatibility launcher is `scripts/mcp_photonic_server.py`; the package
 implementation is `photonic_workflow.mcp.server`. The stdio server speaks
-JSON-RPC 2.0 and reports package/server version `0.6.0`.
+JSON-RPC 2.0 and reports package/server version `0.7.0`.
 
 ### Resources
 

@@ -16,6 +16,27 @@ NATIVE_EXAMPLE_NAMES = {
 }
 
 WHEEL_REQUIRED_SUFFIXES = (
+    "photonic_workflow/data/skill/examples/comsol-device-canary/DeviceCanary.java",
+    "photonic_workflow/data/skill/examples/comsol-device-canary/run.py",
+    "photonic_workflow/data/skill/examples/comsol-device-canary/audit.py",
+    "photonic_workflow/data/skill/examples/comsol-device-canary/taper_profile.py",
+    "photonic_workflow/data/skill/examples/comsol-device-canary/profile_modes.py",
+    "photonic_workflow/data/skill/examples/comsol-device-canary/profile_driven.py",
+    "photonic_workflow/data/skill/examples/comsol-device-canary/bend_profile.py",
+    "photonic_workflow/data/skill/examples/comsol-device-canary/bend_geometry.py",
+    "photonic_workflow/data/skill/examples/comsol-device-canary/README.md",
+    "photonic_workflow/data/skill/examples/device-models/waveguide.json",
+    "photonic_workflow/data/skill/examples/device-models/directional-coupler.json",
+    "photonic_workflow/data/skill/examples/device-models/ring-allpass.json",
+    "photonic_workflow/data/skill/examples/device-models/ring-adddrop.json",
+    "photonic_workflow/data/skill/examples/device-models/bragg-uniform.json",
+    "photonic_workflow/data/skill/examples/device-models/mmi2x2-ideal.json",
+    "photonic_workflow/data/skill/examples/device-models/ybranch-ideal.json",
+    "photonic_workflow/device_models.py",
+    "photonic_workflow/data/skill/references/executable-device-models.md",
+    "photonic_workflow/diagnostics.py",
+    "photonic_workflow/consumption.py",
+    "photonic_workflow/data/skill/references/executable-diagnostics.md",
     "photonic_workflow/adapters/testing.py",
     "photonic_workflow/models/migration_catalog.py",
     "photonic_workflow/data/templates/mzi-4port/assembly.json",
@@ -26,6 +47,41 @@ WHEEL_REQUIRED_SUFFIXES = (
 )
 
 SDIST_REQUIRED_RELATIVE_PATHS = (
+    "examples/comsol-device-canary/DeviceCanary.java",
+    "examples/comsol-device-canary/run.py",
+    "examples/comsol-device-canary/audit.py",
+    "examples/comsol-device-canary/taper_profile.py",
+    "examples/comsol-device-canary/profile_modes.py",
+    "examples/comsol-device-canary/profile_driven.py",
+    "examples/comsol-device-canary/bend_profile.py",
+    "examples/comsol-device-canary/bend_geometry.py",
+    "examples/comsol-device-canary/README.md",
+    "examples/device-models/waveguide.json",
+    "examples/device-models/directional-coupler.json",
+    "examples/device-models/ring-allpass.json",
+    "examples/device-models/ring-adddrop.json",
+    "examples/device-models/bragg-uniform.json",
+    "examples/device-models/mmi2x2-ideal.json",
+    "examples/device-models/ybranch-ideal.json",
+    "tests/unit/test_device_models.py",
+    "tests/unit/test_device_models_oracles.py",
+    "tests/unit/test_mmi2x2_oracles.py",
+    "tests/unit/test_ybranch_oracles.py",
+    "tests/integration/test_device_cli.py",
+    "tests/unit/test_device_canary.py",
+    "tests/unit/test_device_canary_audit.py",
+    "tests/unit/test_taper_profile.py",
+    "tests/unit/test_profile_modes.py",
+    "tests/unit/test_profile_driven.py",
+    "tests/unit/test_bend_profile.py",
+    "tests/unit/test_bend_geometry.py",
+    "docs/research/device-family-roadmap-2026-10.md",
+    "examples/diagnostics/geometry-positive.json",
+    "examples/diagnostics/four-channel-positive.json",
+    "examples/diagnostics/near-zero-phase.json",
+    "examples/diagnostics/trace_transform.py",
+    "tests/unit/test_diagnostics.py",
+    "tests/unit/test_consumption.py",
     "SKILL.md",
     "CHANGELOG.md",
     "README.zh.md",
@@ -75,6 +131,22 @@ def main() -> int:
             original = REPOSITORY_ROOT / "examples/comsol-hadamard-inverse" / name
             if archive.read(native_prefix + name) != original.read_bytes():
                 raise RuntimeError(f"wheel original native source differs: {name}")
+        for example, expected_names in (
+            ("device-models", {"waveguide.json", "directional-coupler.json", "ring-allpass.json",
+                               "ring-adddrop.json", "bragg-uniform.json", "mmi2x2-ideal.json", "ybranch-ideal.json"}),
+            (
+                "comsol-device-canary",
+                {"README.md", "DeviceCanary.java", "run.py", "audit.py", "taper_profile.py",
+                 "profile_modes.py", "profile_driven.py", "bend_profile.py", "bend_geometry.py"},
+            ),
+        ):
+            prefix = f"photonic_workflow/data/skill/examples/{example}/"
+            actual_names = {name.removeprefix(prefix) for name in wheel_names if name.startswith(prefix)}
+            if actual_names != expected_names:
+                raise RuntimeError(f"unexpected packaged {example} files: {sorted(actual_names)}")
+            for name in expected_names:
+                if archive.read(prefix + name) != (REPOSITORY_ROOT / "examples" / example / name).read_bytes():
+                    raise RuntimeError(f"packaged {example}/{name} differs from reviewed source")
     if any("comsol-euler-bend" in name for name in wheel_names):
         raise RuntimeError("wheel contains private Euler example")
     for suffix in WHEEL_REQUIRED_SUFFIXES:

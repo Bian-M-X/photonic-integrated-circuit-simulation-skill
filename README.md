@@ -1,10 +1,10 @@
 <a id="top"></a>
 
 <p align="center">
-  <img src="docs/images/readme/hero.svg" alt="Photonic Waveguide Optics Skill and Workflow — conceptual waveguide illustration" width="100%" />
+  <img src="docs/images/readme/hero.svg" alt="Photonic Integrated Circuit Simulation — conceptual waveguide illustration" width="100%" />
 </p>
 
-<h1 align="center">Photonic Waveguide Optics Skill and Workflow</h1>
+<h1 align="center">Photonic Integrated Circuit Simulation</h1>
 
 <p align="center">Explore photonic ideas with your agent, one model and one piece of evidence at a time.</p>
 
@@ -13,11 +13,11 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill/actions/workflows/python-compat.yml"><img src="https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill/actions/workflows/python-compat.yml/badge.svg" alt="Python compatibility" /></a>
-  <a href="https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill/actions/workflows/platform-compat.yml"><img src="https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill/actions/workflows/platform-compat.yml/badge.svg" alt="Platform compatibility" /></a>
-  <a href="https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill/actions/workflows/agent-compat.yml"><img src="https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill/actions/workflows/agent-compat.yml/badge.svg" alt="Agent compatibility" /></a>
+  <a href="https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/python-compat.yml"><img src="https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/python-compat.yml/badge.svg" alt="Python compatibility" /></a>
+  <a href="https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/platform-compat.yml"><img src="https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/platform-compat.yml/badge.svg" alt="Platform compatibility" /></a>
+  <a href="https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/agent-compat.yml"><img src="https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/agent-compat.yml/badge.svg" alt="Agent compatibility" /></a>
   <a href="pyproject.toml"><img src="https://img.shields.io/badge/Python-3.11%2B-9a765a?logo=python&amp;logoColor=white" alt="Python 3.11 or newer" /></a>
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/0.6.0-alpha-71866b" alt="Version 0.6.0 alpha" /></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/0.7.0-alpha-71866b" alt="Version 0.7.0 alpha" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-bd795d" alt="MIT License" /></a>
 </p>
 
@@ -37,15 +37,15 @@ intent, component and compact-model contracts, complex S-parameter circuits,
 layout/netlist comparisons, bounded solver plans, optimization, packaging,
 tapeout, measurement, provenance, and evidence gates.
 
-The repository retains its historical COMSOL-oriented name, but the runtime is
-solver-agnostic. COMSOL, MATLAB, Lumerical, layout/PDK tools, instruments, and
+The repository and skill use the name **Photonic Integrated Circuit Simulation**;
+the runtime remains solver-agnostic. COMSOL, MATLAB, Lumerical, layout/PDK tools, instruments, and
 remote services are bounded adapters; this project does not replace an
 electromagnetic solver, foundry signoff, calibrated measurement, or engineering
 judgment.
 
 | Agent skill | Python package | CLI |
 |---|---|---|
-| `$photonic-waveguide-optics` | `photonic-workflow` | `photonic` |
+| `$photonic-integrated-circuit-simulation` | `photonic-workflow` | `photonic` |
 
 | What would you like to do? | Start here |
 |---|---|
@@ -54,11 +54,30 @@ judgment.
 | Inspect inverse design and simulation evidence | [2D Hadamard](#hadamard) · [SOI Euler splitter](#euler-splitter) |
 | Connect existing tools or projects | [MCP, MATLAB, and solvers](#integrations) · [Documentation map](#docs) |
 
-## What Version 0.6.0 Provides
+## What Version 0.7.0 Provides
 
 | Design & modeling | Automation & integration | Verification & provenance |
 |---|---|---|
 | PIC / PDK contracts, complex S-parameter circuits, reusable geometry recipes | Local CLI, 13 MCP tools, bounded external-tool plans | G / M evidence gates, provenance, SHA-256 artifact audits |
+
+The current update adds seven executable complex-S models: straight waveguide,
+directional coupler, all-pass ring, add-drop ring, uniform Bragg reflector,
+ideal 2×2 MMI and ideal Y branch. These are analytic/reduced models with declared
+indices, coupling and losses; they do not calculate those inputs from geometry.
+Both ring variants belong to one device family. Use them for screening and
+circuit composition, with [model assumptions and examples](references/executable-device-models.md).
+
+[Readback diagnostics](references/executable-diagnostics.md) check geometry,
+complete source columns and phase conventions. The separate
+[COMSOL canary](examples/comsol-device-canary/README.md) includes bounded native
+straight/taper tests in a 2D scalar bulk-index surrogate and a geometry-only
+Euler-bend probe. The straight/taper receiver-flux/modal-power discrepancy remains
+unresolved, so near-unity target-mode transmission is not a qualified loss result.
+The default closed-interpolation bend shows about 0.52 nm contour deviation,
+exceeding its probe's 0.1 nm target; no bend mode or field solve ran. That precision target is
+specific to the probe; the deviation alone does not establish a performance failure.
+Native crossing, geometry-calibrated MMI/Y and broader device qualification remain future work;
+see the [capability record and next priorities](docs/research/device-family-roadmap-2026-10.md).
 
 <details>
 <summary><strong>Full capability map and status definitions</strong></summary>
@@ -68,6 +87,7 @@ judgment.
 | Installable core | Click CLI, Pydantic contracts, NumPy circuit composition, project configuration, run store, provenance, artifact audit, and G0-G8/M0-M4 ledgers |
 | PIC and PDK contracts | Design intent, devices, ports, components, netlists, layouts, PDK/technology/corner models, model cards, packaging, test, tapeout, and measurement records |
 | Circuit compatibility | Legacy `assembly.json` 1.0 and long-form complex S-parameter CSV validation/composition |
+| Executable device screening | Seven parameterized analytic/reduced models, complete complex S matrices and CSV reuse in circuits; geometry, scattering and phase diagnostics |
 | Reusable modeling recipes | Versioned, fail-closed circular/Euler geometry, segmented port windows, bulk material dispersion, and common-basis two-port diagnostics distilled from reviewed LT-aMZI workflows |
 | External backends | Capability probes and bounded plans; commercial execution remains separately authorized and test-gated |
 | MATLAB | Phase A check, inventory, plan, controlled-wrapper, result, and Engine-probe surfaces; real local smoke belongs to Phase B |
@@ -93,8 +113,8 @@ Python 3.11 or newer is required. Install the solver-independent core from a
 reviewed checkout:
 
 ```powershell
-git clone https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill.git
-Set-Location .\comsol-photonic-waveguide-optics-skill
+git clone https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill.git
+Set-Location .\photonic-integrated-circuit-simulation-skill
 
 python -m pip install -e .
 photonic --version
@@ -127,8 +147,8 @@ To install the Codex skill itself, place this repository under a discovered
 skills directory such as:
 
 ```powershell
-$SkillRoot = Join-Path $env:USERPROFILE '.codex\skills\photonic-waveguide-optics'
-git clone https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill.git $SkillRoot
+$SkillRoot = Join-Path $env:USERPROFILE '.codex\skills\photonic-integrated-circuit-simulation'
+git clone https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill.git $SkillRoot
 ```
 
 Restart Codex or open a new task after changing skill discovery locations.
@@ -282,7 +302,7 @@ of device qualification.
 | Test item | Value |
 |---|---|
 | Model | `GPT-5.6sol high` |
-| Skill | `$photonic-waveguide-optics` |
+| Skill (at test time) | `$photonic-waveguide-optics` |
 | Solver | COMSOL Multiphysics 6.4.0.293, Electromagnetic Waves, Frequency Domain |
 | Platform | 220 nm SOI context; 2D effective-index model (EIM) |
 | Wavelength | 1550 nm |
@@ -388,10 +408,11 @@ Run `photonic <group> --help` for the authoritative command schema.
 | Project and recovery | `init`, `check`, `doctor`, `status`, `inspect`, `report` |
 | PDK and device data | `pdk`, `component`, `model`, `sparams`, `variation` |
 | Reusable modeling | `recipe list`, `recipe inspect`, `recipe render` |
+| Device screening | `device list`, `device evaluate`, `device export` |
 | Circuit and layout | `circuit`, `netlist`, `layout` |
 | External planning | `solver`, `matlab` |
 | Campaigns and release | `optimize`, `package`, `testplan`, `tapeout`, `measurement` |
-| Evidence and security | `gate`, `audit` |
+| Evidence and security | `gate`, `audit` (including `audit diagnostics`) |
 
 <details>
 <summary><strong>Backend adoption, JSON responses, and exit codes</strong></summary>
@@ -615,7 +636,7 @@ project.
 
 ## Release Highlights
 
-**0.6.0 · alpha** — budgeted search, a native adjoint/MMA example, and fabrication-aware robust-design guidance. See the [changelog](CHANGELOG.md) for the full history.
+**0.7.0 · alpha** — seven executable device baselines, readback diagnostics, native canary helpers, budgeted search, and fabrication-aware inverse-design guidance. The skill is now named `photonic-integrated-circuit-simulation`; package and CLI names remain compatible. See the [changelog](CHANGELOG.md) for the full history.
 
 <details>
 <summary><strong>New in 0.6.0: Lower-cost inverse design</strong></summary>
@@ -662,7 +683,8 @@ One public skill routes to these methods because they share optical conventions,
 solver infrastructure and evidence contracts. Independently installed copies
 would duplicate those rules. A new family member is justified only when its
 invocation, dependencies and behavioral tests can stand alone.
-The MCP surface is now 13 tools / 36 resources.
+The MCP surface is now 13 tools / 38 resources. Device evaluation is available
+through CLI/Python; MCP exposes its reference route, rather than a device-solver tool.
 See the [implementation and validation report](docs/research/workflow-upgrade-2026-09.md).
 
 </details>

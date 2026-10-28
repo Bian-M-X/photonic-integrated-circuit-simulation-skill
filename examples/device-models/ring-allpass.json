@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "model": "ring-allpass",
+  "wavelengths_nm": [
+    1520,
+    1535,
+    1550,
+    1565,
+    1580
+  ],
+  "parameters": {
+    "roundtrip_length_um": 62.83185307179586,
+    "neff": 2.4,
+    "loss_db_per_cm": 3,
+    "coupling_power": 0.1
+  }
+}

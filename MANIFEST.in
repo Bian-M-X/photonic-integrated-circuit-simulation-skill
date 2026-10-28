@@ -13,6 +13,7 @@ recursive-include docs *.md
 include docs/research/workflow-upgrade-2026-09-results.json
 recursive-include docs/showcases/hadamard-2d *.py *.json *.csv *.png *.svg *.pdf
 recursive-include examples *.py *.toml *.md *.json
+include examples/comsol-device-canary/DeviceCanary.java
 recursive-include matlab *.m
 recursive-include references *.md
 recursive-include scripts *.py *.ps1

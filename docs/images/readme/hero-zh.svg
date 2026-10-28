@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-labelledby="title desc">
-  <title id="title">循光而行。 — Photonic Waveguide Optics</title>
+  <title id="title">循光而行。 — 光子集成电路仿真</title>
   <desc id="desc">从一个问题出发，让设计与证据相遇。 右侧为概念波导示意，不是仿真场图。</desc>
   <defs>
     <linearGradient id="paper" x2="1" y2="1"><stop stop-color="#fffaf1"/><stop offset="1" stop-color="#f1f4e9"/></linearGradient>
@@ -13,7 +13,7 @@
   <circle cx="1108" cy="104" r="77" fill="none" stroke="#ddc99e" stroke-opacity=".35"/>
   <path d="M56 61h25" stroke="#bd795d" stroke-width="2" stroke-linecap="round"/>
   <g font-family="Segoe UI, Noto Sans SC, Microsoft YaHei, sans-serif">
-    <text x="95" y="66" fill="#7b846f" font-size="13" letter-spacing="2.3">PHOTONIC WAVEGUIDE OPTICS</text>
+    <text x="95" y="66" fill="#7b846f" font-size="13" letter-spacing="1.6">PHOTONIC INTEGRATED CIRCUIT SIMULATION</text>
   </g>
   <g font-family="Georgia, Noto Serif SC, Songti SC, SimSun, serif">
     <text x="56" y="165" fill="#364b40" font-size="72" letter-spacing="3">循光而行。</text>

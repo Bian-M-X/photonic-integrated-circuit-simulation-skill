@@ -26,9 +26,9 @@ AGENTS_DIR = ROOT / "agents"
 REFERENCES_DIR = ROOT / "references"
 ASSETS_DIR = ROOT / "assets"
 SAFE_NAME = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
-# The two directory names under which this skill is actually deployed:
-# the README-documented Codex install name and the repository name.
-INSTALL_DIR_NAMES = ("photonic-waveguide-optics", ROOT.name)
+# Exercise the canonical name and the previous discovery folder during migration.
+# The checkout directory itself need not be renamed to install the new skill.
+INSTALL_DIR_NAMES = ("photonic-integrated-circuit-simulation", "photonic-waveguide-optics", ROOT.name)
 REQUIRED_AGENT_SECTIONS = ("## Purpose", "## Read First", "## Output Contract")
 REQUIRED_PAYLOAD_DIRS = ("agents", "references")
 

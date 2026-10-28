@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "model": "directional-coupler",
+  "wavelengths_nm": [
+    1520,
+    1535,
+    1550,
+    1565,
+    1580
+  ],
+  "parameters": {
+    "length_um": 7.853981633974483,
+    "neff_1": 2.4,
+    "neff_2": 2.4,
+    "kappa_per_um": 0.1,
+    "loss_db_per_cm": 3
+  }
+}

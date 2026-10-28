@@ -234,9 +234,10 @@ def load_component_data(
     try:
         with csv_path.open(newline="", encoding="utf-8-sig") as handle:
             reader = csv.DictReader(handle)
-            if tuple(reader.fieldnames or ()) != REQUIRED_COLUMNS:
+            if tuple(reader.fieldnames or ()) not in (REQUIRED_COLUMNS, (*REQUIRED_COLUMNS, "power")):
                 raise AssemblyError(
-                    f"{name}: {csv_path} columns must be exactly {', '.join(REQUIRED_COLUMNS)}"
+                    f"{name}: {csv_path} columns must be {', '.join(REQUIRED_COLUMNS)}"
+                    " with only an optional trailing derived power column"
                 )
             raw_rows = list(reader)
     except FileNotFoundError as exc:
@@ -247,6 +248,8 @@ def load_component_data(
     matrices: dict[float, Any] = {}
     seen: set[tuple[float, str, str]] = set()
     for line_number, row in enumerate(raw_rows, start=2):
+        if None in row or any(value is None for value in row.values()):
+            raise AssemblyError(f"{name}: malformed CSV row at {csv_path}:{line_number}")
         try:
             wavelength = float(row["wavelength_nm"])
             out_port = row["out_port"]
@@ -259,6 +262,19 @@ def load_component_data(
             raise AssemblyError(f"{name}: non-finite S-parameter data at {csv_path}:{line_number}")
         if wavelength <= 0:
             raise AssemblyError(f"{name}: wavelength must be positive at {csv_path}:{line_number}")
+        if "power" in row:
+            try:
+                power = float(row["power"])
+            except (TypeError, ValueError) as exc:
+                raise AssemblyError(f"{name}: invalid derived power at {csv_path}:{line_number}") from exc
+            derived_power = real * real + imag * imag
+            if (
+                not math.isfinite(power)
+                or not math.isfinite(derived_power)
+                or power < 0
+                or not math.isclose(power, derived_power, rel_tol=1e-9, abs_tol=1e-12)
+            ):
+                raise AssemblyError(f"{name}: inconsistent derived power at {csv_path}:{line_number}")
         value = complex(real, imag)
         if out_port not in port_index or in_port not in port_index:
             raise AssemblyError(f"{name}: unknown CSV port at {csv_path}:{line_number}")
@@ -390,6 +406,18 @@ def compose(
             sie = system_s[np.ix_(internal_idx, external_idx)]
             sii = system_s[np.ix_(internal_idx, internal_idx)]
             lhs = np.eye(len(internal_idx), dtype=complex) - connection_matrix @ sii
+            if not np.all(np.isfinite(lhs)):
+                raise AssemblyError(f"non-finite internal network matrix at {wavelength:g} nm")
+            try:
+                internal_sigma = np.linalg.svd(lhs, compute_uv=False)
+            except np.linalg.LinAlgError as exc:
+                raise AssemblyError(f"internal network SVD failed at {wavelength:g} nm") from exc
+            if not np.all(np.isfinite(internal_sigma)):
+                raise AssemblyError(f"non-finite internal network singular values at {wavelength:g} nm")
+            rank_tolerance = np.finfo(float).eps * max(lhs.shape) * internal_sigma[0]
+            if internal_sigma[-1] <= rank_tolerance:
+                raise AssemblyError(f"singular internal network at {wavelength:g} nm: "
+                                    "numerical rank deficiency")
             try:
                 internal_response = np.linalg.solve(lhs, connection_matrix @ sie)
             except np.linalg.LinAlgError as exc:

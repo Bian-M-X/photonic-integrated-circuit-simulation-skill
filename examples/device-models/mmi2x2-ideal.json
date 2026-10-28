@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "model": "mmi2x2-ideal",
+  "wavelengths_nm": [
+    1520,
+    1535,
+    1550,
+    1565,
+    1580
+  ],
+  "parameters": {
+    "coupling_power": 0.5,
+    "excess_loss_db": 0,
+    "phase_rad": 0
+  }
+}

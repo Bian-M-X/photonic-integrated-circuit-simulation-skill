@@ -2083,6 +2083,8 @@
       "photonic://skill/reference/device-family-workflows",
       "photonic://skill/reference/engineering-workflow",
       "photonic://skill/reference/environment-and-runner",
+      "photonic://skill/reference/executable-device-models",
+      "photonic://skill/reference/executable-diagnostics",
       "photonic://skill/reference/fabrication-aware-robust-design",
       "photonic://skill/reference/frequency-domain-source-sweeps",
       "photonic://skill/reference/hierarchical-device-workflow",
@@ -2423,6 +2425,50 @@
         }
       ]
     },
+    "photonic audit diagnostics": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "request",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "request"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "fail_on_issues",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--fail-on-issues"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
     "photonic check": {
       "kind": "Command",
       "parameters": [
@@ -2605,6 +2651,116 @@
           "secondary_options": [],
           "multiple": false
         },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic device": {
+      "kind": "Group",
+      "parameters": []
+    },
+    "photonic device evaluate": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "request",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "request"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic device export": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "request",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "request"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "output",
+          "kind": "Option",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--output"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "project_root",
+          "kind": "Option",
+          "type": "path",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--project-root"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic device list": {
+      "kind": "Command",
+      "parameters": [
         {
           "name": "json_output",
           "kind": "Option",

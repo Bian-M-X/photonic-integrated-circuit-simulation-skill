@@ -72,6 +72,25 @@ Audit after every geometry rebuild:
 - booleans did not destroy selections
 - design-region material does not overwrite fixed waveguides
 
+Read these assignments from the finalized native model, together with domain
+areas, bounding boxes and semantic selection provenance. Do not use fixed domain
+numbers or smallest-area selection as a universal shortcut. Check the actual
+finished outline after interpolation and booleans; sharp end caps can invalidate
+an otherwise correct centerline. Use `executable-diagnostics.md` for a runnable
+2D exported-readback guard. Its pass does not establish native connectivity,
+material tensors or an independently verified mode profile.
+
+In the COMSOL 6.4 native canary, finalized domain measurements use
+`geom("g").measureFinal().selection().geom("g", 2)` followed by
+`selection().set(domainIds)`. The geometry-object selection returned by
+`measure()` is a different API; neither an object selection nor an assumed
+`MeshSelection.init(int)` call can substitute for finalized entity selection.
+Verify the version-matched API and native readback before reusing this pattern.
+Compare measured area and bounds together: a tiny area difference explained
+by coordinate representation warrants an explicit geometry tolerance, not a
+change to optical acceptance limits. Preserve the initial discrepancy and its
+explanation; this does not establish mesh convergence.
+
 ## Geometry Rules
 
 Build from centerlines when possible:
@@ -229,6 +248,13 @@ Mesh refinement order:
 4. local bend refinement
 5. convergence check on key metrics
 
+In the COMSOL 6.4 Size API, the default `size` node always uses its size
+properties and has no `hmaxactive` or `hminactive` property. Additional local
+Size nodes expose those switches. Read back the appropriate properties for
+each node instead of applying one property list to both. Record actual element
+counts after meshing; requested size values alone are not a refinement check.
+See the [6.4 Size API](https://doc.comsol.com/6.4/doc/com.comsol.help.comsol/comsol_api_mesh.49.100.html).
+
 For PML models, use the mesh topology required by the selected PML formulation
 and verify the PML coordinates and domain selections after geometry changes.
 COMSOL's Wave Optics physics-controlled mesh uses structured PML meshes by
@@ -295,6 +321,17 @@ abs(comp1.ewfd.S11)^2
 ```
 
 Do not mix `emw` and `ewfd`; inspect the model's actual physics tag first.
+
+For quadrature experiments on an already solved model, result-level `IntLine`
+and `IntSurface` evaluations can set `intorderactive=true` and `intorder`
+without recomputing the solution. Read back the selection, dimension, units,
+dataset and actual source axis. The 6.4 `getReal()` default has expressions in
+rows and solution numbers in columns; verify cardinality before interpreting
+an index. Test a known nonpolynomial spatial integral to establish that order
+changes affect evaluation. Newly added physics coupling operators may not be
+available in the existing solution's evaluation context; an unknown-operator
+error is not a reason to rerun an expensive field solution blindly. See the
+[6.4 numerical integration API](https://doc.comsol.com/6.4/doc/com.comsol.help.comsol/comsol_api_results.52.084.html).
 
 ## Dataset Rules
 

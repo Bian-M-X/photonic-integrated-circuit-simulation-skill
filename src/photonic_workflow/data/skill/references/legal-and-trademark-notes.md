@@ -17,7 +17,7 @@ Reduce risk when publishing this skill project by ensuring it:
 
 Acceptable project-style names:
 
-- `photonic-waveguide-optics-skill`
+- `photonic-integrated-circuit-simulation-skill`
 - `integrated-photonics-simulation-skill`
 - `waveguide-interferometer-skill`
 

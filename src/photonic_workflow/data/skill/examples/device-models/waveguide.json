@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "model": "waveguide",
+  "wavelengths_nm": [
+    1520,
+    1535,
+    1550,
+    1565,
+    1580
+  ],
+  "parameters": {
+    "length_um": 100,
+    "neff": 2.4,
+    "loss_db_per_cm": 3
+  }
+}

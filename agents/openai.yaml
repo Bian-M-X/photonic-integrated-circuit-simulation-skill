@@ -1,4 +1,4 @@
 interface:
-  display_name: "Photonic Workflow Design and Closure"
-  short_description: "Auditable PIC workflow design and closure"
-  default_prompt: "Use $photonic-waveguide-optics to inspect the requested PIC artifact, choose the needed tools and references, and complete the task with explicit physical assumptions and evidence limits."
+  display_name: "Photonic Integrated Circuit Simulation"
+  short_description: "Design, simulate, and assess integrated photonic circuits"
+  default_prompt: "Use $photonic-integrated-circuit-simulation to inspect the requested PIC artifact, choose the needed tools and references, and complete the task with explicit physical assumptions and evidence limits."

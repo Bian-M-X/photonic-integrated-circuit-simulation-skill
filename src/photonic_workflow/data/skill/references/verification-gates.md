@@ -13,6 +13,12 @@ project may impose stricter prerequisites; this reference does not waive them.
 - [G0-G8 Design Gates](#g0-device-contract)
 - [Minimum Gate Ledger](#minimum-gate-ledger)
 
+For runnable conditional scattering, exported final-geometry and near-zero
+phase checks, use `executable-diagnostics.md`. Its statuses refer to those
+checks only: raw numerics, applicability and evidence qualification are separate.
+A passing diagnostic does not close a gate, and a not-applicable passive check
+must not be reintroduced as an unconditional column-power rejection downstream.
+
 ## Choose The Active Profile
 
 Freeze the intended claim, then evaluate only the smallest profile that covers

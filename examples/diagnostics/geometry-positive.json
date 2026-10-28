@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "kind": "geometry",
+  "data": {
+    "length_unit": "um",
+    "domains": [
+      {
+        "id": 9,
+        "area_um2": 21.0,
+        "bbox_um": [
+          0,
+          30,
+          -0.35,
+          0.35
+        ],
+        "material": "core"
+      },
+      {
+        "id": 2,
+        "area_um2": 699.0,
+        "bbox_um": [
+          0,
+          30,
+          -12,
+          12
+        ],
+        "material": "clad"
+      }
+    ],
+    "regions": [
+      {
+        "name": "guide",
+        "domain_ids": [
+          9
+        ],
+        "material": "core",
+        "area_interval_um2": [
+          20.9,
+          21.1
+        ],
+        "bbox_interval_um": [
+          0,
+          30,
+          -0.36,
+          0.36
+        ]
+      },
+      {
+        "name": "background",
+        "domain_ids": [
+          2
+        ],
+        "material": "clad",
+        "area_interval_um2": [
+          698,
+          700
+        ],
+        "bbox_interval_um": [
+          0,
+          30,
+          -12,
+          12
+        ]
+      }
+    ],
+    "expected_neff": [
+      1.53,
+      1.55
+    ],
+    "actual_neff": 1.5387
+  }
+}

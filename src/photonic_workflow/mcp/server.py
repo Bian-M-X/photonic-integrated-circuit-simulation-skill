@@ -53,6 +53,8 @@ REFERENCE_RESOURCES = {
         "device-family-workflows",
         "engineering-workflow",
         "environment-and-runner",
+        "executable-diagnostics",
+        "executable-device-models",
         "fabrication-aware-robust-design",
         "frequency-domain-source-sweeps",
         "hierarchical-device-workflow",

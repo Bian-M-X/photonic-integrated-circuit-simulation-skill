@@ -6,7 +6,118 @@ the host package version.
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-10-28
+
+### Changed
+
+- Renamed the installable skill to `photonic-integrated-circuit-simulation` and
+  moved active repository links to `photonic-integrated-circuit-simulation-skill`.
+  The `photonic-workflow` distribution, Python imports, `photonic` CLI and MCP
+  server identity remain compatible. Reinstall the skill under its new name;
+  old installed copies are not automatically migrated.
+- The full CI suite uses pytest and installs its canary process dependencies,
+  so the new function-based regressions run in clean environments.
+
 ### Added
+
+- Identified bend geometry-only probe preparation and verification, with final
+  semantic-domain/material readbacks, true core-to-end-window intersections and
+  finalized native edge samples. Bundles preserve producer dependencies; offline
+  verification never starts COMSOL or establishes mode/performance acceptance.
+- Bounded native geometry evidence for the zero-angle control and a retained
+  nonzero closed-interpolation counterexample. A native edge deviated about
+  0.52 nm from the intended lower boundary, failing its 0.1 nm contour target
+  despite passing area/end-width checks. API unit codepoints prevent console
+  replacement characters from silently establishing geometry units.
+- Offline return-to-center Euler-bend geometry, reusing the existing symmetric
+  Euler recipe with normal offsets, a zero-angle rectangle and explicit path,
+  area and sampling diagnostics. Fixed Java interpolation-curve fragments are
+  configuration proposals; native geometry, modes and bend loss remain untested.
+- Offline profile-bound driven continuation, with a data-only historical mode
+  evidence route, pre-resume native state assertions and complete two-source
+  complex S/signed-flux diagnostics. Original receipts are preserved and
+  current mode criteria are recomputed; device qualification remains separate.
+- Explicit fatal-record rejection shared by mode/driven evidence checks and
+  semantic verification of the fixed canary's actual frequency/source axis.
+- Native two-source driven diagnostics for the equal-width control and one
+  nonzero double ramp using its own mode checkpoint. Raw S/flux linkage and
+  profile-aware field plots were checked; the port/modal mismatch still fails.
+- Offline profile-specific modes preparation and evidence validation, binding
+  generated Java, runtime profile identity, geometry/port readbacks, completed
+  native receipts and selected-mode checkpoints. Conflicting duplicate E/H
+  traces and driven-result markers are rejected before mode acceptance.
+- The `comsol` optional dependency set includes psutil for the canary's native
+  process supervision and offline selected-mode evidence analysis.
+- Two profile-bound equal-width controls completed native selected-port mode
+  diagnostics, with an independent slab/complex-field check and preserved
+  producer snapshots. Device scattering and convergence remain unqualified.
+- Single-domain interface sampling guidance backed by a two-source saved-solution
+  diagnostic, including actual domain membership, zero extrapolation and atomic
+  row acceptance. Local algebraic consistency does not resolve the receiver gap.
+- Native configure-only evidence for two equal-width taper controls: equal
+  domain geometry/materials but different finalized vertex/edge counts and
+  boundary IDs. Profile-bound mode/solve reuse remains future work.
+- Offline symmetric taper profile preparation with equal-width and zero-length
+  controls, strict polygon/parameter checks and configure-only Java generation.
+  The default preserves legacy rendered bytes; custom profiles are not solved
+  or accepted by the legacy fixed-profile modes/solve/plot pipeline.
+- Same-point sampling guidance backed by a two-source existing-solution
+  diagnostic: explicit Solution interpolation passes component-product checks
+  while CutLine nonmultiplicativity remains visible. Coordinate and trace
+  validation remain separate from field, port and mesh acceptance.
+
+- Ideal reciprocal three-port `ybranch-ideal` with matched trunk, explicit
+  branch reflections and coherent combining; complete complex S and independent
+  channel/circuit counterexamples. Geometry and odd-mode radiation are not solved.
+- Circuit composition rejects numerically rank-deficient internal feedback
+  before solving, including a balanced lossless Y-loop dark state that roundoff
+  previously hid. Resolvable near-resonant controls remain supported; no damping
+  is added and the output schema is unchanged.
+- Ideal four-port `mmi2x2-ideal` circuit model with explicit splitting power,
+  excess loss and common phase, complete reciprocal complex S export and
+  coherent-interference counterexamples. It is not a geometry-dependent MMI
+  solver; the original five models and request schema remain compatible.
+- Existing-solution spatial-flux diagnostic guidance: signed internal cuts,
+  explicit coordinate units and physical-location controls, material splits,
+  path-specific quadrature controls, and strict observation metadata. Native
+  batch triage distinguishes entry/completion from exit status and uses typed
+  property readbacks. These additions do not qualify new device families.
+- Offline canary audit with checkpoint SHA-256 verification, strict source,
+  dataset and integration-order records, and a nonpolynomial quadrature control.
+  Postprocessing consistency and receiver flux/modal agreement retain separate
+  outcomes. This tool does not launch COMSOL or certify checkpoint/log provenance.
+- Three-mesh straight-control evidence: the maximum receiver power discrepancy
+  decreases from about 0.676% to 0.276%, but still fails the frozen 0.1% target;
+  the last-two-mesh power change also fails its independent target. Result-level
+  quadrature controls and actual mesh readbacks are documented. Taper and broader
+  native family qualification remain gated on the unresolved baseline.
+- Five parameterized analytic/reduced device models (waveguide, directional
+  coupler, all-pass ring, add-drop ring and uniform Bragg CMT), complete complex
+  scattering export and `photonic device list/evaluate/export`. Independent
+  algebra/ODE and circuit-integration tests distinguish numerical correctness
+  from native device qualification. Request schema is separate version 1.0.
+- Circuit component loading accepts the existing composition writer's optional
+  derived `power` column, verifies it against the complex amplitude, and rejects
+  unknown columns or malformed rows. Existing five-column inputs are unchanged.
+- Explicit distinction between physical-face partitioning and modal channels;
+  the existing partition helper's rejection of overlapping physical faces is
+  preserved.
+- Experimental straight/taper native canary source, strict native-row parsing
+  and bounded compiler diagnostics. The 2026-10-19 straight-control campaign
+  reached configuration readback, selected port modes and a two-source driven
+  solve resumed from the same saved mode checkpoint. Independent slab and
+  exported-field checks support this single-mesh, single-wavelength 2D scalar
+  diagnostic only; taper execution and physical convergence remain unverified.
+  Failed original receipts are retained separately from parser reanalysis.
+- Read-only `photonic audit diagnostics` for conditional N-channel scattering,
+  final 2D geometry/material readbacks and strict plus conditioned phase checks.
+  Requests use a separate version 1.0 format; no existing recipe or G/M contract
+  semantics change. All outputs remain diagnostic and caller-evidence dependent.
+- Instrumented Python transformation I/O receipts with explicit path roots,
+  content fingerprints and separate stale planned-consumer warnings.
+- Benchmark-driven positive/negative regressions and documented native-test
+  boundaries. Frozen campaign reports retain the version and producer bytes
+  used at execution; updating the source does not migrate installed copies.
 
 - On-demand fabrication-aware robust design guidance and a full-text assessment
   of BOSON, PRISM and scalable photonic inverse design, with explicit adoption
@@ -16,8 +127,8 @@ the host package version.
   counterexamples, including diluted bad-scenario loss for binary targets.
   These diagnostics do not implement full paper backends or
   certify process models, fabrication yield or new native device performance.
-- Readable packaged fabrication reference: 36 MCP resources, still 13 tools.
-  Package version remains 0.6.0; persisted schemas and CLI are unchanged.
+- Readable packaged fabrication, diagnostics and device-model references: 38 MCP
+  resources, still 13 tools. Persisted G/M schemas remain unchanged.
 
 ## [0.6.0] - 2026-10-10
 
@@ -182,6 +293,7 @@ Implementation and validation: OpenAI Codex.
   required normal interactive Windows context. LiveLink, Lumerical, instruments,
   and real PDK/DRC/LVS integrations remain separate Phase C adoption gates.
 
-[0.6.0]: https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill/compare/v0.5.0...main
-[0.5.0]: https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill/compare/v0.4.0...v0.5.0
-[0.4.0]: https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill/releases/tag/v0.4.0
+[0.7.0]: https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/compare/10508ed...main
+[0.6.0]: https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/compare/v0.5.0...10508ed
+[0.5.0]: https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/compare/v0.4.0...v0.5.0
+[0.4.0]: https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/releases/tag/v0.4.0

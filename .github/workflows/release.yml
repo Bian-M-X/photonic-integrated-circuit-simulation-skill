@@ -61,7 +61,7 @@ jobs:
           java-version: "21"
 
       - name: Install release tooling and editable package
-        run: python -m pip install --disable-pip-version-check -e ".[dev,inverse-design]"
+        run: python -m pip install --disable-pip-version-check -e ".[dev,inverse-design,comsol]"
 
       - name: Require tag and package versions to match
         shell: bash
@@ -73,7 +73,7 @@ jobs:
 
       - name: Re-run the solver-free release suite
         run: |
-          python -B -m unittest discover -s tests -p "test_*.py"
+          python -B -m pytest
           python -B scripts/update_contract_surface_snapshot.py
           python -B scripts/test_photonic_assembly.py
           python -B scripts/test_numeric_tools.py

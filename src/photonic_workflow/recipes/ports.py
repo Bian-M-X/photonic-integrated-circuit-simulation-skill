@@ -197,6 +197,12 @@ def audit_exterior_boundary_partition(
 ) -> dict[str, object]:
     """Fail closed unless ports and open boundaries exactly partition the exterior.
 
+    Keys in ``port_boundary_ids`` identify physical cross-section faces, not
+    individual modal channels. Several modal Port features may share one face;
+    group their identical boundary selection under one physical-face key before
+    this audit and validate channel identities/normalization separately. Never
+    merge genuinely distinct, overlapping physical faces to bypass this check.
+
     ``open_boundary_ids`` represents the scattering/radiation or PML-facing
     exterior selection.  This is a pure post-geometry entity audit: it does not
     decide whether a port window contains the correct modal support and it does
