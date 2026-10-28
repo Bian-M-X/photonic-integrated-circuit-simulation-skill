@@ -16,7 +16,7 @@ runtime and its optional scientific dependencies.
 
 The runtime wheel also carries a synchronized finite mirror of the original
 example under `data/skill/examples/comsol-hadamard-inverse`. With the matching
-released runtime installed (`python -m pip install "photonic-workflow[inverse-design]==0.6.0"`
+released runtime installed (`python -m pip install "photonic-workflow[inverse-design]==0.7.0"`
 once that version is published), extract it to a **new writable directory**:
 
 ```python

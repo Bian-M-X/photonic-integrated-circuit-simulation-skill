@@ -89,10 +89,10 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install editable core
-        run: python -m pip install --disable-pip-version-check -e .
+        run: python -m pip install --disable-pip-version-check -e . "pytest>=8" psutil
 
       - name: Test package contracts and services
-        run: python -B -m unittest discover -s tests -p "test_*.py"
+        run: python -B -m pytest
 
       - name: Verify public compatibility snapshot
         run: python -B scripts/update_contract_surface_snapshot.py

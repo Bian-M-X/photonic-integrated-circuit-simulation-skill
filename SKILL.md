@@ -1,9 +1,9 @@
 ---
-name: photonic-waveguide-optics
+name: photonic-integrated-circuit-simulation
 description: Design, debug, simulate, and qualify integrated photonic devices and circuits, including COMSOL wave-optics models, modal ports, complex S parameters, and layout or measurement handoffs. Use for PIC engineering work that needs explicit modeling assumptions and evidence limits.
 ---
 
-# Photonic Waveguide Optics
+# Photonic Integrated Circuit Simulation
 
 Use engineering judgment to advance the user's requested PIC task. This skill
 supplies reusable numerical tools and the non-obvious constraints that protect
@@ -46,9 +46,17 @@ do not load the entire reference library or all agent cards by default.
 | COMSOL setup, paths, compile/batch, failure logs | `references/environment-and-runner.md` |
 | Materials, selections, ports, studies, mesh, datasets and exports | `references/wave-optics-port-models.md` |
 | Blank, zero or implausible fields; plotting and leakage | `references/comsol-field-physical-audit.md` |
+| Canary flux/modal mismatch or saved quadrature records | `examples/comsol-device-canary/README.md` (offline audit); `references/frequency-domain-source-sweeps.md` |
+| Prepare symmetric taper geometry or an equal-width control without solving | `examples/comsol-device-canary/README.md` (offline profile tool) |
+| Prepare a return-to-center Euler bend or its zero-angle geometry control | `examples/comsol-device-canary/README.md` (offline bend geometry); `references/smooth-bend-geometry.md` |
+| Prepare an identified bend geometry-only native probe or check its bundle | `examples/comsol-device-canary/README.md` (native geometry probe preparation) |
+| Prepare a profile-specific modes source or validate its checkpoint provenance | `examples/comsol-device-canary/README.md` (profile-bound mode route) |
+| Resume a driven profile from identified mode evidence or inspect its complex S/flux | `examples/comsol-device-canary/README.md` (profile-bound driven route) |
+| Final geometry/material readback, conditional S checks, near-zero phase or actual tool consumption | `references/executable-diagnostics.md` |
 | Multiple excitations, complex S columns, phase/gauge alignment | `references/frequency-domain-source-sweeps.md` |
 | Geometry, port-window, dispersion or two-port diagnostic code | `references/modeling-recipes.md`; bends also `references/smooth-bend-geometry.md` |
 | Waveguide, bend, taper, coupler, ring or grating design | `references/device-family-workflows.md` |
+| Evaluate or export analytic/reduced complex S, including ideal MMI and Y splitters | `references/executable-device-models.md` |
 | MZI/aMZI/LT-aMZI, imbalance, FSR | `references/interferometer-workflows.md`; quantum-source work also `references/quantum-photonic-knowledge-base.md` |
 | Complex-S circuit composition or layout/connectivity | `references/hierarchical-device-workflow.md` |
 | Sweeps, optimization, corners or reports | `references/optimization-and-reporting.md` |
@@ -78,6 +86,11 @@ exists. MCP prefixes and installed versions may differ between hosts.
   read-only and never executes a solver or promotes evidence.
 - Reusable code: `photonic recipe list --json`, then inspect only the selected
   recipe; MCP equivalents are `list_recipes`, `inspect_recipe`, `render_recipe`.
+- Exported observations: `photonic audit diagnostics <request.json>
+  --fail-on-issues --json`; conditional checks never promote a device gate.
+- Parameterized device baselines: `photonic device list --json`, then
+  `photonic device evaluate <request.json> --json`; export complete complex S
+  with `device export` for circuit screening. These do not run a field solver.
 - MCP discovery: read `photonic://server/manifest` and use `list_allowed_roots`
   when paths matter. `run_java_batch` is a compatibility name for a **plan-only**
   tool. It cannot run COMSOL.
@@ -104,6 +117,9 @@ use reviewed source code for model construction beyond recipe coverage.
   radiation continuum. Use justified local modal windows and verify incoming
   power normalization. Do not silently invert a contaminated incoming matrix to
   make a raw response pass.
+- After geometry rebuilds, read back final semantic domains, material assignments,
+  measured areas/bounds and the relevant mode baseline before scaling the scan.
+  Centerline checks and solver completion do not detect a core assigned to background.
 - Material, boundary/PML, mesh or port changes invalidate dependent mode/phase
   evidence. Boundary Mode fields support port-mode plots; a no-solve model has
   no driven field. Check dataset, physics tag, expression and source index

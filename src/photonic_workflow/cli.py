@@ -20,6 +20,8 @@ from .capabilities import core_capability_reports, optional_capability_reports
 from .circuits import AssemblyError, compose, validate_manifest, write_composition
 from .compact_models import compare_model_cards, release_model_card, validate_model_card
 from .config import load_project_config, resolved_allowed_roots
+from .device_models import evaluate_device, list_models, scattering_csv
+from .diagnostics import audit_request, load_diagnostic_request
 from .exceptions import (
     ExitCode,
     InvalidInputError,
@@ -581,6 +583,87 @@ def layout_compare(left: Path, right: Path, json_output: bool) -> None:
         compare_layout_manifests(left_model, right_model),
         json_output=json_output,
     )
+@cli.group("device")
+def device_group() -> None:
+    """Evaluate declared analytic/reduced device models without a field solver."""
+
+
+@device_group.command("list")
+@click.option("--json", "json_output", is_flag=True)
+def device_list(json_output: bool) -> None:
+    _emit("photonic device list", {"models": list_models()}, json_output=json_output)
+
+
+def _device_request(path: Path) -> Any:
+    def reject_constant(value: str) -> None:
+        raise InvalidInputError(f"non-finite JSON number: {value}")
+
+    def unique_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+        result: dict[str, Any] = {}
+        for key, value in pairs:
+            if key in result:
+                raise InvalidInputError(f"duplicate JSON key: {key}")
+            result[key] = value
+        return result
+
+    return json.loads(
+        path.read_text(encoding="utf-8"),
+        parse_constant=reject_constant,
+        object_pairs_hook=unique_keys,
+    )
+
+
+@device_group.command("evaluate")
+@click.argument("request", type=click.Path(exists=True, dir_okay=False, path_type=Path))
+@click.option("--json", "json_output", is_flag=True)
+def device_evaluate(request: Path, json_output: bool) -> None:
+    _emit(
+        "photonic device evaluate",
+        evaluate_device(_device_request(request)),
+        json_output=json_output,
+    )
+
+
+@device_group.command("export")
+@click.argument("request", type=click.Path(exists=True, dir_okay=False, path_type=Path))
+@click.option("--output", type=click.Path(dir_okay=False, path_type=Path), required=True)
+@click.option("--project-root", type=click.Path(path_type=Path), required=True)
+@click.option("--json", "json_output", is_flag=True)
+def device_export(request: Path, output: Path, project_root: Path, json_output: bool) -> None:
+    result = evaluate_device(_device_request(request))
+    root, _, _ = _project(project_root)
+    target, relative = _checked_recipe_output(root, output)
+    try:
+        atomic_create_text(
+            target,
+            scattering_csv(result),
+            path_guard=lambda candidate: _checked_recipe_output(root, candidate),
+        )
+    except FileExistsError as exc:
+        raise InvalidInputError(f"device output already exists: {relative}") from exc
+    _emit(
+        "photonic device export",
+        {
+            "artifact_path": relative,
+            "metadata_path_base": "project-root; rebase sparameters for a nested assembly manifest",
+            "sha256": sha256_file(target),
+            "model": result["model"],
+            "convention": result["convention"],
+            "component": {
+                "ports": result["port_order"],
+                "port_modes": dict.fromkeys(result["port_order"], "declared-single-mode"),
+                "model_level": result["model_level"],
+                "reference_plane": "local physical port planes; see evaluated model metadata",
+                "sparameters": relative,
+                "passive": True,
+            },
+            "physics_accepted": False,
+            "will_execute": False,
+        },
+        json_output=json_output,
+    )
+
+
 @cli.group("recipe")
 def recipe_group() -> None:
     """Inspect and render deterministic, non-executing modeling recipes."""
@@ -1215,6 +1298,21 @@ def gate_adoption_evaluate(
 @cli.group("audit")
 def audit_group() -> None:
     """Audit repository or project artifacts."""
+
+
+@audit_group.command("diagnostics")
+@click.argument("request", type=click.Path(exists=True, dir_okay=False, path_type=Path))
+@click.option("--fail-on-issues", is_flag=True)
+@click.option("--json", "json_output", is_flag=True)
+def audit_diagnostics(request: Path, fail_on_issues: bool, json_output: bool) -> None:
+    """Read-only conditional scattering, phase or final-geometry checks; no solver or gate writes."""
+    result = audit_request(load_diagnostic_request(request))
+    acceptable = result["status"] in {"pass", "not_applicable"}
+    code = ExitCode.ACCEPTANCE_REJECTED if fail_on_issues and not acceptable else ExitCode.SUCCESS
+    _emit("photonic audit diagnostics", result, json_output=json_output,
+          ok=acceptable, status=result["status"], exit_code=code)
+    if code:
+        raise click.exceptions.Exit(int(code))
 
 
 @audit_group.command("artifacts")

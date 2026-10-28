@@ -73,7 +73,7 @@ After the pull request and the pushed `main` commit are green:
    artifact, and pass that exact artifact ID through separately permissioned
    attestation and publication jobs;
 4. verify each downloaded wheel, sdist, and checksum inventory with
-   `gh attestation verify <asset> -R Bian-M-X/comsol-photonic-waveguide-optics-skill`;
+   `gh attestation verify <asset> -R Bian-M-X/photonic-integrated-circuit-simulation-skill`;
 5. confirm the prerelease points to the intended tag and exposes only the
    workflow-built assets.
 

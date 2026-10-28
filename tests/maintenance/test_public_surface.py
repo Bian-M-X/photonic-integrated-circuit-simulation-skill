@@ -18,6 +18,7 @@ from photonic_workflow.compatibility import (
     CURRENT_CONTRACT_SCHEMA_VERSION,
     DEFAULT_CONTRACT_SCHEMA_VERSION,
 )
+from photonic_workflow.device_models import list_models
 from photonic_workflow.maintenance import _cli_surface, contract_surface_snapshot
 from photonic_workflow.mcp.server import (
     AGENT_RESOURCES,
@@ -28,10 +29,11 @@ from photonic_workflow.mcp.server import (
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 
 EXPECTED_CLI_SURFACE = {
-    "audit": ("artifacts",),
+    "audit": ("artifacts", "diagnostics"),
     "check": (),
     "circuit": ("compose", "validate"),
     "component": ("inspect",),
+    "device": ("evaluate", "export", "list"),
     "doctor": (),
     "gate": ("adoption", "list", "set"),
     "init": (),
@@ -66,6 +68,22 @@ EXPECTED_CLI_SURFACE = {
 
 
 class PublicSurfaceMaintenanceTests(unittest.TestCase):
+    def test_device_model_catalog_keeps_seven_fixed_ids_and_analytic_ideal_junctions(self) -> None:
+        models = {item["model"]: item for item in list_models()}
+        self.assertEqual(set(models), {
+            "waveguide", "directional-coupler", "ring-allpass", "ring-adddrop", "bragg-uniform",
+            "mmi2x2-ideal", "ybranch-ideal",
+        })
+        self.assertEqual(models["mmi2x2-ideal"]["model_level"], "analytic")
+        self.assertEqual(set(models["mmi2x2-ideal"]["parameters"]), {
+            "coupling_power", "excess_loss_db", "phase_rad",
+        })
+        self.assertEqual(models["ybranch-ideal"]["model_level"], "analytic")
+        self.assertEqual(models["ybranch-ideal"]["port_order"], ["trunk", "upper", "lower"])
+        self.assertEqual(set(models["ybranch-ideal"]["parameters"]), {
+            "coupling_power", "excess_loss_db", "phase_rad",
+        })
+
     def test_cli_snapshot_resolves_lazy_defaults_without_calling_them(self) -> None:
         lazy = Mock(return_value="must not be evaluated")
         command = click.Command("fixture", params=[

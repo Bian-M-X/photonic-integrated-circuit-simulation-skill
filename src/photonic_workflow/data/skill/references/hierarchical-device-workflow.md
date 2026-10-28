@@ -80,6 +80,13 @@ For each component:
 
 Do not mix S matrices with different mode normalization, phase convention, port reference planes, or wavelength grids without an explicit conversion.
 
+For analytic/reduced screening, `photonic device export` supplies a complete
+five-column complex-S CSV and component metadata; see
+`executable-device-models.md`. The loader also accepts the composition writer's
+sixth, trailing `power` column only when it matches `s_real**2+s_imag**2`
+(relative tolerance 1e-9, absolute tolerance 1e-12). This derived column never
+replaces amplitudes or supplies missing phase. Unknown columns are rejected.
+
 ### Stage 2: Define and validate the assembly
 
 Create `circuits/assembly.json` with:
@@ -187,10 +194,20 @@ Otherwise, report a hierarchical verification claim: calibrated components plus 
 |---|---|---|
 | Valid layout, wrong spectrum | phase/reference-plane or compact-model error | align conventions and re-export complex S matrices |
 | Passive network gains power | incomplete/incorrect S data or normalization mismatch | reject model; audit singular values and normalization |
-| Composition is singular | feedback loop at an unresolved pole or invalid ideal connection | refine wavelength grid; add physical propagation/loss; inspect topology |
+| Composition is singular | unresolved feedback pole, internal dark state, or invalid ideal connection | inspect topology and internal numerical rank; revise propagation/loss only when physically justified |
 | Port mode mismatch | direct connection between incompatible modes | insert a validated transition/mode converter |
 | Full-wave subassembly disagrees | block interaction omitted | enlarge calibration block or add a compound model |
 | DRC passes but performance fails | geometrical legality is not optical validation | rerun circuit and promoted full-wave gates |
+
+An ideal lossless feedback loop can contain an undetermined internal dark state
+even when its external transmission looks finite. A linear solver returning
+numbers does not prove uniqueness: roundoff can hide exact singularity. The
+circuit composer checks the internal feedback matrix before solving and rejects
+numerical rank deficiency at `eps * max(matrix.shape) * largest_singular_value`.
+This is a floating-point resolution check, not an accuracy certificate for every
+near-resonant network. Keep well-resolved feedback controls and do not insert
+arbitrary damping to make a singular test pass. Physically justified loss or
+propagation changes define a different model and must be recorded as such.
 
 ## Official Technical Basis
 

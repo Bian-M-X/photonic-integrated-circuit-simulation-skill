@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "model": "bragg-uniform",
+  "wavelengths_nm": [
+    1520,
+    1535,
+    1550,
+    1565,
+    1580
+  ],
+  "parameters": {
+    "length_um": 50,
+    "neff": 2.4,
+    "period_um": 0.3229166666666667,
+    "kappa_per_um": 0.05
+  }
+}

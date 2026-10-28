@@ -186,6 +186,12 @@ The two-port diagnostic additionally requires the exact declarations
 `material_absorption_sign_convention="positive_absorbed"`. Missing or opposite
 conventions fail closed before closure arithmetic is evaluated.
 
+Its v1 aggregate diagnostic combines reciprocity, passivity and unitarity even
+when a device does not require all three. Do not use that aggregate as a physical
+acceptance flag for a lossy, active or nonreciprocal model. Keep v1 reproducibility
+and use the N-channel conditional checks in `executable-diagnostics.md` for those
+cases. A four-channel task needs four actual source columns, not two-port padding.
+
 ## COMSOL Java Fragments
 
 Only the three geometry/port recipes support `comsol-java-fragment` in v1.

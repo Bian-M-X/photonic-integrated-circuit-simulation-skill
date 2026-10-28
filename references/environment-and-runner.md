@@ -4,6 +4,15 @@ Use this reference when a task needs local solver-path setup, Java API automatio
 
 ## Core Principle
 
+For a new campaign, compile and export a small representative case in a unique
+run directory first. Preserve source and executable fingerprints and require a
+fresh successful class plus solver completion/output checks; launcher exit zero
+alone may hide an internal Java failure. Read actual dataset, source, wavelength,
+coordinate units/ranges and row/case counts instead of trusting plot titles or
+filenames. Never reuse an old class/output after a failed compile. Keep failed
+attempts in the resource record; a still-running timed-out process continues to
+consume actual time even when the billing counter stops.
+
 The skill must not hard-code the author's local installation path. Each user supplies their own licensed solver root through either `-SolverRoot` or `PHOTONIC_SOLVER_ROOT`.
 
 Expected Windows relative files under the solver root:
@@ -195,7 +204,36 @@ interval, not survival after the chat, host, or machine exits.
 - If a command times out, inspect output files and the batch log before declaring failure.
 - Save summaries for restartability: candidate id, parameters, metrics, output model path, log path, and status.
 
+For a bounded repair campaign, persist one start time across all attempts and
+include debugging and waiting in the declared wall-clock budget. A fresh
+directory or resumed chat does not restart that budget. At expiry, preserve
+completed stages and finish offline analysis; declare any later solver campaign
+separately. Sampled PID/descendant supervision is useful but is not equivalent
+to Windows Job Object containment.
+
 ## Failure Triage
+
+For a Java batch job, record a unique entry marker and a separate completion
+marker. A zero batch exit code can accompany a Java-method failure; require the
+expected markers and outputs. If the entry marker is absent, inspect the batch
+log and task-local `prefs/logs` or workspace metadata before changing model APIs.
+A method-execution bridge socket error identifies a startup failure, not a
+physics failure or a proven network-policy cause. Compare one execution factor
+at a time within the authorized scope; preserve each attempt's logs and avoid
+changing global proxy, firewall or solver configuration as a speculative repair.
+
+Native readbacks may use equivalent unit spellings such as `um`, U+00B5 + `m`
+or U+03BC + `m`. Check an explicit equivalence set and preserve the original
+Unicode code points in ASCII diagnostics when console encoding is lossy. Never
+accept a replacement character or wildcard as a valid unit. Retain independent
+coordinate and length-integral checks for result datasets.
+
+Use documented typed getters for critical model settings. Do not discover an
+unknown property's type by trying every array and matrix getter: an unsupported
+conversion can fail inside the native API. Keep optional inventory separate
+from required assertions, record unavailable properties as unknown, and retain
+the earliest detailed internal error when a top-level Java-class message is
+generic.
 
 | Symptom | Likely cause | First action |
 |---|---|---|

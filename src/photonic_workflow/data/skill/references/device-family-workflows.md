@@ -19,6 +19,13 @@ Before building a model, classify the device:
 
 Then choose the smallest validation model that proves the core physics.
 
+For executable analytic/reduced models of straight propagation, directional
+coupling, all-pass/add-drop rings and uniform Bragg reflection, use
+`executable-device-models.md`. It distinguishes parameterized complex-S
+evaluation from geometry construction and native field validation. The family
+routes below describe engineering work; they do not imply that every family
+already has a native backend or acceptance evidence.
+
 ## Universal Validation Ladder
 
 1. Straight waveguide: material, port, mode, mesh, and boundary sanity.
@@ -44,12 +51,68 @@ Bend:
 - inspect radiation into background
 - check reflection at bend entry/exit
 
+For an offline return-to-center Euler geometry, use
+`examples/comsol-device-canary/bend_profile.py`. It reuses the symmetric Euler
+recipe, composes four normal-offset bends with straight leads and keeps both
+end tangents along +x. A zero-angle rectangle and sign-mirror control isolate
+the geometry change. Intended path/strip area and sampled chord/polygon area
+are separate diagnostics. Its fixed interpolation-solid Java fragment has no
+materials, ports or solver; sampled nonintersection does not accept the actual
+COMSOL interpolant. Verify native geometry and the bend's own mode checkpoint
+before interpreting any scattering result. It is separate from taper bundles.
+
+The separate `bend_geometry.py` probe has checked a zero-angle rectangle and the
+default four-closed-solid bend in COMSOL. The rectangle passed final semantic
+geometry checks. The nonzero bend formed one core and retained correct end
+widths/materials, but a native edge exceeded its frozen contour tolerance by
+reaching about 0.52 nm beyond the intended lower boundary. Its geometry adoption
+remains blocked; an area pass alone does not qualify the contour. Preserve this
+counterexample and test a flat-cap/open-offset construction before its own modes.
+
 Taper or transition:
 
 - define input/output widths and target modes
 - sweep taper length
 - check mode conversion and reflection
 - compare field shape before and after taper
+
+The offline `examples/comsol-device-canary/taper_profile.py` prepares the
+existing symmetric double-ramp topology with fixed 0.30 um end widths. It can
+produce an equal-width control and configure-stage Java with independently
+checkable polygon area and bounds. It does not solve, predict transmission or
+convert between unequal port widths. A zero-length profile with changed width
+is rejected; a zero-length equal-width profile is a rectangle. Custom profiles
+still need native geometry readback and a separately bound modal/solve pipeline;
+the legacy runner's fixed-profile plots are not evidence for them.
+
+Two equal-width controls have passed bounded native configuration readbacks:
+the positive-length collinear polygon and the zero-length rectangle. They had
+the same domain areas/materials and port spans but different finalized entity
+counts and boundary IDs. Derive selections from the rebuilt geometry and bind
+the profile, audited source and checkpoint identities before mode/solve reuse.
+Neither configuration check ran a mesh or field solve. Nonzero profiles need
+their own modes and driven evidence before any performance acceptance.
+
+`profile_modes.py` prepares a separate modes source and binds its profile,
+dependencies, actual geometry readbacks, native receipt and selected checkpoint.
+Use its offline validation route before reusing custom-profile mode evidence.
+It rejects mismatched files, failed receipt status and driven-result markers,
+and checks duplicate complex-field traces before the inherited mode analysis.
+The legacy fixed-profile runner is a separate interface; a prepared bundle alone
+does not establish mode readiness or authorize a solver run.
+
+The separate `profile_driven.py` route prepares a driven continuation from
+identified mode evidence and validates complete two-source target-mode S plus
+signed flux observations. It asserts the persisted profile before resuming and
+keeps historical producer data distinct from current validation. A changed-width
+profile requires its own mode checkpoint. Treat the first driven result as a
+bounded diagnostic until its normalization, fields and convergence support the
+desired claim; do not identify `1-R-T` as measured loss in a particular channel.
+
+One nonzero double ramp has completed such a single-wavelength diagnostic with
+its own mode checkpoint. Its target-mode transmission was close to one, while
+the independent receiving-flux/modal gate still failed. Keep both observations
+visible; a nearly unit target-mode result alone cannot qualify low loss.
 
 ## Splitters And Couplers
 
@@ -79,6 +142,13 @@ Typical sweeps:
 - wavelength
 
 Acceptance is target-dependent. A 3 dB directional coupler is not the only valid splitter target.
+
+For inexpensive circuit screening, `executable-device-models.md` provides ideal
+MMI and Y models with complete complex S. A Y model must account for branch-side
+reflection or other channels: reciprocity, losslessness and matching at all
+three ports cannot hold simultaneously for a complete three-channel matrix.
+Validate reverse excitation and coherent combining, not just the trunk-input
+split ratio. These ideal models do not replace geometry-specific verification.
 
 ## Resonators
 

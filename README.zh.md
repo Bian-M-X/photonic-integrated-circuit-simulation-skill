@@ -1,10 +1,10 @@
 <a id="top"></a>
 
 <p align="center">
-  <img src="docs/images/readme/hero-zh.svg" alt="光子波导光学 Skill 与工作流 — 概念波导示意图" width="100%" />
+  <img src="docs/images/readme/hero-zh.svg" alt="光子集成电路仿真 — 概念波导示意图" width="100%" />
 </p>
 
-<h1 align="center">光子波导光学 Skill 与工作流</h1>
+<h1 align="center">光子集成电路仿真 · Photonic Integrated Circuit Simulation</h1>
 
 <p align="center">与智能体一起，把光子学的想法一步步变成模型与证据。</p>
 
@@ -13,11 +13,11 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill/actions/workflows/python-compat.yml"><img src="https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill/actions/workflows/python-compat.yml/badge.svg" alt="Python compatibility" /></a>
-  <a href="https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill/actions/workflows/platform-compat.yml"><img src="https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill/actions/workflows/platform-compat.yml/badge.svg" alt="Platform compatibility" /></a>
-  <a href="https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill/actions/workflows/agent-compat.yml"><img src="https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill/actions/workflows/agent-compat.yml/badge.svg" alt="Agent compatibility" /></a>
+  <a href="https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/python-compat.yml"><img src="https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/python-compat.yml/badge.svg" alt="Python compatibility" /></a>
+  <a href="https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/platform-compat.yml"><img src="https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/platform-compat.yml/badge.svg" alt="Platform compatibility" /></a>
+  <a href="https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/agent-compat.yml"><img src="https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/agent-compat.yml/badge.svg" alt="Agent compatibility" /></a>
   <a href="pyproject.toml"><img src="https://img.shields.io/badge/Python-3.11%2B-9a765a?logo=python&amp;logoColor=white" alt="Python 3.11 or newer" /></a>
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/0.6.0-alpha-71866b" alt="Version 0.6.0 alpha" /></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/0.7.0-alpha-71866b" alt="Version 0.7.0 alpha" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-bd795d" alt="MIT License" /></a>
 </p>
 
@@ -36,13 +36,14 @@
 电路、版图与网表比对、受约束的求解器计划、优化、封装、流片、测量、来源追踪
 与证据门。
 
-仓库保留了历史上的 COMSOL 导向名称，但运行时本身与求解器无关。COMSOL、
+仓库与 skill 统一更名为 **Photonic Integrated Circuit Simulation（光子集成电路仿真）**，
+运行时本身仍与求解器无关。COMSOL、
 MATLAB、Lumerical、版图/PDK 工具、仪器和远程服务均通过受约束的适配器接入；本项目
 不替代电磁求解器、晶圆厂签核、校准测量或工程判断。
 
 | Skill | Python 包 | CLI |
 |---|---|---|
-| `$photonic-waveguide-optics` | `photonic-workflow` | `photonic` |
+| `$photonic-integrated-circuit-simulation` | `photonic-workflow` | `photonic` |
 
 | 你想做什么 | 从这里开始 |
 |---|---|
@@ -51,11 +52,26 @@ MATLAB、Lumerical、版图/PDK 工具、仪器和远程服务均通过受约束
 | 查看逆向设计与仿真证据 | [二维 Hadamard](#hadamard) · [SOI 欧拉弯分束器](#euler-splitter) |
 | 接入已有工具或项目 | [MCP、MATLAB 与求解器](#integrations) · [文档地图](#docs) |
 
-## 0.6.0 版本提供的能力
+## 0.7.0 版本提供的能力
 
 | 设计与建模 | 自动化与集成 | 验证与追溯 |
 |---|---|---|
 | PIC / PDK 契约、复数 S 参数电路、可复用几何配方 | 本地 CLI、13 个 MCP 工具、受约束的外部工具计划 | G / M 证据门、来源追踪、SHA-256 产物审计 |
+
+本轮新增七种可执行复数 S 模型：直波导、定向耦合器、全通环、上下路环、均匀布拉格
+反射器、理想 2×2 MMI 和理想 Y 分支。它们使用用户声明的折射率、耦合与损耗，
+属于解析/降阶模型，不会从几何计算这些输入；两种环模型属于同一器件族。
+可用于低成本筛选与电路组合，详见[模型假设与示例](references/executable-device-models.md)。
+
+[读回诊断](references/executable-diagnostics.md)检查几何、完整源列与相位约定。
+独立的 [COMSOL canary](examples/comsol-device-canary/README.md)包含二维标量体折射率
+替代模型的直波导/渐变波导原生测试，以及只检查几何的欧拉弯探针。
+直波导/渐变波导的接收端通量与模态功率差仍未闭合，接近 1 的目标模透射不能作为
+损耗验收结论。默认闭合插值欧拉弯在约 0.52 nm 的轮廓偏差上未通过该探针设定的
+0.1 nm 精度目标，尚未进行弯曲波导的模式或场求解；该目标不是所有器件的通用要求，
+该偏差本身也不证明器件性能失败。
+原生交叉、由几何校准的 MMI/Y 及更广泛器件验收仍待后续开发，见
+[能力记录与后续优先项](docs/research/device-family-roadmap-2026-10.md)。
 
 <details>
 <summary><strong>完整能力表与状态定义</strong></summary>
@@ -65,6 +81,7 @@ MATLAB、Lumerical、版图/PDK 工具、仪器和远程服务均通过受约束
 | 可安装核心 | Click CLI、Pydantic 契约、NumPy 电路组合、项目配置、运行记录、来源追踪、产物审计，以及 G0-G8/M0-M4 台账 |
 | PIC 与 PDK 契约 | 设计意图、器件、端口、组件、网表、版图、PDK/工艺/工艺角模型、model card、封装、测试、流片和测量记录 |
 | 电路兼容性 | 验证和组合旧版 `assembly.json` 1.0 与长表复数 S 参数 CSV |
+| 可执行器件筛选 | 七种参数化解析/降阶模型、完整复数 S 矩阵和 CSV 电路复用；几何、散射与相位诊断 |
 | 可复用建模配方 | 从已审查 LT-aMZI 工作流提炼并版本化的圆弯/欧拉弯几何、分段端口窗口、体材料色散和共同模态基准下的双端口诊断；默认采用 fail-closed（证据不足时不通过）策略 |
 | 外部后端 | 能力探测与受限计划；商业软件的实际执行仍需单独授权并通过测试门 |
 | MATLAB | Phase A 检查、清单、计划、受控封装（wrapper）、结果与 Engine 探测界面；真实本地冒烟测试属于 Phase B |
@@ -88,8 +105,8 @@ MATLAB、Lumerical、版图/PDK 工具、仪器和远程服务均通过受约束
 需要 Python 3.11 或更高版本。请从经过审查的代码检出目录中安装与求解器无关的核心：
 
 ```powershell
-git clone https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill.git
-Set-Location .\comsol-photonic-waveguide-optics-skill
+git clone https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill.git
+Set-Location .\photonic-integrated-circuit-simulation-skill
 
 python -m pip install -e .
 photonic --version
@@ -116,8 +133,8 @@ python -m pip install -e ".[dev]"
 若要安装 Codex skill，请把本仓库放入可被发现的 skills 目录，例如：
 
 ```powershell
-$SkillRoot = Join-Path $env:USERPROFILE '.codex\skills\photonic-waveguide-optics'
-git clone https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill.git $SkillRoot
+$SkillRoot = Join-Path $env:USERPROFILE '.codex\skills\photonic-integrated-circuit-simulation'
+git clone https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill.git $SkillRoot
 ```
 
 更改 skill 发现位置后，请重启 Codex 或新建任务。
@@ -239,7 +256,7 @@ python docs/showcases/hadamard-2d/plot_spectrum.py
 | 测试项目 | 取值 |
 |---|---|
 | 测试模型 | `GPT-5.6sol high` |
-| Skill | `$photonic-waveguide-optics` |
+| Skill（测试时名称） | `$photonic-waveguide-optics` |
 | 求解器 | COMSOL Multiphysics 6.4.0.293，电磁波-频域 |
 | 平台 | 220 nm SOI 背景；二维有效折射率模型（EIM） |
 | 波长 | 1550 nm |
@@ -336,10 +353,11 @@ G0-G8 跟踪从设计到证据打包的过程，M0-M4 是独立的制造后流�
 | 项目与恢复 | `init`、`check`、`doctor`、`status`、`inspect`、`report` |
 | PDK 与器件数据 | `pdk`、`component`、`model`、`sparams`、`variation` |
 | 可复用建模 | `recipe list`、`recipe inspect`、`recipe render` |
+| 器件筛选 | `device list`、`device evaluate`、`device export` |
 | 电路与版图 | `circuit`、`netlist`、`layout` |
 | 外部计划 | `solver`、`matlab` |
 | 任务与发布 | `optimize`、`package`、`testplan`、`tapeout`、`measurement` |
-| 证据与安全 | `gate`、`audit` |
+| 证据与安全 | `gate`、`audit`（含 `audit diagnostics`） |
 
 <details>
 <summary><strong>后端接入、JSON 响应与退出码</strong></summary>
@@ -505,7 +523,7 @@ v1 assembly schema、端口顺序、模型等级词汇、精确波长网格、�
 
 ## 版本更新
 
-**0.6.0 · alpha** — 预算约束搜索、原生伴随/MMA 示例、制造感知鲁棒设计指导。完整记录见 [CHANGELOG](CHANGELOG.md)。
+**0.7.0 · alpha** — 七种可执行器件基线、读回诊断、原生 canary 工具、预算约束搜索与制造感知逆向设计指导。skill 更名为 `photonic-integrated-circuit-simulation`，Python 包与 CLI 名称保持兼容。完整记录见 [CHANGELOG](CHANGELOG.md)。
 
 <details>
 <summary><strong>0.6.0 更新：降低逆向设计的评估成本</strong></summary>
@@ -542,7 +560,8 @@ COMSOL 伴随/MMA 路线：密度场滤波、投影与网格延续、多波长�
 
 本项目保留一个主 skill 是因为这些路线共享光学约定、求解器和证据契约；拆成独立安装的
 skill 会重复这些规则。只有新成员具有独立调用意图、依赖和行为测试时才进一步拆分。
-MCP 现有 13 个工具、36 个资源，公共物理验收契约保持不变。
+MCP 现有 13 个工具、38 个资源，公共物理验收契约保持不变。
+器件求值通过 CLI/Python 使用；MCP 提供参考路由，尚未新增器件求解工具。
 具体实现、硬件实测与限制见[本轮更新报告](docs/research/workflow-upgrade-2026-09.md)。
 
 </details>
@@ -579,7 +598,8 @@ MCP 现有 13 个工具、36 个资源，公共物理验收契约保持不变。
 
 **工具与结构：**精简入口，按需加载工程验收及工具选择参考；MCP 新增
 `list_recipes`、`inspect_recipe`、`render_recipe`，复用已有六种确定性配方。
-0.5.0 当时共 13 个工具、29 个资源；0.6.0 发布时为 35 个资源，本次更新为 36 个。渲染只生成受约束文件，不执行求解器；超出配方覆盖的
+0.5.0 当时共 13 个工具、29 个资源；0.6.0 发布时为 35 个资源，随后增至 36 个，
+0.7.0 为 38 个。渲染只生成受约束文件，不执行求解器；超出配方覆盖的
 建模工作仍可通过已授权的 Java/Python/MATLAB 开发流程完成。
 
 详见[证据门定义](references/verification-gates.md)、[工具选择](references/tool-selection.md)

@@ -8,6 +8,20 @@ $repositoryRoot = (Split-Path -Parent $PSScriptRoot)
 $packageRoot = Join-Path $repositoryRoot 'src\photonic_workflow\data\skill'
 $resourceSets = @(
     @{
+        Source = Join-Path $repositoryRoot 'examples\device-models'
+        Target = Join-Path $packageRoot 'examples\device-models'
+        Filter = '*.json'
+        Names = @('waveguide.json', 'directional-coupler.json', 'ring-allpass.json',
+                  'ring-adddrop.json', 'bragg-uniform.json', 'mmi2x2-ideal.json', 'ybranch-ideal.json')
+    },
+    @{
+        Source = Join-Path $repositoryRoot 'examples\comsol-device-canary'
+        Target = Join-Path $packageRoot 'examples\comsol-device-canary'
+        Filter = '*'
+        Names = @('README.md', 'DeviceCanary.java', 'run.py', 'audit.py', 'taper_profile.py',
+                  'profile_modes.py', 'profile_driven.py', 'bend_profile.py', 'bend_geometry.py')
+    },
+    @{
         Source = Join-Path $repositoryRoot 'references'
         Target = Join-Path $packageRoot 'references'
         Filter = '*.md'

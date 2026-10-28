@@ -1,10 +1,10 @@
 # Notice
 
-This repository is an independent workflow and educational skill for integrated photonic waveguide simulation.
+This repository is an independent workflow and educational skill for integrated photonic circuit simulation.
 
 It is not affiliated with, endorsed by, sponsored by, or authorized by COMSOL AB.
 
-COMSOL and COMSOL Multiphysics are registered trademarks of COMSOL AB. References to those marks, including the current repository slug, are used nominatively only to identify a compatible third-party software environment. The installable skill name, `photonic-waveguide-optics`, is vendor-neutral. No repository or skill name implies affiliation, certification, sponsorship, or endorsement.
+COMSOL and COMSOL Multiphysics are registered trademarks of COMSOL AB. References to those marks are used nominatively only to identify a compatible third-party software environment. The repository and installable skill name, `photonic-integrated-circuit-simulation`, are vendor-neutral. No repository or skill name implies affiliation, certification, sponsorship, or endorsement.
 
 This repository does not include or redistribute:
 

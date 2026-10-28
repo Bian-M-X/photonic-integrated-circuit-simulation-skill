@@ -1,0 +1,138 @@
+{
+  "schema_version": "1.0",
+  "kind": "scattering",
+  "data": {
+    "channels": [
+      "mode0",
+      "mode1",
+      "mode2",
+      "mode3"
+    ],
+    "source_map": {
+      "mode0": "source-7",
+      "mode1": "source-8",
+      "mode2": "source-9",
+      "mode3": "source-10"
+    },
+    "wavelength_nm": 1550.0,
+    "tolerance": 1e-08,
+    "assumptions": {
+      "passive": true,
+      "reciprocal": true,
+      "lossless": true,
+      "complete_channels": true,
+      "power_orthonormal": true,
+      "source_independent_basis": true,
+      "reciprocity_paired_basis": true,
+      "evidence": [
+        "verification/basis.json"
+      ]
+    },
+    "columns": [
+      {
+        "input_channel": "mode0",
+        "source_id": "source-7",
+        "model_id": "built-once",
+        "basis_id": "frozen",
+        "dataset_id": "dset1",
+        "wavelength_nm": 1550.0,
+        "values": [
+          [
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      {
+        "input_channel": "mode1",
+        "source_id": "source-8",
+        "model_id": "built-once",
+        "basis_id": "frozen",
+        "dataset_id": "dset1",
+        "wavelength_nm": 1550.0,
+        "values": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      {
+        "input_channel": "mode2",
+        "source_id": "source-9",
+        "model_id": "built-once",
+        "basis_id": "frozen",
+        "dataset_id": "dset1",
+        "wavelength_nm": 1550.0,
+        "values": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      {
+        "input_channel": "mode3",
+        "source_id": "source-10",
+        "model_id": "built-once",
+        "basis_id": "frozen",
+        "dataset_id": "dset1",
+        "wavelength_nm": 1550.0,
+        "values": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0
+          ]
+        ]
+      }
+    ]
+  }
+}

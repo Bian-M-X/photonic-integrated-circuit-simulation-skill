@@ -5,6 +5,12 @@ or full-circuit precision is consuming excessive simulation time.
 
 ## Calibrate the ladder before trusting its ranking
 
+Numerical mesh stability does not bound model-class error. Before expanding a
+large reduced/EIM sweep, compare a small relevant vector/high-fidelity baseline
+and retain the discrepancy separately from the within-model mesh difference.
+Use the declared claim and available budget to choose that comparison; there is
+no universal error bound inferred from one historical device.
+
 Levels may include analytic/CMT, modal/circuit, 2D EIM, coarse 3D and converged 3D.
 They are physically different models, not interchangeable numerical resolutions.
 State what each can answer: vertical radiation, substrate leakage, polarization

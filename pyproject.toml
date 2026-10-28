@@ -27,17 +27,17 @@ classifiers = [
 ]
 
 [project.urls]
-Repository = "https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill"
-Issues = "https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill/issues"
-Changelog = "https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill/blob/main/CHANGELOG.md"
-Releases = "https://github.com/Bian-M-X/comsol-photonic-waveguide-optics-skill/releases"
+Repository = "https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill"
+Issues = "https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/issues"
+Changelog = "https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/blob/main/CHANGELOG.md"
+Releases = "https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/releases"
 
 [project.optional-dependencies]
 inverse-design = ["scipy>=1.11,<2", "matplotlib>=3.8,<4", "contourpy>=1.2,<2"]
 layout = ["gdsfactory", "kfactory", "gplugins"]
 circuit = ["sax"]
 sparams = ["scikit-rf"]
-comsol = []
+comsol = ["psutil"]
 sim = []
 lumerical = []
 matlab = []
@@ -85,6 +85,10 @@ photonic_workflow = [
   "data/matlab/**/*.m",
   "data/skill/references/*.md",
   "data/skill/agents/*.md",
+  "data/skill/examples/device-models/*.json",
+  "data/skill/examples/comsol-device-canary/*.py",
+  "data/skill/examples/comsol-device-canary/*.java",
+  "data/skill/examples/comsol-device-canary/*.md",
   "data/skill/examples/comsol-hadamard-inverse/*.py",
   "data/skill/examples/comsol-hadamard-inverse/*.java",
   "data/skill/examples/comsol-hadamard-inverse/*.md",
