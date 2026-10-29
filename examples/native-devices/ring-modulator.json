@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0",
+  "family": "ring-modulator",
+  "parameters": {},
+  "wavelengths_nm": [1550],
+  "stage": "solve",
+  "pn": {"reverse_bias_v": 2}
+}

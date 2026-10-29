@@ -1,19 +1,27 @@
 # Device capability development and decision record
 
-Updated 2026-10-28. This records the next development stage, not a claim that the whole
+Updated 2026-10-29. This records the development decisions, not a claim that the whole
 roadmap is implemented. The lead agent owns scope, assumptions and acceptance;
 delegated coding, source research and independent numerical checks use separate
 assignments. Model identity and run evidence belong in each campaign's record.
 
 ## Current release and next priorities
 
-Version 0.7.0 delivers the seven reduced S models, readback diagnostics and
-bounded native canary helpers under the skill name
-`photonic-integrated-circuit-simulation`. The records below retain the chronology
-and limits of the native tests. Next, develop bend geometry and a four-port
-crossing route in parallel with the separate power/convergence investigation;
-then extend geometry-based coupling, MMI and Y tests. Each native claim needs
-its appropriate evidence, while exploratory work can proceed independently.
+Version 0.8.0 adds parameterized native crossing, directional-coupler, MMI, Y,
+ordinary-ring and PN-depletion-ring code to the seven reduced S models and
+earlier canary helpers. The new native route supports complete multiwavelength,
+multiport source sweeps, receipt-bound calibration and separate port-boundary
+mesh controls. See the [measured 0.8 baselines](native-library-v08.md) and
+[reusable native interface](../../references/native-device-library.md).
+The skill name remains `photonic-integrated-circuit-simulation`.
+
+The records below retain the chronology and limits of earlier campaigns.
+Their failed tolerances remain failed; a different refined model does not
+retroactively pass them. Next priorities are claim-specific convergence and
+boundary controls, calibrated SOI vector/overlap inputs, and native Bragg/bend
+performance beyond the existing geometry probes. The tested passive defaults
+are starting geometries, including a non-50:50 MMI, rather than optimized PDK
+components. Each native claim needs its appropriate evidence.
 Use focused checks during development and one full regression/package check
 per release batch, rather than repeating a complete delivery process per probe.
 
@@ -67,7 +75,7 @@ become `full-wave-2d-eim` to fit a circuit schema.
    windows, background/absorber and frequency sampling, then compare an
    independently calibrated reduced model at common reference planes.
 
-The reusable native runner is single-wavelength and single-mesh per invocation.
+The earlier canary runner is single-wavelength and single-mesh per invocation.
 A separate frozen campaign compared three independently remeshed straight controls.
 Its scope is a 2D scalar index surrogate, not 3D SOI or a device acceptance certificate. Experimental
 source existence is distinct from successful execution. Consult the associated

@@ -11,6 +11,8 @@ recursive-include agents *.md *.yaml
 recursive-include assets *.json *.csv
 recursive-include docs *.md
 include docs/research/workflow-upgrade-2026-09-results.json
+include docs/research/native-library-v08-results.json
+include docs/research/native-library-v08-spectrum.png
 recursive-include docs/showcases/hadamard-2d *.py *.json *.csv *.png *.svg *.pdf
 recursive-include examples *.py *.toml *.md *.json
 include examples/comsol-device-canary/DeviceCanary.java

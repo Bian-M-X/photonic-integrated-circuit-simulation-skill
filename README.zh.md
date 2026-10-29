@@ -17,7 +17,7 @@
   <a href="https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/platform-compat.yml"><img src="https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/platform-compat.yml/badge.svg" alt="Platform compatibility" /></a>
   <a href="https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/agent-compat.yml"><img src="https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/agent-compat.yml/badge.svg" alt="Agent compatibility" /></a>
   <a href="pyproject.toml"><img src="https://img.shields.io/badge/Python-3.11%2B-9a765a?logo=python&amp;logoColor=white" alt="Python 3.11 or newer" /></a>
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/0.7.0-alpha-71866b" alt="Version 0.7.0 alpha" /></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/0.8.0-alpha-71866b" alt="Version 0.8.0 alpha" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-bd795d" alt="MIT License" /></a>
 </p>
 
@@ -49,29 +49,45 @@ MATLAB、Lumerical、版图/PDK 工具、仪器和远程服务均通过受约束
 |---|---|
 | 先体验本地工作流，无需商业求解器 | [安装核心](#install) → [MZI 快速开始](#quick-start) |
 | 让 Codex 使用这套 skill | [安装 agent skill](#agent-skill) → [操作入口](SKILL.md) |
+| 构建并校准原生器件代码 | [原生几何、COMSOL 执行与校准](references/native-device-library.md) · [JSON 请求](examples/native-devices/) |
 | 查看逆向设计与仿真证据 | [二维 Hadamard](#hadamard) · [SOI 欧拉弯分束器](#euler-splitter) |
 | 接入已有工具或项目 | [MCP、MATLAB 与求解器](#integrations) · [文档地图](#docs) |
 
-## 0.7.0 版本提供的能力
+## 0.8.0 版本提供的能力
 
 | 设计与建模 | 自动化与集成 | 验证与追溯 |
 |---|---|---|
-| PIC / PDK 契约、复数 S 参数电路、可复用几何配方 | 本地 CLI、13 个 MCP 工具、受约束的外部工具计划 | G / M 证据门、来源追踪、SHA-256 产物审计 |
+| PIC / PDK 契约、复数 S 参数电路、原生器件几何与可复用配方 | 本地 CLI、13 个 MCP 工具、40 个资源、受约束的外部工具计划 | G / M 证据门、来源追踪、SHA-256 产物审计 |
 
-本轮新增七种可执行复数 S 模型：直波导、定向耦合器、全通环、上下路环、均匀布拉格
+原有七种可执行复数 S 筛选模型继续保留：直波导、定向耦合器、全通环、上下路环、均匀布拉格
 反射器、理想 2×2 MMI 和理想 Y 分支。它们使用用户声明的折射率、耦合与损耗，
 属于解析/降阶模型，不会从几何计算这些输入；两种环模型属于同一器件族。
 可用于低成本筛选与电路组合，详见[模型假设与示例](references/executable-device-models.md)。
 
-[读回诊断](references/executable-diagnostics.md)检查几何、完整源列与相位约定。
-独立的 [COMSOL canary](examples/comsol-device-canary/README.md)包含二维标量体折射率
-替代模型的直波导/渐变波导原生测试，以及只检查几何的欧拉弯探针。
-直波导/渐变波导的接收端通量与模态功率差仍未闭合，接近 1 的目标模透射不能作为
-损耗验收结论。默认闭合插值欧拉弯在约 0.52 nm 的轮廓偏差上未通过该探针设定的
-0.1 nm 精度目标，尚未进行弯曲波导的模式或场求解；该目标不是所有器件的通用要求，
-该偏差本身也不证明器件性能失败。
-原生交叉、由几何校准的 MMI/Y 及更广泛器件验收仍待后续开发，见
-[能力记录与后续优先项](docs/research/device-family-roadmap-2026-10.md)。
+新增[原生器件库](references/native-device-library.md)，为直波导对照、交叉、定向耦合器、
+2×2 MMI、Y 分支、普通环与 PN 耗尽型环调制器生成几何和固定 COMSOL 源码。
+环支持双端口全通结构，或通过 `bus_count: 2` 选择四端口上下路结构。
+CLI 将离线准备/核验、显式本地执行和收据绑定的完整复数 S/符号通量校准分开。
+默认折射率 2.6/1.45 定义的是**二维标量折射率替代模型**，不是校准后的 SOI
+模态折射率或三维堆栈。
+
+本机诊断已在 1540、1550、1560 nm 对四类无源结点完成多网格求解，并对普通全通环
+完成这三个波长的求解。新直波导对照中，端口边界局部加密把通量/模态功率差从约
+输入功率的 0.0214 降至 0.000128；接近 1 的 S 透射没有暴露这一通量误差。
+这些检查不代表器件证据门通过，也不建立宽带相位收敛。
+
+五项原生 PN 基准——0、0.99、1.01、2 V 反偏及一项非对称受主掺杂——通过了
+预设一维电荷 Poisson 数值对比，最大电势误差不超过 2.5×10⁻¹⁰ V。
+光学投影使用 1550 nm 的 Soref–Bennett 关系与声明的均匀重叠。
+现已完成相同几何和网格设置下 0 V／2 V 的四端口标量环扫描，各含 21 个波长点；
+在测试的 2 nm 区间内，透射功率最大变化约为输入功率的 1.37%。
+这些结果不构成 SOI 漂移扩散或射频验收。详见
+[原生结果与复现请求](docs/research/native-library-v08.md)和 [PN 模型与边界](references/pn-ring-model.md)。
+
+早期 [COMSOL canary](examples/comsol-device-canary/README.md) 的直波导/渐变波导通量差
+与只检查几何的欧拉弯结果仍作为独立历史诊断保留。
+[读回诊断](references/executable-diagnostics.md)和
+[能力记录](docs/research/device-family-roadmap-2026-10.md)继续区分各模型的证据与未完成验收。
 
 <details>
 <summary><strong>完整能力表与状态定义</strong></summary>
@@ -82,10 +98,11 @@ MATLAB、Lumerical、版图/PDK 工具、仪器和远程服务均通过受约束
 | PIC 与 PDK 契约 | 设计意图、器件、端口、组件、网表、版图、PDK/工艺/工艺角模型、model card、封装、测试、流片和测量记录 |
 | 电路兼容性 | 验证和组合旧版 `assembly.json` 1.0 与长表复数 S 参数 CSV |
 | 可执行器件筛选 | 七种参数化解析/降阶模型、完整复数 S 矩阵和 CSV 电路复用；几何、散射与相位诊断 |
+| 原生器件代码 | 七类光学器件的几何/源码生成、显式本地 COMSOL 执行、完整 S/通量校准、网格功率比较与预设电荷 PN 基准；结论限于诊断 |
 | 可复用建模配方 | 从已审查 LT-aMZI 工作流提炼并版本化的圆弯/欧拉弯几何、分段端口窗口、体材料色散和共同模态基准下的双端口诊断；默认采用 fail-closed（证据不足时不通过）策略 |
 | 外部后端 | 能力探测与受限计划；商业软件的实际执行仍需单独授权并通过测试门 |
 | MATLAB | Phase A 检查、清单、计划、受控封装（wrapper）、结果与 Engine 探测界面；真实本地冒烟测试属于 Phase B |
-| MCP | 低依赖 stdio JSON-RPC 传输；manifest（清单）列出全部已注册 skill 资源，有 13 个职责明确的工具；不执行求解器、MATLAB、仪器或任意 shell |
+| MCP | 低依赖 stdio JSON-RPC 传输，包含 40 个资源和 13 个职责明确的工具；不执行求解器、MATLAB、仪器或任意 shell |
 | 旧入口 | 在包服务等价性回归测试期间，保留现有 Python 与 PowerShell 命令作为兼容入口 |
 | 研究记录 | 官方/项目维护的 PIC 与 MATLAB 工具调研，明确区分本地可用性与物理验证边界 |
 
@@ -354,10 +371,31 @@ G0-G8 跟踪从设计到证据打包的过程，M0-M4 是独立的制造后流�
 | PDK 与器件数据 | `pdk`、`component`、`model`、`sparams`、`variation` |
 | 可复用建模 | `recipe list`、`recipe inspect`、`recipe render` |
 | 器件筛选 | `device list`、`device evaluate`、`device export` |
+| 原生光学代码 | `native list`、`native prepare`、`native verify`、`native run`、`native calibrate`、`native compare` |
+| PN 响应与基准 | `native pn-response`、`native pn-prepare`、`native pn-run`、`native pn-calibrate` |
 | 电路与版图 | `circuit`、`netlist`、`layout` |
 | 外部计划 | `solver`、`matlab` |
 | 任务与发布 | `optimize`、`package`、`testplan`、`tapeout`、`measurement` |
 | 证据与安全 | `gate`、`audit`（含 `audit diagnostics`） |
+
+<details>
+<summary><strong>原生器件准备、执行与校准</strong></summary>
+
+```powershell
+photonic native list --json
+photonic native prepare examples/native-devices/crossing.json --output NEW_BUNDLE_DIRECTORY --json
+photonic native verify NEW_BUNDLE_DIRECTORY --json
+photonic native run NEW_BUNDLE_DIRECTORY --solver-root 'C:\Path\To\LicensedSolverRoot' --cores 4 --json
+photonic native calibrate 'C:\Path\To\Run\receipt.json' --output NEW_RESULT.json --csv-output NEW_S.csv --json
+```
+
+选择尚不存在的 bundle/输出路径，并使用 `run` 实际返回的收据。
+准备和核验不启动求解器；`run` 编译并执行固定生成的 COMSOL 源码。
+请求可选择 `configure`、`modes` 或 `solve` 阶段。检查端口边界离散化时，可加密
+`mesh.port_mesh_um`；`native compare` 比较兼容校准运行的功率，不声称跨运行复相位已对齐。
+完整示例、Python 复用和 PN 命令见[原生参考](references/native-device-library.md)。
+
+</details>
 
 <details>
 <summary><strong>后端接入、JSON 响应与退出码</strong></summary>
@@ -475,6 +513,9 @@ $env:PHOTONIC_SOLVER_ROOT = 'C:\Path\To\LicensedSolverRoot'
 
 移除 `-DryRun` 前，应审查路径、选择集、study 顺序、成本、并发、预期输出和声明等级。渲染后的求解器计划只支持来源追踪，不等于求解器执行或物理证据。
 
+参数化器件库通过 `photonic native run` 显式执行本地求解；它核验并运行固定生成的源码。
+详见[原生器件几何与校准](references/native-device-library.md)。
+
 `docs/research/tool-landscape.md` 和 `docs/research/matlab-tool-landscape.md` 中的官方来源工具调研，明确区分文档宣称能力、本地可用性与已经验证的物理结果。
 
 </details>
@@ -486,7 +527,7 @@ $env:PHOTONIC_SOLVER_ROOT = 'C:\Path\To\LicensedSolverRoot'
 
 `scripts/mcp_photonic_server.py` 是包传输层的兼容启动器。当前版本提供以下接口：
 
-- 由单一权威 registry 声明的资源：一个 server manifest、所有已注册参考文档，以及所有受限 agent role contract；
+- 由单一权威 registry 声明的 40 个资源：一个 server manifest、所有已注册参考文档，以及所有受限 agent role contract；
 - 13 个工具：新增 `list_recipes`、`inspect_recipe`、`render_recipe`，以及原有 `list_allowed_roots`、`create_project_scaffold`、`audit_project_artifacts`、`parse_sweep_table`、`validate_contract`、`inspect_project`、`validate_circuit`、`compose_circuit`、`gate_status` 和为兼容保留名称的 `run_java_batch`。
 
 入口按用户指定的模型、代码或数据选择参考资料；完整资格验证流程按需读取。
@@ -522,6 +563,11 @@ v1 assembly schema、端口顺序、模型等级词汇、精确波长网格、�
 <a id="updates"></a>
 
 ## 版本更新
+
+**0.8.0 · alpha** — 为无源结点、全通/上下路环和 PN 耗尽型环调制器提供原生几何与
+固定 COMSOL 源码，新增显式 CLI 执行、完整复数 S/通量校准、网格功率比较和
+预设电荷 Poisson 数值基准。本机诊断保留二维/一维结论边界，不提升器件证据门。
+详见[原生路线](references/native-device-library.md)与 [CHANGELOG](CHANGELOG.md)。
 
 **0.7.0 · alpha** — 七种可执行器件基线、读回诊断、原生 canary 工具、预算约束搜索与制造感知逆向设计指导。skill 更名为 `photonic-integrated-circuit-simulation`，Python 包与 CLI 名称保持兼容。完整记录见 [CHANGELOG](CHANGELOG.md)。
 
@@ -560,7 +606,7 @@ COMSOL 伴随/MMA 路线：密度场滤波、投影与网格延续、多波长�
 
 本项目保留一个主 skill 是因为这些路线共享光学约定、求解器和证据契约；拆成独立安装的
 skill 会重复这些规则。只有新成员具有独立调用意图、依赖和行为测试时才进一步拆分。
-MCP 现有 13 个工具、38 个资源，公共物理验收契约保持不变。
+MCP 当前有 13 个工具、40 个资源，公共物理验收契约保持不变。
 器件求值通过 CLI/Python 使用；MCP 提供参考路由，尚未新增器件求解工具。
 具体实现、硬件实测与限制见[本轮更新报告](docs/research/workflow-upgrade-2026-09.md)。
 
@@ -677,6 +723,7 @@ python "$env:USERPROFILE\.codex\skills\.system\skill-creator\scripts\quick_valid
 | COMSOL 环境与物理 | [references/environment-and-runner.md](references/environment-and-runner.md)、[references/wave-optics-port-models.md](references/wave-optics-port-models.md) |
 | 源扫描与复数 S 矩阵 | [references/frequency-domain-source-sweeps.md](references/frequency-domain-source-sweeps.md) |
 | 器件与干涉仪工作流 | [references/device-family-workflows.md](references/device-family-workflows.md)、[references/interferometer-workflows.md](references/interferometer-workflows.md) |
+| 原生器件几何、执行与校准 | [references/native-device-library.md](references/native-device-library.md)、[references/pn-ring-model.md](references/pn-ring-model.md)、[examples/native-devices/](examples/native-devices/) |
 | 可复用建模配方与来源 | [references/modeling-recipes.md](references/modeling-recipes.md) |
 | 分层组合 | [references/hierarchical-device-workflow.md](references/hierarchical-device-workflow.md) |
 | 证据门与报告 | [references/verification-gates.md](references/verification-gates.md)、[references/optimization-and-reporting.md](references/optimization-and-reporting.md) |

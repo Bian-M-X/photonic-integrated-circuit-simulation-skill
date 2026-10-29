@@ -17,7 +17,7 @@
   <a href="https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/platform-compat.yml"><img src="https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/platform-compat.yml/badge.svg" alt="Platform compatibility" /></a>
   <a href="https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/agent-compat.yml"><img src="https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/agent-compat.yml/badge.svg" alt="Agent compatibility" /></a>
   <a href="pyproject.toml"><img src="https://img.shields.io/badge/Python-3.11%2B-9a765a?logo=python&amp;logoColor=white" alt="Python 3.11 or newer" /></a>
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/0.7.0-alpha-71866b" alt="Version 0.7.0 alpha" /></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/0.8.0-alpha-71866b" alt="Version 0.8.0 alpha" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-bd795d" alt="MIT License" /></a>
 </p>
 
@@ -51,33 +51,54 @@ judgment.
 |---|---|
 | Try the local workflow without a commercial solver | [Install the core](#install) → [MZI quick start](#quick-start) |
 | Give Codex access to the skill | [Install the agent skill](#agent-skill) → [Skill entrypoint](SKILL.md) |
+| Build and calibrate native device code | [Native geometry, COMSOL execution and calibration](references/native-device-library.md) · [JSON requests](examples/native-devices/) |
 | Inspect inverse design and simulation evidence | [2D Hadamard](#hadamard) · [SOI Euler splitter](#euler-splitter) |
 | Connect existing tools or projects | [MCP, MATLAB, and solvers](#integrations) · [Documentation map](#docs) |
 
-## What Version 0.7.0 Provides
+## What Version 0.8.0 Provides
 
 | Design & modeling | Automation & integration | Verification & provenance |
 |---|---|---|
-| PIC / PDK contracts, complex S-parameter circuits, reusable geometry recipes | Local CLI, 13 MCP tools, bounded external-tool plans | G / M evidence gates, provenance, SHA-256 artifact audits |
+| PIC / PDK contracts, complex S-parameter circuits, native device geometry and reusable recipes | Local CLI, 13 MCP tools, 40 resources, bounded external-tool plans | G / M evidence gates, provenance, SHA-256 artifact audits |
 
-The current update adds seven executable complex-S models: straight waveguide,
+The seven executable complex-S screening models remain available: straight waveguide,
 directional coupler, all-pass ring, add-drop ring, uniform Bragg reflector,
 ideal 2×2 MMI and ideal Y branch. These are analytic/reduced models with declared
 indices, coupling and losses; they do not calculate those inputs from geometry.
 Both ring variants belong to one device family. Use them for screening and
 circuit composition, with [model assumptions and examples](references/executable-device-models.md).
 
-[Readback diagnostics](references/executable-diagnostics.md) check geometry,
-complete source columns and phase conventions. The separate
-[COMSOL canary](examples/comsol-device-canary/README.md) includes bounded native
-straight/taper tests in a 2D scalar bulk-index surrogate and a geometry-only
-Euler-bend probe. The straight/taper receiver-flux/modal-power discrepancy remains
-unresolved, so near-unity target-mode transmission is not a qualified loss result.
-The default closed-interpolation bend shows about 0.52 nm contour deviation,
-exceeding its probe's 0.1 nm target; no bend mode or field solve ran. That precision target is
-specific to the probe; the deviation alone does not establish a performance failure.
-Native crossing, geometry-calibrated MMI/Y and broader device qualification remain future work;
-see the [capability record and next priorities](docs/research/device-family-roadmap-2026-10.md).
+The new [native device library](references/native-device-library.md) generates
+geometry and fixed COMSOL source for straight controls, crossings, directional
+couplers, 2×2 MMIs, Y branches, ordinary rings and PN-depletion ring modulators.
+Rings support a two-port all-pass layout or four-port add-drop layout with
+`bus_count: 2`. The CLI separates offline preparation/verification, explicit
+local execution and receipt-bound calibration to complete complex S and signed
+flux. Default indices 2.6/1.45 define a **2D scalar-index surrogate**; they are
+not calibrated SOI modal indices or a 3D stack.
+
+Local diagnostic runs cover the four passive junction families at 1540, 1550
+and 1560 nm on multiple meshes, plus an ordinary all-pass ring at those three
+wavelengths. In the new straight control, local port-boundary refinement reduced
+the port-flux/modal-power gap from about 0.0214 to 0.000128 of input power.
+Near-unity S transmission alone did not expose that flux error. These checks
+do not pass a device gate or establish broadband phase convergence.
+
+Five native PN benchmarks—0, 0.99, 1.01 and 2 V reverse bias plus asymmetric
+acceptor doping—passed the prescribed 1D charge-Poisson numerical comparison,
+with maximum potential error at most 2.5×10⁻¹⁰ V. The optical projection uses
+the 1550 nm Soref–Bennett law and declared uniform overlap. Matched 0 V/2 V
+four-port scalar-ring scans now cover 21 wavelengths each; their largest sampled
+through-power difference is 0.01367 of incident power in the tested 2 nm window.
+This does not establish SOI drift-diffusion or RF qualification. See the
+[native results and repeatable requests](docs/research/native-library-v08.md)
+and [PN model and limits](references/pn-ring-model.md).
+
+The earlier [COMSOL canary](examples/comsol-device-canary/README.md) retains its
+straight/taper flux discrepancy and geometry-only Euler-bend findings as a
+separate historical diagnostic. [Readback diagnostics](references/executable-diagnostics.md)
+and the [capability record](docs/research/device-family-roadmap-2026-10.md)
+keep model-specific evidence and unresolved qualification work explicit.
 
 <details>
 <summary><strong>Full capability map and status definitions</strong></summary>
@@ -88,10 +109,11 @@ see the [capability record and next priorities](docs/research/device-family-road
 | PIC and PDK contracts | Design intent, devices, ports, components, netlists, layouts, PDK/technology/corner models, model cards, packaging, test, tapeout, and measurement records |
 | Circuit compatibility | Legacy `assembly.json` 1.0 and long-form complex S-parameter CSV validation/composition |
 | Executable device screening | Seven parameterized analytic/reduced models, complete complex S matrices and CSV reuse in circuits; geometry, scattering and phase diagnostics |
+| Native device code | Seven optical families with generated geometry/source, explicit local COMSOL execution, complete S/flux calibration, mesh-power comparison and a prescribed-charge PN benchmark; diagnostic scope |
 | Reusable modeling recipes | Versioned, fail-closed circular/Euler geometry, segmented port windows, bulk material dispersion, and common-basis two-port diagnostics distilled from reviewed LT-aMZI workflows |
 | External backends | Capability probes and bounded plans; commercial execution remains separately authorized and test-gated |
 | MATLAB | Phase A check, inventory, plan, controlled-wrapper, result, and Engine-probe surfaces; real local smoke belongs to Phase B |
-| MCP | Dependency-light stdio JSON-RPC transport whose manifest enumerates all registered skill resources and 13 narrow tools; no solver, MATLAB, instrument, or arbitrary-shell execution |
+| MCP | Dependency-light stdio JSON-RPC transport with 40 resources and 13 narrow tools; no solver, MATLAB, instrument, or arbitrary-shell execution |
 | Legacy entry points | Existing Python and PowerShell commands remain compatibility entry points while package-service parity is regression-tested |
 | Research record | Official/project-maintained source surveys for PIC and MATLAB tools with explicit local and physics verification boundaries |
 
@@ -409,10 +431,33 @@ Run `photonic <group> --help` for the authoritative command schema.
 | PDK and device data | `pdk`, `component`, `model`, `sparams`, `variation` |
 | Reusable modeling | `recipe list`, `recipe inspect`, `recipe render` |
 | Device screening | `device list`, `device evaluate`, `device export` |
+| Native optical code | `native list`, `native prepare`, `native verify`, `native run`, `native calibrate`, `native compare` |
+| PN response and benchmark | `native pn-response`, `native pn-prepare`, `native pn-run`, `native pn-calibrate` |
 | Circuit and layout | `circuit`, `netlist`, `layout` |
 | External planning | `solver`, `matlab` |
 | Campaigns and release | `optimize`, `package`, `testplan`, `tapeout`, `measurement` |
 | Evidence and security | `gate`, `audit` (including `audit diagnostics`) |
+
+<details>
+<summary><strong>Native device preparation, execution and calibration</strong></summary>
+
+```powershell
+photonic native list --json
+photonic native prepare examples/native-devices/crossing.json --output NEW_BUNDLE_DIRECTORY --json
+photonic native verify NEW_BUNDLE_DIRECTORY --json
+photonic native run NEW_BUNDLE_DIRECTORY --solver-root 'C:\Path\To\LicensedSolverRoot' --cores 4 --json
+photonic native calibrate 'C:\Path\To\Run\receipt.json' --output NEW_RESULT.json --csv-output NEW_S.csv --json
+```
+
+Use a fresh bundle/output path and the actual receipt returned by `run`.
+Preparation and verification are solver-free; `run` compiles and executes the
+fixed generated COMSOL source. Choose `configure`, `modes` or `solve` in the
+request. Refine `mesh.port_mesh_um` when testing port-boundary discretization;
+`native compare` compares power between compatible calibrated runs without
+asserting cross-run complex-phase alignment. Complete examples, API reuse and
+PN commands are in the [native reference](references/native-device-library.md).
+
+</details>
 
 <details>
 <summary><strong>Backend adoption, JSON responses, and exit codes</strong></summary>
@@ -569,6 +614,10 @@ Review paths, selections, study order, cost, concurrency, expected outputs, and
 claim level before removing `-DryRun`. A rendered solver plan is provenance
 support, not solver execution or physics evidence.
 
+For the parameterized device library, `photonic native run` is the explicit
+local execution route; it verifies and runs only its fixed generated source.
+See [native device geometry and calibration](references/native-device-library.md).
+
 The official-source tool surveys in `docs/research/tool-landscape.md` and
 `docs/research/matlab-tool-landscape.md` distinguish documented capability from
 local availability and verified physics.
@@ -583,7 +632,7 @@ local availability and verified physics.
 `scripts/mcp_photonic_server.py` is a compatibility launcher for the package
 transport. The current version exposes:
 
-- resources declared by one authoritative registry: one server manifest, every
+- 40 resources declared by one authoritative registry: one server manifest, every
   registered reference document, and every bounded agent role contract;
 - 13 tools in the development tree: `list_recipes`, `inspect_recipe`,
   `render_recipe`, `list_allowed_roots`, `create_project_scaffold`,
@@ -636,6 +685,13 @@ project.
 
 ## Release Highlights
 
+**0.8.0 · alpha** — native geometry and fixed COMSOL source for passive junctions,
+all-pass/add-drop rings and PN-depletion ring modulators; explicit CLI execution,
+complete complex-S/flux calibration, mesh-power comparison and a numerical
+prescribed-Poisson benchmark. Local diagnostics retain their 2D/1D scope and do
+not promote device gates. See the [native route](references/native-device-library.md)
+and [changelog](CHANGELOG.md).
+
 **0.7.0 · alpha** — seven executable device baselines, readback diagnostics, native canary helpers, budgeted search, and fabrication-aware inverse-design guidance. The skill is now named `photonic-integrated-circuit-simulation`; package and CLI names remain compatible. See the [changelog](CHANGELOG.md) for the full history.
 
 <details>
@@ -683,7 +739,7 @@ One public skill routes to these methods because they share optical conventions,
 solver infrastructure and evidence contracts. Independently installed copies
 would duplicate those rules. A new family member is justified only when its
 invocation, dependencies and behavioral tests can stand alone.
-The MCP surface is now 13 tools / 38 resources. Device evaluation is available
+The current MCP surface is 13 tools / 40 resources. Device evaluation is available
 through CLI/Python; MCP exposes its reference route, rather than a device-solver tool.
 See the [implementation and validation report](docs/research/workflow-upgrade-2026-09.md).
 
@@ -819,6 +875,7 @@ validator available.
 | COMSOL environment and physics | [references/environment-and-runner.md](references/environment-and-runner.md), [references/wave-optics-port-models.md](references/wave-optics-port-models.md) |
 | Source sweeps and complex S matrices | [references/frequency-domain-source-sweeps.md](references/frequency-domain-source-sweeps.md) |
 | Device and interferometer workflows | [references/device-family-workflows.md](references/device-family-workflows.md), [references/interferometer-workflows.md](references/interferometer-workflows.md) |
+| Native device geometry, execution and calibration | [references/native-device-library.md](references/native-device-library.md), [references/pn-ring-model.md](references/pn-ring-model.md), [examples/native-devices/](examples/native-devices/) |
 | Reusable modeling recipes and provenance | [references/modeling-recipes.md](references/modeling-recipes.md) |
 | Hierarchical composition | [references/hierarchical-device-workflow.md](references/hierarchical-device-workflow.md) |
 | Gates and reporting | [references/verification-gates.md](references/verification-gates.md), [references/optimization-and-reporting.md](references/optimization-and-reporting.md) |

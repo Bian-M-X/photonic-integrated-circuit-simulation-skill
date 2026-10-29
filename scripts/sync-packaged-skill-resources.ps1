@@ -8,6 +8,13 @@ $repositoryRoot = (Split-Path -Parent $PSScriptRoot)
 $packageRoot = Join-Path $repositoryRoot 'src\photonic_workflow\data\skill'
 $resourceSets = @(
     @{
+        Source = Join-Path $repositoryRoot 'examples\native-devices'
+        Target = Join-Path $packageRoot 'examples\native-devices'
+        Filter = '*.json'
+        Names = @('straight.json', 'crossing.json', 'directional-coupler.json', 'mmi2x2.json',
+                  'ybranch.json', 'ring.json', 'ring-modulator.json', 'pn-depletion.json')
+    },
+    @{
         Source = Join-Path $repositoryRoot 'examples\device-models'
         Target = Join-Path $packageRoot 'examples\device-models'
         Filter = '*.json'

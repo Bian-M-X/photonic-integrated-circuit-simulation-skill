@@ -13,7 +13,7 @@ from typing import Any
 from photonic_workflow.security import ensure_within_allowed_roots
 
 REQUIRED_COLUMNS = ("wavelength_nm", "out_port", "in_port", "s_real", "s_imag")
-MODEL_LEVELS = {"analytic", "reduced", "full-wave-2d-eim", "full-wave-3d", "measured"}
+MODEL_LEVELS = {"analytic", "reduced", "2d-scalar-index-surrogate", "full-wave-2d-eim", "full-wave-3d", "measured"}
 
 
 class AssemblyError(ValueError):

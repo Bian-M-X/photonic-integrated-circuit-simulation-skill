@@ -26,6 +26,69 @@ from photonic_workflow.mcp.server import (
 from photonic_workflow.project import create_project_scaffold
 
 
+def native_family_smoke(outside: Path) -> dict[str, str]:
+    """Exercise installed native preparation without optional solver dependencies."""
+    from photonic_workflow.native_backend import prepare_native_bundle, verify_native_bundle
+    from photonic_workflow.native_devices import native_catalog, native_request
+    from photonic_workflow.native_pn import prepare_pn_bundle, verify_pn_bundle
+
+    catalog = native_catalog()
+    if set(catalog["families"]) != {
+        "straight", "crossing", "directional-coupler", "mmi2x2", "ybranch", "ring", "ring-modulator",
+    } or catalog["physics_accepted"] or catalog["preparation_executes_solver"]:
+        raise RuntimeError("installed native catalog differs from its seven diagnostic families")
+    cli = [sys.executable, "-B", "-m", "photonic_workflow.cli"]
+    catalog_cli = json.loads(subprocess.run(
+        [*cli, "native", "list", "--json"], check=True, capture_output=True, text=True,
+    ).stdout)
+    if catalog_cli["data"] != catalog or not catalog_cli["ok"]:
+        raise RuntimeError("installed native CLI catalog differs from its Python interface")
+    for family in ("crossing", "directional-coupler", "ring-modulator"):
+        request = {"schema_version": "1.0", "family": family, "stage": "configure", "wavelengths_nm": [1550]}
+        if family == "ring-modulator":
+            request["pn"] = {"reverse_bias_v": 1.0}
+        geometry, config = native_request(request)
+        output = outside / ("installed-native-" + family)
+        manifest = prepare_native_bundle(output, geometry, config)
+        verified = verify_native_bundle(output)
+        if (manifest != verified["manifest"] or manifest["native_execution"]
+                or verified["geometry"]["family"] != family):
+            raise RuntimeError("installed native family preparation/verification failed")
+        if family == "crossing":
+            checked = json.loads(subprocess.run(
+                [*cli, "native", "verify", str(output), "--json"], check=True, capture_output=True, text=True,
+            ).stdout)
+            if not checked["ok"] or checked["data"]["native_execution"]:
+                raise RuntimeError("installed native verify CLI violated its offline boundary")
+        if family == "ring-modulator" and geometry["pn_response"]["physics_accepted"]:
+            raise RuntimeError("installed PN response automatically promoted device qualification")
+        with (output / "NativePic.java").open("ab") as stream:
+            stream.write(b"\n// installation smoke substitution\n")
+        try:
+            verify_native_bundle(output)
+        except ValueError:
+            pass
+        else:
+            raise RuntimeError("installed native verifier accepted substituted source")
+    pn_parameters = {"reverse_bias_v": 1.0}
+    pn_request = outside / "installed-pn-request.json"
+    pn_request.write_text(json.dumps(pn_parameters), encoding="utf-8")
+    response = json.loads(subprocess.run(
+        [*cli, "native", "pn-response", str(pn_request), "--json"], check=True, capture_output=True, text=True,
+    ).stdout)["data"]
+    pn_bundle = outside / "installed-pn-poisson"
+    manifest = prepare_pn_bundle(pn_bundle, pn_parameters)
+    verified = verify_pn_bundle(pn_bundle)
+    if (manifest != verified["manifest"] or manifest["native_execution"]
+            or verified["parameters"] != response["parameters"] or response["physics_accepted"]):
+        raise RuntimeError("installed PN Poisson prepare/response/verify contract failed")
+    return {
+        "native_family_smoke": "seven catalogued; crossing/coupler/PN-ring prepared and verified; no native execution",
+        "native_cli_smoke": "installed catalog, verify and PN response passed; source substitution rejected",
+        "pn_poisson_smoke": "installed prepare/verify and response linkage passed; no native execution",
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -88,6 +151,7 @@ def main() -> int:
         outside = Path(temporary)
         os.chdir(outside)
         try:
+            native_checks = native_family_smoke(outside)
             canary_audit = skill_root / "examples" / "comsol-device-canary" / "audit.py"
             checkpoint = outside / "synthetic-checkpoint.mph"
             checkpoint.write_bytes(b"installation smoke fixture; not native evidence")
@@ -247,6 +311,7 @@ def main() -> int:
                 "bend_geometry_smoke": (
                     "passed installed zero/bend prepare, verify and source substitution rejection; no native run"
                 ),
+                **native_checks,
             },
             indent=2,
             allow_nan=False,

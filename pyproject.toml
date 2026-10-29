@@ -86,6 +86,7 @@ photonic_workflow = [
   "data/skill/references/*.md",
   "data/skill/agents/*.md",
   "data/skill/examples/device-models/*.json",
+  "data/skill/examples/native-devices/*.json",
   "data/skill/examples/comsol-device-canary/*.py",
   "data/skill/examples/comsol-device-canary/*.java",
   "data/skill/examples/comsol-device-canary/*.md",

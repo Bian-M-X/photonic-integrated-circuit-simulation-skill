@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.0",
+  "family": "mmi2x2",
+  "parameters": {},
+  "wavelengths_nm": [1550],
+  "stage": "solve"
+}

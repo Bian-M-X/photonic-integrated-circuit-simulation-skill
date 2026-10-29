@@ -6,6 +6,46 @@ the host package version.
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-10-29
+
+### Added
+
+- Parameterized native straight, four-port crossing, directional coupler, 2x2
+  MMI, three-port Y, all-pass/add-drop ring and PN-depletion ring sources. The
+  geometry, actual material domains, port windows, bound-mode observations and
+  complete source/wavelength complex S axes have explicit readbacks.
+- `photonic native` preparation, verification, bounded local execution,
+  receipt-bound calibration/CSV export and power-only mesh comparison. The
+  explicit local `run` command executes fixed regenerated Java; the 13 MCP
+  tools keep their existing non-execution boundary. There are 40 MCP resources.
+- Native scalar port-window and boundary-mesh controls, retained failed native
+  attempts, and raw source-bound field exports. A three-wavelength straight
+  control reduced the flux/modal gap from about 2.14% to 0.0128% with refinement;
+  this is a bounded diagnostic result, not a universal device accuracy claim.
+- Ordinary rings support one-bus/two-port and two-bus/four-port geometry. Curved
+  finite-element area integration is separate from rendering-based CAD areas;
+  rendering precision must not silently loosen a geometry check.
+- Abrupt lateral PN depletion, 1550 nm Soref--Bennett index/extinction response,
+  and a native prescribed-charge 1D Poisson benchmark with solved-potential and
+  field comparisons, charge quadrature, voltage and asymmetric-doping controls.
+- Receipt-bound native baseline tables, ordinary-ring radius/spectrum screens,
+  matched 0 V/2 V four-port optical scans, local 20 pm spectral controls and
+  repeatable request generation.
+  Sanitized numeric summaries and a power-spectrum figure preserve the scope
+  of these diagnostics separately from full SOI device qualification.
+
+### Compatibility and limits
+
+- Native optics uses the explicit `2d-scalar-index-surrogate` level, now also
+  accepted by the circuit schema without relabeling it as a calibrated SOI EIM.
+  Supplied indices, optical overlap and material laws retain their scope.
+- PN validation checks the prescribed-depletion approximation; it does not
+  establish semiconductor drift-diffusion, 3D SOI overlap, electrical parasitics,
+  RF bandwidth or fabrication qualification. Cross-model phase alignment and
+  continuous-band guarantees require their own evidence.
+- Failed receipts and coarse-grid discrepancies remain visible. Native execution,
+  numerical calibration and physical device qualification are separate results.
+
 ## [0.7.0] - 2026-10-28
 
 ### Changed
@@ -293,7 +333,8 @@ Implementation and validation: OpenAI Codex.
   required normal interactive Windows context. LiveLink, Lumerical, instruments,
   and real PDK/DRC/LVS integrations remain separate Phase C adoption gates.
 
-[0.7.0]: https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/compare/10508ed...main
+[0.8.0]: https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/compare/75a1840...main
+[0.7.0]: https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/compare/10508ed...75a1840
 [0.6.0]: https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/compare/v0.5.0...10508ed
 [0.5.0]: https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/releases/tag/v0.4.0
