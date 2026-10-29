@@ -51,7 +51,7 @@ meep = []
 femwell = ["femwell"]
 tidy3d = ["tidy3d"]
 measurement = ["pyvisa"]
-dev = ["build", "mypy", "PyYAML>=6.0.3,<7", "pytest>=8", "pytest-cov", "ruff==0.16.1"]
+dev = ["build", "mypy", "PyYAML>=6.0.3,<7", "pytest>=8", "pytest-cov", "ruff==0.17.0"]
 all = [
   "femwell",
   "gdsfactory",
