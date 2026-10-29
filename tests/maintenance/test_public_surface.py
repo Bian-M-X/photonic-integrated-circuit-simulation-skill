@@ -39,6 +39,8 @@ EXPECTED_CLI_SURFACE = {
     "init": (),
     "inspect": (),
     "layout": ("compare-backends", "normalize"),
+    "lumerical": ("compare-devices", "compare-solvers", "device-export", "discover", "export-geometry",
+                  "import-sparameters", "inspect-result", "optimize-step", "plan", "plan-benchmark", "run"),
     "matlab": (
         "check",
         "doctor",

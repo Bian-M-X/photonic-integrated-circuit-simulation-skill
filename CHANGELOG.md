@@ -6,6 +6,43 @@ the host package version.
 
 ## [Unreleased]
 
+- Add five non-executing Lumerical MCP tools sharing CLI discovery, planning,
+  receipt inspection, power comparison and lossless export (18 tools total).
+  Register the shared dual-solver workflow reference (43 resources total).
+- Add a built-in Lumerical registry factory for filesystem check and fixed
+  dry-run planning; generic execution stays disabled and licenses unverified.
+- Add explicit-stack Lumerical LSF rendering for circular/Euler recipes.
+  Existing canonical JSON and COMSOL fragment bytes remain unchanged. Three
+  native CAD cases passed 114 property readbacks, including saved-model reload.
+- Add matched scalar COMSOL/FDTD benchmark plans and receipt-bound power-only
+  comparisons. Preserve baseline/refined failures and separate modal-phase,
+  boundary, discretization and finite-time evidence requirements.
+
+- Add `fdtd-device` for all-source native FDTD evaluation of seven shared optical
+  geometry families, selected-mode basis checks, signed incoming-power audits,
+  raw per-source artifacts and complete complex-S export. Support explicit 2D
+  scalar and finite-height 3D models, with sampled Li/Malitson material readback.
+- Add receipt-bound `device-export`, matched-device power comparison and
+  `optimize-step` using existing candidate, budget and trial contracts. Circuit
+  input passivity tolerance is explicit, defaults to 1e-6 and never rescales S.
+- Document the COMSOL capability mapping and 12-case native device campaign:
+  every case solved all sources; the coarse add-drop ring failed the declared
+  passivity diagnostic. Preserve original COMSOL multiphysics and adjoint routes;
+  ring-modulator optical geometry does not imply native CHARGE/PN migration.
+- Register the complete-device workflow reference; the extended MCP surface
+  retains the existing non-execution boundary.
+- Add explicit local Lumerical discovery, fixed MODE/FDTD diagnostics, native
+  CAD readback, supervised hidden sessions and retained failure artifacts.
+- Reuse five existing planar device geometries through SI-valued CAD objects
+  and LSF export. Preserve complete complex S data, modal metadata and raw
+  source bytes when exporting to the existing circuit contracts.
+- Add a Lumerical skill route and packaged examples. Local MODE/FDTD solves
+  and coupling-device CAD readback were exercised on 2026-10-29 using the
+  existing localhost license, with retained startup failures and numeric limits.
+- Add explicit temporary local-license operation and child-only license endpoint
+  selection. Preserve system settings and stop only owned processes. FDTD phase
+  diagnostics use actual sampled monitor coordinates and retain requested planes.
+
 ## [0.8.0] - 2026-10-29
 
 ### Added

@@ -260,6 +260,7 @@ class AdapterRegistry:
 
 def default_adapter_registry() -> AdapterRegistry:
     from .descriptors import EXTERNAL_ADAPTER_DESCRIPTORS
+    from .lumerical import LumericalAdapter
     from .matlab.descriptors import MATLAB_ADAPTER_DESCRIPTORS
     from .matlab.engine import MatlabEngineAdapter
     from .matlab.runtime import MatlabRuntimeAdapter
@@ -267,6 +268,7 @@ def default_adapter_registry() -> AdapterRegistry:
     registry = AdapterRegistry()
     for descriptor in (*EXTERNAL_ADAPTER_DESCRIPTORS, *MATLAB_ADAPTER_DESCRIPTORS):
         factory = {
+            "lumerical": LumericalAdapter,
             "matlab-runtime": MatlabRuntimeAdapter,
             "matlab-engine": MatlabEngineAdapter,
         }.get(descriptor.adapter)

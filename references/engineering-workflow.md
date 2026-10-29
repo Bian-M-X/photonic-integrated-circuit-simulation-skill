@@ -16,7 +16,7 @@ turn the section numbering into an all-project execution gate.
 |---|---|
 | topology, phase trend, FSR, coarse screening | analytic/reduced or circuit |
 | many qualified connected blocks | complete complex multiport S network |
-| individual passive in-plane block | 2D EIM; targeted 3D when the claim needs vertical-physics validation |
+| individual passive in-plane block | declared 2D scalar screening or calibrated EIM; targeted 3D when vertical physics matters |
 | vertical confinement, etch depth, free-space/grating coupling | 3D full wave |
 | placement, routing, connectivity, rules | layout and extracted netlist |
 | final corner behavior | circuit corners plus promoted full-wave checks |
@@ -24,6 +24,9 @@ turn the section numbering into an all-project execution gate.
 
 Use a complete-device 3D solve only when the claim requires it, the device is
 small enough to converge, or interaction physics invalidates block separation.
+For COMSOL/Lumerical choices, shared tool consumption and matched-model
+comparisons, read [dual-solver-workflows.md](dual-solver-workflows.md). A scalar
+constant-index model is not promoted to calibrated EIM by changing its solver.
 
 ## Qualification Stages
 
@@ -37,17 +40,23 @@ Keep a paper-faithful baseline separate from engineering optimization.
 ### 2. Establish the port baseline
 
 Use the same cross-section and conventions as the intended device. Verify mode
-shape, `S21`, `S11`, phase, mesh, boundaries/PML, and reference planes. Numeric
-ports require one Boundary Mode Analysis per port before the driven study.
-Exclude ports from scattering/radiation selections.
+shape, `S21`, `S11`, phase, mesh, boundaries/PML, and actual reference planes.
+Use the selected backend's port construction; vendor feature names are not
+interchangeable:
 
-After geometry finalization, audit the exterior as an exact partition: port
-selections are mutually disjoint; port and open-boundary selections do not
-overlap; and their union is every exterior boundary, with no internal boundary.
-In a reduced 2D EIM model a validated core-only terminal segment may be the
-correct port face. If the numeric mode needs cladding support, use an explicitly
-segmented local modal window containing only that guide and justified cladding
-margin, never an arbitrary whole device side.
+- **COMSOL:** bind Numeric Port features to one Boundary Mode Analysis per
+  port before the driven study. For exterior ports, port selections are mutually
+  disjoint, do not overlap scattering/radiation selections, and together cover
+  the exterior. Internal slit ports have a different backing/termination audit.
+  A core-only terminal may be valid for a particular reduced model; modes that
+  need cladding support require a justified segmented modal window rather than
+  an arbitrary whole device side.
+- **Lumerical FDTD:** use native port objects, explicit inward source direction
+  and selected mode, and extend the same waveguide behind interior port planes
+  through PML backing. Audit E/H profile sampling coordinates, incoming modal
+  power, mode-power normalization and the actual active source. These internal
+  monitors do not form a COMSOL exterior-boundary partition. See
+  [lumerical-device-workflow.md](lumerical-device-workflow.md).
 
 After materials, boundaries, ports, PML, or mesh change, invalidate stale mode
 selection and phase evidence.
@@ -62,9 +71,10 @@ band. Record port order, modes, normalization, time/phase convention,
 reference planes, model level, geometry/process parameters, validity range,
 source run, and hashes.
 
-For COMSOL source sweeps, obtain every input column from the same built model
-and common modal basis. Do not rebuild the second input independently without
-a proved gauge alignment.
+For either backend, obtain every input column from the same built model and
+common modal basis. COMSOL uses its source-sweep study; Lumerical selects each
+actual source port in the same constructed model. Do not rebuild a second
+input independently without proved gauge alignment, or fill it by reciprocity.
 
 ### 4. Compose before promoting
 
@@ -106,12 +116,22 @@ Remove `-DryRun` after reviewing paths, selections, study order, cost,
 outputs, and authorization. Reuse authorization already granted for this scope. Exit code zero without the declared output model
 and batch log is failure.
 
+For Lumerical, use the installation-matched Python API through the bounded
+`photonic lumerical plan` / `run` route. The local MODE/FDE, FDTD controls and
+selected-mode device sweeps have their own recorded native evidence; preserve
+request, project, raw arrays, source identity, logs and receipt. `device-export`
+checks raw-data identity before existing circuit tools consume it. An available
+installation does not imply all Ansys products or operations have been tested.
+
 For MATLAB, `matlab -batch` is the default controlled route. Phase A supports
 check/plan and fixed-wrapper contracts. An Engine import, shared-session name,
 product list, or compiled MEX file is not trusted execution. Run real batch,
 Engine, layout, FDFD, or RF fixtures only as authorized Phase B validation.
-LiveLink, Lumerical, instruments, Simulink, real PDK/tapeout, and remote/HPC
-work remain Phase C until their own adoption gates pass.
+LiveLink, instruments, Simulink, real PDK/tapeout and remote/HPC integrations
+require their own adoption evidence. Local Lumerical MODE/FDE and FDTD tests
+are bounded Phase-B observations; EME, CHARGE/HEAT, INTERCONNECT, native adjoint
+and multiphysics adoption remain separate. Do not label every Lumerical route
+untested merely because another product has no native fixture.
 
 Adoption records qualify a declared integration suite. A controlled experiment
 may collect the evidence needed to qualify it under existing authorization;
@@ -142,9 +162,12 @@ variables before searching. Preserve the baseline and checkpoints. Re-evaluate
 winners at the validated fidelity needed for the claim; use higher fidelity and
 process/temperature corners when accuracy or robustness claims require them. A local,
 heuristic, surrogate, or noisy search winner is not a proved global optimum.
-The current runtime plans external parameter or pixel loops; it does not provide
-a native adjoint gradient interface or a qualified topology optimizer. Do not
-claim those capabilities until a backend-specific adoption gate and fixture pass.
+The shared runtime provides bounded low-dimensional candidate suggestions.
+Lumerical `optimize-step --execute` connects one candidate to a real all-source
+device evaluation and recorded history. Generic `optimize run`/`resume` and a
+Lumerical adjoint interface are separate capabilities. The existing dedicated
+COMSOL adjoint/MMA route is described in `comsol-adjoint-inverse-design.md`;
+its evidence does not transfer to another solver's gradients.
 
 ### 8. Inspect, gate, and hand off
 

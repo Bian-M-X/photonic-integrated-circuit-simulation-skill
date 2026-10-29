@@ -26,6 +26,25 @@ evaluation from geometry construction and native field validation. The family
 routes below describe engineering work; they do not imply that every family
 already has a native backend or acceptance evidence.
 
+## Backend-specific execution
+
+The same engineering questions and metric definitions apply to both solvers.
+Use [dual-solver-workflows.md](dual-solver-workflows.md) to choose an execution
+route while retaining model level, materials, ports and data contracts.
+
+| Family or task | COMSOL route | Lumerical route |
+|---|---|---|
+| Straight, crossing, coupler, MMI, Y, optical ring footprint | `photonic native prepare/run/calibrate` | `photonic lumerical plan/run/device-export`, operation `fdtd-device` |
+| Circular/Euler geometry recipe | Canonical numeric output or COMSOL Java fragment | Canonical numeric output and explicitly supported Lumerical recipe renderer; exported geometry still needs native readback/ports |
+| PN ring voltage response or Poisson | Existing PN approximation and separate native Poisson route | Optical footprint only until a carrier/electrical evaluator is explicitly connected and validated |
+| Arbitrary taper, grating or custom inverse region | Task-specific reviewed model and its own fixtures | Task-specific reviewed model and its own fixtures; the seven-family device request is not an arbitrary-layout importer |
+| Native adjoint/MMA | Dedicated COMSOL route and gradient checks | Requires a separate native gradient implementation and checks |
+
+Neither the common Python geometry generator nor a common footprint proves
+equal boundary treatment or solver accuracy. The paired straight/coupler
+protocol compares matched scalar powers and preserves failures; it does not
+silently align cross-solver phase gauges.
+
 ## Universal Validation Ladder
 
 1. Straight waveguide: material, port, mode, mesh, and boundary sanity.
@@ -165,6 +184,11 @@ Core checks:
 - through and drop spectra
 
 Use fine wavelength steps around resonances. A coarse sweep can miss narrow resonances entirely.
+For FDTD, also lengthen the time window and inspect residual energy and the
+actual stopping condition. A five-point spectrum or a bright ring-field plot
+does not establish resonance linewidth, Q, group delay or a converged steady
+state. Frequency-domain COMSOL solves need their own spectral, mesh and boundary
+refinement; absence of a time-window parameter is not an accuracy certificate.
 
 ## Bragg, Periodic, And Photonic Crystal Devices
 

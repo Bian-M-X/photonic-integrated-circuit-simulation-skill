@@ -123,6 +123,10 @@ def validate_structure(manifest: dict[str, Any]) -> list[str]:
             errors.append(f"component {name!r}.sparameters must be relative to the manifest")
         if "passive" in component and not isinstance(component["passive"], bool):
             errors.append(f"component {name!r}.passive must be a boolean")
+        tolerance = component.get("passivity_tolerance", 1e-6)
+        if (isinstance(tolerance, bool) or not isinstance(tolerance, int | float)
+                or not math.isfinite(tolerance) or not 0 <= tolerance <= 0.05):
+            errors.append(f"component {name!r}.passivity_tolerance must be finite in [0, 0.05]")
 
     for name, instance in instances.items():
         if not isinstance(name, str) or not name:
@@ -300,9 +304,14 @@ def load_component_data(
                 raise AssemblyError(f"{name}: SVD failed at {wavelength:g} nm") from exc
             if not math.isfinite(sigma_max):
                 raise AssemblyError(f"{name}: non-finite singular value at {wavelength:g} nm")
-            if sigma_max > 1.000001:
+            tolerance = component.get("passivity_tolerance", 1e-6)
+            if (isinstance(tolerance, bool) or not isinstance(tolerance, int | float)
+                    or not math.isfinite(tolerance) or not 0 <= tolerance <= 0.05):
+                raise AssemblyError(f"{name}: invalid explicit passivity_tolerance")
+            if sigma_max > 1 + tolerance:
                 raise AssemblyError(
-                    f"{name}: passive model has singular value {sigma_max:.6g} > 1 at {wavelength:g} nm"
+                    f"{name}: passive model has singular value {sigma_max:.6g} > 1 + {tolerance:g} "
+                    f"at {wavelength:g} nm"
                 )
     wavelengths = tuple(sorted(matrices))
     return ComponentData(ports=ports, wavelengths_nm=wavelengths, matrices=matrices)

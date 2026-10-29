@@ -57,6 +57,7 @@ class FidelityLevel(StrEnum):
     MATLAB_FDFD_2D = "matlab-fdfd-2d"
     MATLAB_VARFDFD_2_5D = "matlab-varfdfd-2.5d"
     FULL_WAVE_2D_EIM = "full-wave-2d-eim"
+    FULL_WAVE_2D_SCALAR = "full-wave-2d-scalar"
     FULL_WAVE_3D = "full-wave-3d"
     MULTIPHYSICS = "multiphysics"
     MEASURED = "measured"

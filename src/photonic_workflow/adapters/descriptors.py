@@ -64,10 +64,18 @@ EXTERNAL_ADAPTER_DESCRIPTORS: tuple[AdapterDescriptor, ...] = (
     _descriptor(
         "lumerical",
         "Ansys Lumerical product bridge",
-        implementation=ImplementationStatus.UNVERIFIED,
+        implementation=ImplementationStatus.EXPERIMENTAL,
         commercial=True,
-        capabilities=["FDTD/MODE/DEVICE/INTERCONNECT plan contract"],
-        limitations=["requires product-specific local API and license parity evidence"],
+        capabilities=[
+            "built-in allowlisted filesystem check and fixed-operation RunSpec dry plans",
+            "explicit local CLI for native MODE/FDTD diagnostics, CAD and complete device source sweeps",
+            "shared geometry/material recipes, verified complex-S circuit exchange and candidate evaluation",
+            "nonexecuting MCP discovery, planning and retained-result inspection/export",
+        ],
+        limitations=[
+            "generic adapter factory enables check/plan only; execution remains in the explicit local CLI",
+            "licensed solver validation is product-specific; DEVICE, EME and INTERCONNECT remain unverified",
+        ],
     ),
     _descriptor(
         "gdsfactory",

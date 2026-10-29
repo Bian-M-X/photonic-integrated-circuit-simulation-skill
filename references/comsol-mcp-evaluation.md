@@ -38,7 +38,7 @@ wheel instead of maintaining a second hard-coded resource count.
 
 ### Tools
 
-The current development surface contains 13 narrow tools. Query the live
+The current development surface contains 18 narrow tools. Query the live
 manifest: an already-running server may still expose an earlier surface.
 
 | Tool | Operation |
@@ -46,7 +46,7 @@ manifest: an already-running server may still expose an earlier surface.
 | `list_allowed_roots` | Return separate read and write roots |
 | `list_recipes` | List compact identities/versions of built-in modeling recipes |
 | `inspect_recipe` | Read one exact recipe contract, units, limits and provenance |
-| `render_recipe` | Create a new canonical JSON or fixed Java artifact; return a compact hash receipt |
+| `render_recipe` | Create a new canonical JSON, fixed Java or supported Lumerical LSF artifact; return a compact hash receipt |
 | `create_project_scaffold` | Create a package-based project scaffold without copying business logic |
 | `audit_project_artifacts` | Scan eligible files completely for blocked or sensitive artifacts |
 | `parse_sweep_table` | Validate a legacy COMSOL scalar sweep and write bounded summaries |
@@ -56,6 +56,11 @@ manifest: an already-running server may still expose an earlier surface.
 | `compose_circuit` | Compose an assembly and write the external complex S matrix |
 | `gate_status` | Read G0-G8 and M0-M4 without changing the ledger |
 | `run_java_batch` | Compatibility name for a redacted COMSOL Java dry-run plan only |
+| `discover_lumerical_install` | Inspect an explicitly allowed installation root without importing the API or checking out a license |
+| `plan_lumerical_run` | Validate a fixed operation and return the same non-executing plan as the CLI |
+| `inspect_lumerical_result` | Verify a complete native device receipt and return compact recomputed diagnostics |
+| `compare_lumerical_results` | Compare matched-device powers without implicit phase alignment |
+| `export_lumerical_result` | Export verified native complex S and unchanged source bytes under the configured write root |
 
 `run_java_batch` rejects non-dry-run and execution-enabling flags. Its result
 must report `will_execute: false` and `execution_enabled: false`. Keep the name
@@ -66,6 +71,13 @@ path policy. `render_recipe` accepts strict versioned request files, refuses
 overwrites and output links/junctions, and keeps generated arrays/code outside
 the response. Read/write roots remain separate; no solver process or gate
 mutation is added. See [modeling-recipes.md](modeling-recipes.md).
+
+The Lumerical tools call the same discovery, planning, inspection, comparison
+and export functions as the CLI. Installation roots and all input artifacts
+must be explicitly readable; exports must stay under the separate write root.
+The built-in `LumericalAdapter` adds registry check/plan support, while generic
+adapter execution remains disabled. Licensed runs use `photonic lumerical run`.
+See [dual-solver-workflows.md](dual-solver-workflows.md) for shared and native steps.
 
 All tools declare MCP `readOnlyHint`, `destructiveHint`, `idempotentHint` and
 `openWorldHint`. File-writing operations are not marked read-only. These hints

@@ -13,6 +13,10 @@ recursive-include docs *.md
 include docs/research/workflow-upgrade-2026-09-results.json
 include docs/research/native-library-v08-results.json
 include docs/research/native-library-v08-spectrum.png
+include docs/research/lumerical-native-2026-10-29-results.json
+include docs/research/lumerical-device-2026-10-29-results.json
+include docs/research/lumerical-unified-tools-2026-10-30-results.json
+recursive-include docs/images *.png *.svg *.json
 recursive-include docs/showcases/hadamard-2d *.py *.json *.csv *.png *.svg *.pdf
 recursive-include examples *.py *.toml *.md *.json
 include examples/comsol-device-canary/DeviceCanary.java

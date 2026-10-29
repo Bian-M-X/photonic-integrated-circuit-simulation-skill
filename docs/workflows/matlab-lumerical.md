@@ -1,6 +1,17 @@
 # MATLAB-Lumerical Workflow
 
-Status: Phase C execution route; Phase A provides a descriptor only
+Status: optional MATLAB bridge remains descriptor-only; native Python execution
+has a separate implementation and evidence scope.
+
+For direct Lumerical work, use `photonic lumerical discover`, `plan`, `run`,
+`export-geometry`, `import-sparameters`, `device-export`, `compare-devices` and
+`optimize-step`. The native route does not require
+MATLAB. See [Lumerical workflows](../../references/lumerical-workflows.md) for
+MODE/FDTD requests, geometry reuse and the complex-S exchange contract. Native
+Python success does not validate this MATLAB bridge or additional products.
+The [complete device workflow](../../references/lumerical-device-workflow.md)
+documents all-source optical extraction and reuse of the existing circuit and
+optimization tools.
 
 ## Use when
 

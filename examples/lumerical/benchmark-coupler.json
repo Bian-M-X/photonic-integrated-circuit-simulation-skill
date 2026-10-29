@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "family": "directional-coupler",
+  "model_level": "2d-scalar-index-surrogate",
+  "comsol_request": {
+    "schema_version": "1.0",
+    "family": "directional-coupler",
+    "parameters": {},
+    "wavelengths_nm": [
+      1500.0,
+      1523.8095238095239,
+      1548.3870967741937,
+      1573.7704918032787,
+      1600.0
+    ],
+    "materials": {
+      "core_index": 2.6,
+      "cladding_index": 1.45
+    },
+    "mesh": {
+      "core_mesh_um": 0.04,
+      "cladding_mesh_um": 0.14,
+      "port_mesh_um": 0.02
+    },
+    "stage": "solve",
+    "export_fields": false
+  },
+  "lumerical_request": {
+    "schema_version": "1.0",
+    "operation": "fdtd-device",
+    "parameters": {
+      "family": "directional-coupler",
+      "geometry_parameters": {},
+      "model_dimension": "2d",
+      "core_index": 2.6,
+      "clad_index": 1.45,
+      "height_m": 2.2e-07,
+      "wavelength_start_m": 1.5e-06,
+      "wavelength_stop_m": 1.6e-06,
+      "frequency_points": 5,
+      "mesh_accuracy": 5,
+      "simulation_time_s": 1.5e-12,
+      "port_buffer_m": 1.2e-06,
+      "cladding_span_z_m": 2.5e-06,
+      "mode_selection": "fundamental TM mode",
+      "mode_profile_samples": 3,
+      "auto_shutoff_min": 1e-07,
+      "core_material_model": null,
+      "clad_material_model": null,
+      "material_fit_tolerance": 0.01
+    }
+  },
+  "power_tolerance": 0.03,
+  "comparison": "complete selected-mode powers only",
+  "geometry_sha256": "42bc6871549c4cc10b0ffdab53b4256cba4d8d0b54978873159da3dd6eed3a85",
+  "refinement": {
+    "comsol_mesh": {
+      "core_mesh_um": 0.025,
+      "cladding_mesh_um": 0.1,
+      "port_mesh_um": 0.01
+    },
+    "lumerical_mesh_accuracy": 6
+  },
+  "boundaries": {
+    "comsol": "finite exterior modal windows and scattering boundary",
+    "lumerical": "interior modal planes, extended leads and PML"
+  },
+  "will_execute": false,
+  "physics_accepted": false,
+  "limits": [
+    "No native mode-gauge alignment or complex-phase parity is supplied.",
+    "Use each backend's mesh/boundary/time refinement before interpreting agreement.",
+    "The 2D scalar index problem is not a calibrated 3D waveguide stack."
+  ]
+}

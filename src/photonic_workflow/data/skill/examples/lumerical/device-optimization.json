@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "spec_file": "device-optimization-spec.json",
+  "base_request": "device-coupler.json",
+  "trials_dir": "../../runs/lumerical-coupler-optimization-trials",
+  "objective": {
+    "name": "cross_power",
+    "out_port": "lower_right",
+    "in_port": "upper_left",
+    "statistic": "mean_power"
+  },
+  "parameter_map": {"gap": "geometry_parameters.gap_um"}
+}

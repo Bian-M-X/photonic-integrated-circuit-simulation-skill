@@ -183,6 +183,7 @@ class RecipeSupportLevel(StrEnum):
 class RecipeRenderer(StrEnum):
     CANONICAL_JSON = "canonical-json"
     COMSOL_JAVA_FRAGMENT = "comsol-java-fragment"
+    LUMERICAL_LSF_FRAGMENT = "lumerical-lsf-fragment"
 
 
 @dataclass(frozen=True, slots=True)
@@ -288,6 +289,7 @@ class RenderedRecipe:
     media_type: str
     suggested_suffix: str
     instance_id: str | None = None
+    renderer_options: dict[str, JSONValue] | None = None
 
     @property
     def sha256(self) -> str:
@@ -309,6 +311,8 @@ class RenderedRecipe:
         }
         if include_content:
             payload["content"] = self.content
+        if self.renderer_options is not None:
+            payload["renderer_options"] = deepcopy(self.renderer_options)
         return payload
 
 

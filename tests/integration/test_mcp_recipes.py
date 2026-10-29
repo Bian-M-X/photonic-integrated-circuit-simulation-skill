@@ -168,8 +168,9 @@ class McpRecipeTests(unittest.TestCase):
 
     def test_tool_annotations_distinguish_readers_from_writers(self) -> None:
         tools = {item["name"]: item for item in self.server.tool_list()}
-        writers = {"create_project_scaffold", "parse_sweep_table", "compose_circuit", "render_recipe"}
-        self.assertEqual(len(tools), 13)
+        writers = {"create_project_scaffold", "parse_sweep_table", "compose_circuit", "render_recipe",
+                   "export_lumerical_result"}
+        self.assertEqual(len(tools), 18)
         for name, tool in tools.items():
             self.assertEqual(tool["annotations"]["readOnlyHint"], name not in writers)
             self.assertFalse(tool["annotations"]["openWorldHint"])

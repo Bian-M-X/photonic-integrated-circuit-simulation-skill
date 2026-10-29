@@ -115,25 +115,42 @@ Interpretation:
 
 ## External Optimization Loop
 
-For parameter sweeps or inverse design:
+Use a backend-independent outer loop with a solver-specific evaluator:
 
-1. Python/PowerShell creates candidate parameters.
-2. Candidate parameters are embedded into generated Java source or passed through a safe patching step.
-3. Java source is compiled with the version-matched COMSOL `comsolcompile`
-   entrypoint.
-4. Batch solver runs one candidate.
-5. Metrics are exported to stdout or CSV/TXT.
-6. Python aggregates, ranks, plots, and chooses next candidates.
-7. Best candidates and summaries are saved for restartability.
+1. Freeze candidate variables/units, objectives, constraints, total evaluation
+   budget and verification reserve.
+2. Ask the shared proposer for one bounded candidate using identified history.
+3. Construct the solver-specific model from the frozen shared parameters.
+4. Execute the actual required input sources; one four-port selected-mode
+   evaluation contains four source solves, not one interchangeable solver job.
+5. Verify raw artifacts, source identity, complete matrices and diagnostics.
+6. Compute objective/constraint values from those retained native results.
+7. Record success/failure and cost, and resume from that history. Promote a
+   candidate only after its separate fidelity/convergence/robustness checks.
 
-The current runtime plans this external loop and records generic optimization
-contracts. Its read-only `optimize suggest` now supplies bounded low-dimensional
-GP-EI candidates from frozen trial records; see `low-cost-optimization.md`.
-It does not expose a native COMSOL/Lumerical/Tidy3D adjoint gradient,
-differentiate the solver, or provide a qualified topology optimizer. Treat
-`optimize run`/`resume` execution as unavailable until a backend-specific
-gradient interface, versioned fixture, failure cleanup, and claim boundary pass
-their adoption gate.
+For **COMSOL**, the established evaluator generates reviewed Java, compiles
+with installation-matched `comsolcompile`, runs batch and exports actual
+results. The dedicated native adjoint/MMA route has its own gradient and
+evidence discipline in `comsol-adjoint-inverse-design.md`.
+
+For **Lumerical FDTD**, `photonic lumerical optimize-step` joins the shared
+`OptimizationSpec`/`OptimizationTrial` and proposer to receipt-bound native
+device matrices. Without `--execute` it creates a candidate plan only; with
+`--execute` it evaluates one geometry candidate, records a pending trial before
+the solve and retains failures. Current mappings are explicit micrometre
+geometry parameters, with declared port-power/insertion-loss objectives and
+the supported reflection/singular-value/reciprocity constraints. Read
+`lumerical-device-workflow.md` for the exact supported schema.
+
+The shared read-only `optimize suggest` supplies bounded low-dimensional
+GP-EI candidates from frozen trials; see `low-cost-optimization.md`. The bounded
+Lumerical evaluator does not implement native adjoint gradients or the entire
+robust-optimization stack. Generic `optimize run`/`resume` remains distinct
+from this explicit one-step route. Do not pool different solver, mesh, model
+level, reference plane, material or objective identities in one training history.
+
+Use `dual-solver-workflows.md` for the frozen matched-model benchmark before
+claiming that a different backend gives equal or better objective accuracy.
 
 ### Evidence Cadence
 

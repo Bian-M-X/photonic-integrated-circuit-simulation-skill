@@ -29,9 +29,23 @@ Each geometry block must expose:
 
 COMSOL geometry parts can be instantiated repeatedly and can preserve selections, but part models do not carry materials, mesh, or physics. Rebind those explicitly after assembly and audit the resulting selections.
 
+The Lumerical route reuses the common numeric footprints and rebuilds native
+rectangles, polygons, annuli and extended leads. Native geometry/material
+readback remains necessary; a copied CAD object does not transfer port or field
+evidence. Arbitrary COMSOL PartInstance features are not converted to Lumerical
+objects. See `dual-solver-workflows.md` for shared and backend-specific steps.
+
 ### Circuit layer
 
 Represent each calibrated block as a wavelength-dependent multiport S matrix. Use the complete complex matrix, not only insertion loss or one transmission coefficient.
+The existing CSV and circuit manifest can consume data from either solver.
+For a Lumerical native run, use `photonic lumerical device-export` to bind the
+export to its actual source sweep and raw arrays. COMSOL uses its native
+calibration/export route. Preserve each producer identity in component sidecars.
+Connecting components from different producers additionally requires compatible
+modal basis, directions, normalization, time convention and reference planes;
+matching mode names or agreement of powers alone is insufficient. The composer
+does not infer or repair that physical compatibility.
 
 The component contract must record:
 

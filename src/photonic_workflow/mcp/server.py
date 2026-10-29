@@ -51,6 +51,7 @@ REFERENCE_RESOURCES = {
         "comsol-field-physical-audit",
         "comsol-performance",
         "device-family-workflows",
+        "dual-solver-workflows",
         "engineering-workflow",
         "environment-and-runner",
         "executable-diagnostics",
@@ -62,6 +63,8 @@ REFERENCE_RESOURCES = {
         "inverse-design-evidence",
         "legal-and-trademark-notes",
         "low-cost-optimization",
+        "lumerical-workflows",
+        "lumerical-device-workflow",
         "modeling-recipes",
         "multifidelity-and-error-budgets",
         "native-device-library",
@@ -318,7 +321,7 @@ class PhotonicMcpServer:
             _tool(
                 "render_recipe",
                 "Write modeling recipe artifact",
-                "Evaluate a strict versioned recipe file and create a new JSON or fixed Java fragment. "
+                "Evaluate a strict versioned recipe file and create new JSON, fixed Java or Lumerical LSF. "
                 "Returns a compact hash receipt; refuses overwrite; never compiles, solves or changes gates.",
                 {
                     "request_file": {"type": "string", "description": "Absolute path under a read root."},
@@ -328,9 +331,52 @@ class PhotonicMcpServer:
                         "enum": [item.value for item in RecipeRenderer],
                         "default": RecipeRenderer.CANONICAL_JSON.value,
                     },
-                    "instance_id": {"type": "string", "description": "Safe instance ID; required for Java only."},
+                    "instance_id": {"type": "string", "description": "Safe ID required for native fragments."},
+                    "height_um": {"type": "number", "description": "Explicit extrusion height for geometry LSF only."},
+                    "core_index": {"type": "number", "description": "Explicit core index for geometry LSF only."},
                 },
                 ["request_file", "output"],
+                destructive=False,
+            ),
+            _tool(
+                "discover_lumerical_install",
+                "Discover local Lumerical files",
+                "Inspect an explicit readable installation root; never import vendor code or check a license.",
+                {"install_root": {"type": "string", "description": "Absolute path under a configured read root."}},
+                ["install_root"],
+                read_only=True,
+            ),
+            _tool(
+                "plan_lumerical_run",
+                "Plan fixed Lumerical operation",
+                "Validate a fixed-operation request and installation files; no solver, license or output writes.",
+                {"request_file": path, "install_root": path},
+                ["request_file", "install_root"],
+                read_only=True,
+            ),
+            _tool(
+                "inspect_lumerical_result",
+                "Inspect saved Lumerical device result",
+                "Verify complete native source-sweep artifacts and return compact recomputed metrics; no solve.",
+                {"receipt_file": path, "require_diagnostics": {"type": "boolean", "default": False}},
+                ["receipt_file"],
+                read_only=True,
+            ),
+            _tool(
+                "compare_lumerical_results",
+                "Compare saved same-device powers",
+                "Verify two source sweeps and compare matched powers; never align complex modal phases implicitly.",
+                {"coarse_receipt": path, "fine_receipt": path},
+                ["coarse_receipt", "fine_receipt"],
+                read_only=True,
+            ),
+            _tool(
+                "export_lumerical_result",
+                "Export verified native matrix for circuits",
+                "Create new CSV, metadata and unchanged source JSON within write roots; never execute or overwrite.",
+                {"receipt_file": path, "output": path, "project_root": path,
+                 "passivity_tolerance": {"type": "number", "description": "Explicit circuit numerical allowance."}},
+                ["receipt_file", "output", "project_root"],
                 destructive=False,
             ),
             _tool(
@@ -456,6 +502,7 @@ class PhotonicMcpServer:
             version=request.recipe_version,
             renderer=arguments.get("renderer", RecipeRenderer.CANONICAL_JSON.value),
             instance_id=arguments.get("instance_id"),
+            **{key: arguments[key] for key in ("height_um", "core_index") if key in arguments},
         )
         try:
             atomic_create_text(
@@ -481,7 +528,65 @@ class PhotonicMcpServer:
             "written": True,
             "will_execute": False,
             "physics_accepted": False,
+            **({"renderer_options": rendered.renderer_options} if rendered.renderer_options is not None else {}),
         }
+
+    def _absolute_read_path(self, raw: str, label: str) -> Path:
+        if not Path(raw).is_absolute():
+            raise McpError(f"{label} must be an absolute path", code=-32602)
+        return self._read_path(raw)
+
+    def _lumerical_install_root(self, raw: str) -> Path:
+        root = self._absolute_read_path(raw, "install_root")
+        # Discovery has no implicit global scan at the MCP boundary. Guard all
+        # candidate children before the shared implementation inspects them.
+        candidates = [root, root / "Lumerical"]
+        if root.is_dir():
+            for version in root.glob("v*"):
+                candidates.extend((version / "Lumerical", version))
+        for candidate in candidates:
+            for relative in ("api/python/lumapi.py", "VERSION", "bin/mode-solutions.exe",
+                             "bin/fdtd-solutions.exe", "bin/device.exe", "bin/interconnect.exe",
+                             "bin/fdtd-engine.exe"):
+                self._read_path(str(candidate / relative))
+        return root
+
+    def _lumerical_tool(self, name: str, arguments: dict[str, Any]) -> dict[str, Any]:
+        # Imports below expose only the same solver-free services used by CLI.
+        from photonic_workflow.lumerical.inspection import inspect_device_run
+        from photonic_workflow.lumerical.runtime import discover_install, plan_run
+        from photonic_workflow.lumerical.workflow import compare_device_runs, export_device_run
+        from photonic_workflow.native_devices import load_native_json
+
+        if name == "discover_lumerical_install":
+            root = self._lumerical_install_root(arguments["install_root"])
+            return {**discover_install(root), "will_execute": False, "physics_accepted": False}
+        if name == "plan_lumerical_run":
+            request = self._absolute_read_path(arguments["request_file"], "request_file")
+            root = self._lumerical_install_root(arguments["install_root"])
+            return {**plan_run(load_native_json(request), install_root=root), "will_execute": False}
+        if name == "compare_lumerical_results":
+            coarse = self._absolute_read_path(arguments["coarse_receipt"], "coarse_receipt")
+            fine = self._absolute_read_path(arguments["fine_receipt"], "fine_receipt")
+            return {**compare_device_runs(coarse, fine), "will_execute": False}
+        receipt = self._absolute_read_path(arguments["receipt_file"], "receipt_file")
+        if name == "inspect_lumerical_result":
+            return inspect_device_run(receipt, require_diagnostics=arguments.get("require_diagnostics", False))
+        project = Path(arguments["project_root"])
+        output = Path(arguments["output"])
+        if not project.is_absolute() or not output.is_absolute():
+            raise McpError("project_root and output must be absolute paths", code=-32602)
+        project = self._write_path(str(project))
+        checked = self._write_path(str(output))
+        write_root = next(root for root in self.write_roots if checked.is_relative_to(root))
+        # Validate all three files before creating any of them. The shared
+        # exporter repeats its no-link/no-overwrite checks while writing.
+        for candidate in (output, output.with_suffix(output.suffix + ".metadata.json"),
+                          output.with_suffix(output.suffix + ".source.json")):
+            self._write_path(str(candidate))
+            checked_recipe_output(write_root, candidate)
+        return export_device_run(receipt, checked, project_root=project,
+                                 passivity_tolerance=arguments.get("passivity_tolerance"))
 
     def tool_call(self, name: str, arguments: dict[str, Any]) -> dict[str, Any]:
         arguments = self._validate_tool_arguments(name, arguments)
@@ -518,6 +623,9 @@ class PhotonicMcpServer:
                 self._read_path(str(arguments["project_root"]))
             ).summary(),
         }
+        for tool_name in ("discover_lumerical_install", "plan_lumerical_run", "inspect_lumerical_result",
+                          "compare_lumerical_results", "export_lumerical_result"):
+            handlers[tool_name] = lambda selected=tool_name: self._lumerical_tool(selected, arguments)
         if name == "create_project_scaffold":
             root = self._write_path(str(arguments["project_root"]))
             result = create_project_scaffold(
