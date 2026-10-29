@@ -118,8 +118,8 @@ jobs:
           if ($payload.modeling_recipe_reference_verified -ne $true) {
             throw "The modeling-recipe reference was not readable through MCP"
           }
-          if (@($payload.tool_names).Count -ne 13) {
-            throw "Expected 13 MCP tools, found $(@($payload.tool_names).Count)"
+          if (@($payload.tool_names).Count -ne 18) {
+            throw "Expected 18 MCP tools, found $(@($payload.tool_names).Count)"
           }
           if ($payload.recipe_artifact_verified -ne $true) {
             throw "MCP recipe rendering smoke did not verify its artifact"

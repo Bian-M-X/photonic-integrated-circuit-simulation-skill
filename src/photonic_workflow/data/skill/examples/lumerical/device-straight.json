@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "operation": "fdtd-device",
+  "parameters": {
+    "family": "straight",
+    "geometry_parameters": {"length_um": 6.0, "width_um": 0.3},
+    "model_dimension": "2d",
+    "core_index": 2.6,
+    "clad_index": 1.45,
+    "frequency_points": 5,
+    "mesh_accuracy": 3
+  }
+}

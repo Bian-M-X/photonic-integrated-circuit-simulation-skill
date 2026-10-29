@@ -133,6 +133,8 @@ def main() -> int:
         "create_project_scaffold", "audit_project_artifacts", "parse_sweep_table",
         "validate_contract", "inspect_project", "validate_circuit", "compose_circuit",
         "gate_status", "run_java_batch",
+        "discover_lumerical_install", "plan_lumerical_run", "inspect_lumerical_result",
+        "compare_lumerical_results", "export_lumerical_result",
     }
     if actual_resource_uris != expected_resource_uris or {item["name"] for item in tools} != expected_tools:
         raise RuntimeError(

@@ -30,6 +30,7 @@ from .exceptions import (
 )
 from .gates import GateLedger
 from .layouts import compare_layout_manifests, normalize_layout_manifest
+from .lumerical_cli import lumerical_group
 from .models import (
     BackendAdoptionCheck,
     BackendAdoptionTarget,
@@ -710,6 +711,10 @@ def recipe_inspect(recipe_id: str, version: str | None, json_output: bool) -> No
 @click.option("--output", type=click.Path(dir_okay=False, path_type=Path))
 @click.option("--project-root", type=click.Path(path_type=Path))
 @click.option("--instance-id")
+@click.option("--height-um", type=click.FloatRange(min=0, min_open=True),
+              help="Explicit extrusion height for the Lumerical geometry renderer.")
+@click.option("--core-index", type=click.FloatRange(min=0, min_open=True),
+              help="Explicit scalar core index for the Lumerical geometry renderer.")
 @click.option("--dry-run", is_flag=True)
 @click.option("--json", "json_output", is_flag=True)
 def recipe_render(
@@ -719,6 +724,8 @@ def recipe_render(
     output: Path | None,
     project_root: Path | None,
     instance_id: str | None,
+    height_um: float | None,
+    core_index: float | None,
     dry_run: bool,
     json_output: bool,
 ) -> None:
@@ -736,6 +743,8 @@ def recipe_render(
         version=request.recipe_version,
         renderer=renderer,
         instance_id=instance_id,
+        height_um=height_um,
+        core_index=core_index,
     )
 
     output_path: Path | None = None
@@ -1537,6 +1546,7 @@ def matlab_inspect(result: Path, json_output: bool) -> None:
 
 
 cli.add_command(native_group)
+cli.add_command(lumerical_group)
 
 
 def main(argv: list[str] | None = None) -> int:

@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "operation": "fdtd-device",
+  "parameters": {
+    "family": "directional-coupler",
+    "geometry_parameters": {},
+    "model_dimension": "2d",
+    "core_index": 2.6,
+    "clad_index": 1.45,
+    "frequency_points": 5,
+    "mesh_accuracy": 3
+  }
+}

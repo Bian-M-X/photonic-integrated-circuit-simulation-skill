@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "operation": "geometry-readback",
+  "parameters": {
+    "native_request": {
+      "schema_version": "1.0",
+      "family": "directional-coupler",
+      "parameters": {}
+    },
+    "height_um": 0.22,
+    "core_index": 3.476
+  }
+}

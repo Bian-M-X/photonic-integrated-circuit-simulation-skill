@@ -265,6 +265,8 @@ def render_recipe(
     version: str | None = None,
     renderer: str | RecipeRenderer = RecipeRenderer.CANONICAL_JSON,
     instance_id: str | None = None,
+    height_um: float | None = None,
+    core_index: float | None = None,
 ) -> RenderedRecipe:
     try:
         selected_renderer = RecipeRenderer(renderer)
@@ -276,18 +278,30 @@ def render_recipe(
             f"recipe {recipe_id!r} does not support renderer "
             f"{selected_renderer.value!r}"
         )
+    if selected_renderer != RecipeRenderer.LUMERICAL_LSF_FRAGMENT and (height_um is not None or core_index is not None):
+        raise InvalidInputError("height_um and core_index are accepted only by the Lumerical LSF renderer")
     if selected_renderer == RecipeRenderer.COMSOL_JAVA_FRAGMENT:
         _preflight_comsol_parameters(recipe_id, parameters)
+    elif selected_renderer == RecipeRenderer.LUMERICAL_LSF_FRAGMENT:
+        from .renderers import MAX_LUMERICAL_CIRCULAR_VERTICES
+
+        vertices = parameters.get("vertices_um")
+        if (recipe_id == "geometry.circular-route" and isinstance(vertices, list | tuple)
+                and len(vertices) > MAX_LUMERICAL_CIRCULAR_VERTICES):
+            raise InvalidInputError(
+                f"Lumerical circular-route renderer supports at most {MAX_LUMERICAL_CIRCULAR_VERTICES} vertices"
+            )
     result = evaluate_recipe(recipe_id, parameters, version=version)
+    renderer_options = None
     if selected_renderer == RecipeRenderer.CANONICAL_JSON:
         if instance_id is not None:
             raise InvalidInputError(
-                "instance_id is accepted only by the COMSOL Java renderer"
+                "instance_id is accepted only by native fragment renderers"
             )
         content = _canonical_json(cast(JSONValue, result.to_payload()))
         media_type = "application/json"
         suffix = ".json"
-    else:
+    elif selected_renderer == RecipeRenderer.COMSOL_JAVA_FRAGMENT:
         if instance_id is None:
             raise InvalidInputError(
                 "COMSOL Java rendering requires an explicit safe instance_id"
@@ -310,6 +324,16 @@ def render_recipe(
             content += "\n"
         media_type = "text/x-java-source"
         suffix = ".java"
+    else:
+        from .lumerical import lumerical_geometry_plan, render_lumerical_lsf_fragment
+
+        plan = lumerical_geometry_plan(
+            result, instance_id=instance_id, height_um=height_um, core_index=core_index,
+        )
+        content = render_lumerical_lsf_fragment(plan)
+        media_type = "text/x-lumerical-lsf"
+        suffix = ".lsf"
+        renderer_options = {"height_um": plan["height_um"], "core_index": plan["core_index"]}
     return RenderedRecipe(
         result=result,
         renderer=selected_renderer,
@@ -317,6 +341,7 @@ def render_recipe(
         media_type=media_type,
         suggested_suffix=suffix,
         instance_id=instance_id,
+        renderer_options=renderer_options,
     )
 
 

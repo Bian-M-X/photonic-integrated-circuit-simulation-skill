@@ -1,0 +1,96 @@
+{
+  "schema_version": "1.0",
+  "date": "2026-10-29",
+  "timezone": "Asia/Shanghai",
+  "status": "local native diagnostics passed; device qualification not implied",
+  "regression": {
+    "tests": 1565,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 5
+  },
+  "passed_tests": 1560,
+  "lumerical_tests": 82,
+  "native_evidence": {
+    "mode100": {
+      "receipt": "runs\\lumerical-local-license-20261029\\mode-waveguide\\receipt.json",
+      "receipt_sha256": "9c30f3b719f3018a28c3022acd8e12f307251718bc3f5c2069b0a4a3aee0bfda",
+      "solve_completed": true,
+      "diagnostic_passed": true,
+      "model_level": "vector-2d-cross-section-fde"
+    },
+    "mode160": {
+      "receipt": "runs\\lumerical-local-license-20261029\\mode160\\receipt.json",
+      "receipt_sha256": "975d6334f6416b454f0e54ae47ca721100cb328cf1d2bba32b5720e5e7954fe3",
+      "solve_completed": true,
+      "diagnostic_passed": true,
+      "model_level": "vector-2d-cross-section-fde"
+    },
+    "fdtd3": {
+      "receipt": "runs\\lumerical-local-license-20261029\\fdtd-sampled-plane\\receipt.json",
+      "receipt_sha256": "2585a5ce0bd3b64ad656c327ba1c6582785b5b0b14c8b878f92ea6c3fe591898",
+      "solve_completed": true,
+      "diagnostic_passed": true,
+      "model_level": "2d-fdtd-uniform-periodic-plane-wave"
+    },
+    "fdtd5": {
+      "receipt": "runs\\lumerical-local-license-20261029\\fdtd5\\receipt.json",
+      "receipt_sha256": "fecfc3a9fc34599c3a2c967d020ab2176e8d4fc2bd8804bb4438d2c5fb538daa",
+      "solve_completed": true,
+      "diagnostic_passed": true,
+      "model_level": "2d-fdtd-uniform-periodic-plane-wave"
+    },
+    "coupler_cad": {
+      "receipt": "runs\\lumerical-local-license-20261029\\geometry-readback\\receipt.json",
+      "receipt_sha256": "8afe238fe5e9dde036a0c3103e6362e761e761888e775fd30e89ed941eb82f5e",
+      "solve_completed": false,
+      "diagnostic_passed": true,
+      "model_level": "native-cad-geometry-only"
+    }
+  },
+  "mode_mesh_comparison": {
+    "coarse_mesh_cells": 100,
+    "fine_mesh_cells": 160,
+    "coarse_mode1": {
+      "mode": "mode1",
+      "neff_imag": -5.36909984004065e-15,
+      "neff_real": 2.443126764746839,
+      "te_fraction": 0.9844411815881146
+    },
+    "fine_mode1": {
+      "mode": "mode1",
+      "neff_imag": -4.102306179860539e-15,
+      "neff_real": 2.442924702206735,
+      "te_fraction": 0.9841404249207657
+    },
+    "neff_real_delta": -0.00020206254010401992,
+    "scope": "matched high-TE branch at one wavelength; two meshes do not prove full convergence"
+  },
+  "fdtd_mesh_comparison": {
+    "coarse_mesh_accuracy": 3,
+    "fine_mesh_accuracy": 5,
+    "coarse_phase_error_rad": 0.0738237386801689,
+    "fine_phase_error_rad": 0.02889416518378525,
+    "coarse_power_error": 7.252481515340747e-07,
+    "fine_power_error": 1.7242458040245268e-06,
+    "coarse_amplitude_error": 0.00026531940810892163,
+    "fine_amplitude_error": 0.00016503671238154993,
+    "requested_plane_diagnostic_failure_retained": "runs/lumerical-local-license-20261029/fdtd-uniform/receipt.json",
+    "reference_plane_policy": "E-dataset x coordinates; nearest mesh cell interpolation"
+  },
+  "local_license": {
+    "existing_file_used": true,
+    "external_internet_required": false,
+    "persistent_configuration_changed": false,
+    "old_windows_service_start_denied": true,
+    "temporary_local_application_worked": true,
+    "owned_manager_processes_exited": true,
+    "reusable_flag": "--local-license"
+  },
+  "claim_limits": [
+    "No device evidence gates were changed.",
+    "No full COMSOL model conversion or cross-solver field equivalence is established.",
+    "MODE/FDTD diagnostic and coupler CAD evidence only; EME, DEVICE and INTERCONNECT remain unverified.",
+    "Power error did not decrease monotonically under FDTD refinement; both measurements are retained."
+  ]
+}

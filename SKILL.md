@@ -1,6 +1,6 @@
 ---
 name: photonic-integrated-circuit-simulation
-description: Design, debug, simulate, and qualify integrated photonic devices and circuits, including COMSOL wave-optics models, modal ports, complex S parameters, and layout or measurement handoffs. Use for PIC engineering work that needs explicit modeling assumptions and evidence limits.
+description: Design, debug, simulate, and qualify integrated photonic devices and circuits with COMSOL or Ansys Lumerical, reusable geometry, modal ports, complex S parameters, and layout or measurement handoffs. Use for PIC engineering work that needs explicit modeling assumptions and evidence limits.
 ---
 
 # Photonic Integrated Circuit Simulation
@@ -44,6 +44,9 @@ do not load the entire reference library or all agent cards by default.
 | Choose a tool, discover capabilities, or add an integration | `references/tool-selection.md` |
 | Plan or advance component/circuit qualification | `references/engineering-workflow.md`; gate definitions in `references/verification-gates.md` |
 | COMSOL setup, paths, compile/batch, failure logs | `references/environment-and-runner.md` |
+| Lumerical installation/API, MODE/FDTD diagnostics, geometry migration or complex S exchange | `references/lumerical-workflows.md` |
+| Lumerical complete-device source sweeps, receipt-bound circuit export or native candidate evaluation | `references/lumerical-device-workflow.md` |
+| Reuse recipes across solvers, compare native results or choose backend-specific workflow steps | `references/dual-solver-workflows.md` |
 | Materials, selections, ports, studies, mesh, datasets and exports | `references/wave-optics-port-models.md` |
 | Blank, zero or implausible fields; plotting and leakage | `references/comsol-field-physical-audit.md` |
 | Canary flux/modal mismatch or saved quadrature records | `examples/comsol-device-canary/README.md` (offline audit); `references/frequency-domain-source-sweeps.md` |
@@ -87,14 +90,26 @@ exists. MCP prefixes and installed versions may differ between hosts.
   read-only and never executes a solver or promotes evidence.
 - Reusable code: `photonic recipe list --json`, then inspect only the selected
   recipe; MCP equivalents are `list_recipes`, `inspect_recipe`, `render_recipe`.
+  Circular/Euler geometry also supports `lumerical-lsf-fragment` with explicit
+  extrusion height and core index. Keep geometry rendering separate from a solve.
 - Exported observations: `photonic audit diagnostics <request.json>
   --fail-on-issues --json`; conditional checks never promote a device gate.
 - Parameterized device baselines: `photonic device list --json`, then
   `photonic device evaluate <request.json> --json`; export complete complex S
   with `device export` for circuit screening. These do not run a field solver.
+- Native Lumerical: `photonic lumerical discover`, then `plan` and `run` for
+  MODE/FDTD diagnostics, CAD readback or `fdtd-device` source sweeps. The device
+  route reuses seven optical geometry families and reviewed dispersion recipes;
+  `device-export` verifies receipt-bound complete complex S for circuits,
+  `compare-devices` compares matched powers, and `optimize-step` evaluates one
+  shared-budget candidate only with `--execute`. Read the complete-device route
+  for units, modal-basis checks and unsupported multiphysics/adjoint paths.
 - MCP discovery: read `photonic://server/manifest` and use `list_allowed_roots`
   when paths matter. `run_java_batch` is a compatibility name for a **plan-only**
   tool. It cannot run COMSOL.
+  Lumerical MCP tools share CLI discovery, planning, receipt inspection, power
+  comparison and export; they do not start a vendor process. Reconnect a running
+  server after updating its package to discover the new tools.
 
 Keep large arrays, fields and meshes in files. Return compact diagnostics with
 artifact paths, units, source/run identity and hashes where relevant. Prefer
@@ -108,7 +123,7 @@ use reviewed source code for model construction beyond recipe coverage.
   interaction physics. Identify the level in the result. Layout is not field
   validation; full-device 3D is justified by the claim and convergence budget.
 - Before a large full-wave campaign, qualify the relevant straight-waveguide
-  and port baseline. Numeric ports need correctly bound Boundary Mode Analysis
+  and port baseline. COMSOL numeric ports need correctly bound Boundary Mode Analysis
   steps before the driven study. For exterior ports, audit their complete,
   disjoint partition with the open boundary. For internal slit ports, qualify
   the backing absorber and its outer termination, and use a separate source-free
@@ -141,10 +156,18 @@ use reviewed source code for model construction beyond recipe coverage.
 ## Execute and finish at the right evidence level
 
 COMSOL Java source plus the local compile/batch runner is the existing execution
-baseline. Review a dry-run plan, paths, study order, resource budget and declared
+baseline. Lumerical uses its installation-matched native Python API in isolated,
+hidden MODE/FDTD sessions; MATLAB is an optional separate bridge. Reuse geometry,
+material formulas and data contracts while rebuilding solver-specific physics,
+mesh, ports and monitors. A geometry export or a successful diagnostic does not
+convert a COMSOL model or qualify a Lumerical device. Review a dry-run plan,
+paths, study order, resource budget and declared
 outputs before a solve. Continue under authorization already granted for that
 scope; obtain missing authorization only at the action that needs it. Keep
 licensed concurrency at one unless explicitly authorized and isolated.
+Local-license startup errors may come from a stopped localhost manager or a
+missing endpoint, not external Internet access. Read the Lumerical route for
+the explicit temporary local-manager and child-only endpoint options.
 
 The package's fixed-operation restriction applies to its public adapters and
 MCP tools. It does not prohibit writing, reviewing or running task-specific

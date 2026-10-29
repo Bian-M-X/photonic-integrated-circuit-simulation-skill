@@ -1457,6 +1457,7 @@
       "matlab-fdfd-2d",
       "matlab-varfdfd-2.5d",
       "full-wave-2d-eim",
+      "full-wave-2d-scalar",
       "full-wave-3d",
       "multiphysics",
       "measured"
@@ -1740,7 +1741,7 @@
       "has_factory": false
     },
     "lumerical": {
-      "implementation": "unverified",
+      "implementation": "experimental",
       "adapter_spi_version": "1.0",
       "contract_schema_versions": {
         "ArtifactRecord": "1.0",
@@ -1762,7 +1763,7 @@
         "ArtifactRecord",
         "ProvenanceRecord"
       ],
-      "has_factory": false
+      "has_factory": true
     },
     "matlab-comsol-livelink": {
       "implementation": "unverified",
@@ -2081,6 +2082,7 @@
       "photonic://skill/reference/comsol-mcp-evaluation",
       "photonic://skill/reference/comsol-performance",
       "photonic://skill/reference/device-family-workflows",
+      "photonic://skill/reference/dual-solver-workflows",
       "photonic://skill/reference/engineering-workflow",
       "photonic://skill/reference/environment-and-runner",
       "photonic://skill/reference/executable-device-models",
@@ -2092,6 +2094,8 @@
       "photonic://skill/reference/inverse-design-evidence",
       "photonic://skill/reference/legal-and-trademark-notes",
       "photonic://skill/reference/low-cost-optimization",
+      "photonic://skill/reference/lumerical-device-workflow",
+      "photonic://skill/reference/lumerical-workflows",
       "photonic://skill/reference/modeling-recipes",
       "photonic://skill/reference/multifidelity-and-error-budgets",
       "photonic://skill/reference/native-device-library",
@@ -2158,18 +2162,112 @@
             "type": "string",
             "enum": [
               "canonical-json",
-              "comsol-java-fragment"
+              "comsol-java-fragment",
+              "lumerical-lsf-fragment"
             ],
             "default": "canonical-json"
           },
           "instance_id": {
             "type": "string",
-            "description": "Safe instance ID; required for Java only."
+            "description": "Safe ID required for native fragments."
+          },
+          "height_um": {
+            "type": "number",
+            "description": "Explicit extrusion height for geometry LSF only."
+          },
+          "core_index": {
+            "type": "number",
+            "description": "Explicit core index for geometry LSF only."
           }
         },
         "required": [
           "request_file",
           "output"
+        ],
+        "additionalProperties": false
+      },
+      "discover_lumerical_install": {
+        "type": "object",
+        "properties": {
+          "install_root": {
+            "type": "string",
+            "description": "Absolute path under a configured read root."
+          }
+        },
+        "required": [
+          "install_root"
+        ],
+        "additionalProperties": false
+      },
+      "plan_lumerical_run": {
+        "type": "object",
+        "properties": {
+          "request_file": {
+            "type": "string"
+          },
+          "install_root": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "request_file",
+          "install_root"
+        ],
+        "additionalProperties": false
+      },
+      "inspect_lumerical_result": {
+        "type": "object",
+        "properties": {
+          "receipt_file": {
+            "type": "string"
+          },
+          "require_diagnostics": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "receipt_file"
+        ],
+        "additionalProperties": false
+      },
+      "compare_lumerical_results": {
+        "type": "object",
+        "properties": {
+          "coarse_receipt": {
+            "type": "string"
+          },
+          "fine_receipt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "coarse_receipt",
+          "fine_receipt"
+        ],
+        "additionalProperties": false
+      },
+      "export_lumerical_result": {
+        "type": "object",
+        "properties": {
+          "receipt_file": {
+            "type": "string"
+          },
+          "output": {
+            "type": "string"
+          },
+          "project_root": {
+            "type": "string"
+          },
+          "passivity_tolerance": {
+            "type": "number",
+            "description": "Explicit circuit numerical allowance."
+          }
+        },
+        "required": [
+          "receipt_file",
+          "output",
+          "project_root"
         ],
         "additionalProperties": false
       },
@@ -3600,6 +3698,697 @@
           "default": false,
           "options": [
             "--dry-run"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic lumerical": {
+      "kind": "Group",
+      "parameters": []
+    },
+    "photonic lumerical compare-devices": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "coarse",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "coarse"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "fine",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "fine"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic lumerical compare-solvers": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "comsol_receipt",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "comsol_receipt"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "lumerical_receipt",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "lumerical_receipt"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "power_tolerance",
+          "kind": "Option",
+          "type": "float range",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--power-tolerance"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic lumerical device-export": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "receipt",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "receipt"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "output",
+          "kind": "Option",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--output"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "project_root",
+          "kind": "Option",
+          "type": "directory",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--project-root"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "passivity_tolerance",
+          "kind": "Option",
+          "type": "float range",
+          "required": false,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--passivity-tolerance"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic lumerical discover": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "install_root",
+          "kind": "Option",
+          "type": "directory",
+          "required": false,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--install-root"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic lumerical export-geometry": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "request",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "request"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "output",
+          "kind": "Option",
+          "type": "path",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--output"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "height_um",
+          "kind": "Option",
+          "type": "float range",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--height-um"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "core_index",
+          "kind": "Option",
+          "type": "float range",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--core-index"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic lumerical import-sparameters": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "source",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "source"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "output",
+          "kind": "Option",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--output"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "project_root",
+          "kind": "Option",
+          "type": "directory",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--project-root"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "target_time_dependence",
+          "kind": "Option",
+          "type": "choice",
+          "required": false,
+          "nargs": 1,
+          "default": null,
+          "choices": [
+            "exp(-iwt)",
+            "exp(+iwt)"
+          ],
+          "options": [
+            "--target-time-dependence"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic lumerical inspect-result": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "receipt",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "receipt"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic lumerical optimize-step": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "config",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "config"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "output",
+          "kind": "Option",
+          "type": "path",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--output"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "execute",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--execute"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "install_root",
+          "kind": "Option",
+          "type": "directory",
+          "required": false,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--install-root"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "license_server",
+          "kind": "Option",
+          "type": "text",
+          "required": false,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--license-server"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "local_license",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--local-license"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "threads",
+          "kind": "Option",
+          "type": "integer range",
+          "required": false,
+          "nargs": 1,
+          "default": 2,
+          "options": [
+            "--threads"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic lumerical plan": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "request",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "request"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "install_root",
+          "kind": "Option",
+          "type": "directory",
+          "required": false,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--install-root"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic lumerical plan-benchmark": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "family",
+          "kind": "Argument",
+          "type": "choice",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "choices": [
+            "straight",
+            "directional-coupler"
+          ],
+          "options": [
+            "family"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "power_tolerance",
+          "kind": "Option",
+          "type": "float range",
+          "required": false,
+          "nargs": 1,
+          "default": 0.03,
+          "options": [
+            "--power-tolerance"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic lumerical run": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "request",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "request"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "output",
+          "kind": "Option",
+          "type": "path",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--output"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "install_root",
+          "kind": "Option",
+          "type": "directory",
+          "required": false,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--install-root"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "timeout_s",
+          "kind": "Option",
+          "type": "float range",
+          "required": false,
+          "nargs": 1,
+          "default": 180.0,
+          "options": [
+            "--timeout"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "threads",
+          "kind": "Option",
+          "type": "integer range",
+          "required": false,
+          "nargs": 1,
+          "default": 2,
+          "options": [
+            "--threads"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "license_server",
+          "kind": "Option",
+          "type": "text",
+          "required": false,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--license-server"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "local_license",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--local-license"
           ],
           "secondary_options": [],
           "multiple": false
@@ -5426,7 +6215,8 @@
           "default": "canonical-json",
           "choices": [
             "canonical-json",
-            "comsol-java-fragment"
+            "comsol-java-fragment",
+            "lumerical-lsf-fragment"
           ],
           "options": [
             "--renderer"
@@ -5469,6 +6259,32 @@
           "default": null,
           "options": [
             "--instance-id"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "height_um",
+          "kind": "Option",
+          "type": "float range",
+          "required": false,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--height-um"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "core_index",
+          "kind": "Option",
+          "type": "float range",
+          "required": false,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--core-index"
           ],
           "secondary_options": [],
           "multiple": false

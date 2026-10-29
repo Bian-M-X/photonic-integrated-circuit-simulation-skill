@@ -1,0 +1,501 @@
+{
+  "schema_version": "1.0",
+  "validation_date": "2026-10-30",
+  "package_version": "0.8.0",
+  "development_surface": {
+    "mcp_tools": 18,
+    "mcp_resources": 43,
+    "lumerical_cli_commands": 11,
+    "canonical_recipes": 6,
+    "lumerical_geometry_recipes": 2
+  },
+  "native_recipe_cad": {
+    "status": "passed",
+    "case_count": 3,
+    "primitive_count": 8,
+    "property_checks": 114,
+    "max_absolute_property_error": 0.0,
+    "solve_invoked": false,
+    "session_closed": true,
+    "owned_license_processes_exited": true
+  },
+  "matched_solver_comparisons": {
+    "straight": {
+      "schema_version": "1.0",
+      "family": "straight",
+      "model_level": "2d-scalar-index-surrogate",
+      "status": "within_declared_power_tolerance",
+      "power_agreement_passed": true,
+      "power_tolerance": 0.03,
+      "max_absolute_power_change": 1.2852829476495131e-05,
+      "rms_absolute_power_change": 3.764208469884456e-06,
+      "per_wavelength_max_power_change": [
+        4.035920263878445e-06,
+        5.388197506395187e-06,
+        2.6025835859755375e-06,
+        4.922302560883551e-06,
+        1.2852829476495131e-05
+      ],
+      "wavelengths_nm": [
+        1500.0,
+        1523.8095238095239,
+        1548.3870967741937,
+        1573.7704918032787,
+        1600.0
+      ],
+      "port_order": [
+        "left",
+        "right"
+      ],
+      "matrix_element_count": 20,
+      "comsol_guided_power_per_source": [
+        [
+          0.9999981313440302,
+          0.9999981395017516
+        ],
+        [
+          0.9999973274450876,
+          0.9999973458366969
+        ],
+        [
+          0.999996083228698,
+          0.999996119230336
+        ],
+        [
+          0.9999945278706609,
+          0.9999945581128893
+        ],
+        [
+          0.9999924735111757,
+          0.9999924841080411
+        ]
+      ],
+      "lumerical_guided_power_per_source": [
+        [
+          1.0000012087373928,
+          0.9999941760950437
+        ],
+        [
+          0.999997639583796,
+          0.9999920254987735
+        ],
+        [
+          0.9999950988356952,
+          0.9999935841314336
+        ],
+        [
+          0.9999956603411982,
+          0.9999995430358596
+        ],
+        [
+          0.9999980553313312,
+          1.0000053986938489
+        ]
+      ],
+      "max_reference_plane_roundoff_m": 0.0,
+      "reference_plane_roundoff_tolerance_m": 1e-15,
+      "comsol_transverse_bbox_tolerance_m": 1e-12,
+      "geometry_sha256": "2af9614d8c331bdb5b0b146618071284d23b0817b915fa0faaf38c1f36df06b2",
+      "receipt_sha256": {
+        "comsol": "d2b708ce2671896f6be22ea19c61594c72b949e11f69d013fb5f46b37974c771",
+        "lumerical": "8fb422129959aa1087b5490be5981353f2cae6a712b2ae7f0e5b5ba97422c13c"
+      },
+      "lumerical_diagnostic_passed": true,
+      "complex_phase_comparable": false,
+      "complex_phase_comparison": "not asserted; independent native modal gauges are not aligned",
+      "boundary_implementations": {
+        "comsol": "finite exterior scattering boundary",
+        "lumerical": "extended waveguide/PML backing"
+      },
+      "transformations_applied": [],
+      "physics_accepted": false,
+      "limits": [
+        "Agreement is restricted to declared selected-mode powers and the tested samples.",
+        "Boundary, modal truncation, mesh and finite-time errors require independent budgets.",
+        "No claim of equal complex phase, group delay, runtime or production qualification."
+      ]
+    },
+    "coupler_baseline": {
+      "schema_version": "1.0",
+      "family": "directional-coupler",
+      "model_level": "2d-scalar-index-surrogate",
+      "status": "outside_declared_power_tolerance",
+      "power_agreement_passed": false,
+      "power_tolerance": 0.03,
+      "max_absolute_power_change": 0.052032124639252775,
+      "rms_absolute_power_change": 0.018554820468669544,
+      "per_wavelength_max_power_change": [
+        0.020865448390328334,
+        0.052032124639252775,
+        0.01874674870730586,
+        0.03008104632257666,
+        0.036582975709984644
+      ],
+      "wavelengths_nm": [
+        1500.0,
+        1523.8095238095239,
+        1548.3870967741937,
+        1573.7704918032787,
+        1600.0
+      ],
+      "port_order": [
+        "upper_left",
+        "lower_left",
+        "upper_right",
+        "lower_right"
+      ],
+      "matrix_element_count": 80,
+      "comsol_guided_power_per_source": [
+        [
+          0.8360423987250635,
+          0.8360283488902093,
+          0.8360301655612379,
+          0.8360420052427674
+        ],
+        [
+          0.8688955532448108,
+          0.868887052007415,
+          0.8688902032168927,
+          0.8688926483490749
+        ],
+        [
+          0.8524205345804541,
+          0.852411176628238,
+          0.852419798096475,
+          0.8524115495976007
+        ],
+        [
+          0.8188558170190079,
+          0.818855344459628,
+          0.8188510865072416,
+          0.8188599861784902
+        ],
+        [
+          0.8747184979703801,
+          0.8747218050378052,
+          0.8747165263812557,
+          0.8747237284944258
+        ]
+      ],
+      "lumerical_guided_power_per_source": [
+        [
+          0.8459268000717985,
+          0.8459265681578731,
+          0.8459184684508617,
+          0.8459183114974321
+        ],
+        [
+          0.8388815263159302,
+          0.8388813663756765,
+          0.8388696506560038,
+          0.8388694909564186
+        ],
+        [
+          0.8292098641784255,
+          0.8292098004692338,
+          0.8291985725826131,
+          0.8291985067832922
+        ],
+        [
+          0.8291661040128575,
+          0.8291661438755085,
+          0.8291593044990345,
+          0.8291593073006099
+        ],
+        [
+          0.8477038679462333,
+          0.8477039780093238,
+          0.8476956351284153,
+          0.8476957102538737
+        ]
+      ],
+      "max_reference_plane_roundoff_m": 0.0,
+      "reference_plane_roundoff_tolerance_m": 1e-15,
+      "comsol_transverse_bbox_tolerance_m": 1e-12,
+      "geometry_sha256": "42bc6871549c4cc10b0ffdab53b4256cba4d8d0b54978873159da3dd6eed3a85",
+      "receipt_sha256": {
+        "comsol": "bca00abfb32779a74b5aaee31e20c80339587becec9d542903ba815bf1e337e0",
+        "lumerical": "17af6cfcdd4b81cd2b31fe8db59b61adf316f106694dad76ca3b85c4ddc87341"
+      },
+      "lumerical_diagnostic_passed": true,
+      "complex_phase_comparable": false,
+      "complex_phase_comparison": "not asserted; independent native modal gauges are not aligned",
+      "boundary_implementations": {
+        "comsol": "finite exterior scattering boundary",
+        "lumerical": "extended waveguide/PML backing"
+      },
+      "transformations_applied": [],
+      "physics_accepted": false,
+      "limits": [
+        "Agreement is restricted to declared selected-mode powers and the tested samples.",
+        "Boundary, modal truncation, mesh and finite-time errors require independent budgets.",
+        "No claim of equal complex phase, group delay, runtime or production qualification."
+      ]
+    },
+    "coupler_fine": {
+      "schema_version": "1.0",
+      "family": "directional-coupler",
+      "model_level": "2d-scalar-index-surrogate",
+      "status": "outside_declared_power_tolerance",
+      "power_agreement_passed": false,
+      "power_tolerance": 0.03,
+      "max_absolute_power_change": 0.047445203528292845,
+      "rms_absolute_power_change": 0.016492000503117336,
+      "per_wavelength_max_power_change": [
+        0.025660197969659904,
+        0.047445203528292845,
+        0.01308925695134211,
+        0.024947865326820973,
+        0.03117329378410083
+      ],
+      "wavelengths_nm": [
+        1500.0,
+        1523.8095238095239,
+        1548.3870967741937,
+        1573.7704918032787,
+        1600.0
+      ],
+      "port_order": [
+        "upper_left",
+        "lower_left",
+        "upper_right",
+        "lower_right"
+      ],
+      "matrix_element_count": 80,
+      "comsol_guided_power_per_source": [
+        [
+          0.8351979493869576,
+          0.8351974411461585,
+          0.8351981743430021,
+          0.8351972170529537
+        ],
+        [
+          0.8692963033399024,
+          0.8692939262778545,
+          0.8692948660893578,
+          0.8692952866185643
+        ],
+        [
+          0.851781903080139,
+          0.8517808763484823,
+          0.8517825864700626,
+          0.8517800558175067
+        ],
+        [
+          0.8191511536933798,
+          0.8191505301085481,
+          0.8191495245678588,
+          0.8191527456224984
+        ],
+        [
+          0.8746783961052722,
+          0.8746780177021334,
+          0.8746779416116944,
+          0.8746785009976561
+        ]
+      ],
+      "lumerical_guided_power_per_source": [
+        [
+          0.8453003818506573,
+          0.8453003873810431,
+          0.8452898476213513,
+          0.8452897541764633
+        ],
+        [
+          0.8384382159366777,
+          0.838438327406861,
+          0.8384304432115998,
+          0.8384303979381218
+        ],
+        [
+          0.8292042074294103,
+          0.8292042272666118,
+          0.8291989638345655,
+          0.8291989911748154
+        ],
+        [
+          0.8296822086494715,
+          0.8296823160531361,
+          0.8296785761184512,
+          0.8296787468043474
+        ],
+        [
+          0.8484628490930509,
+          0.8484628065654772,
+          0.848463049005573,
+          0.8484630820051664
+        ]
+      ],
+      "max_reference_plane_roundoff_m": 1.1858461261560205e-19,
+      "reference_plane_roundoff_tolerance_m": 1e-15,
+      "comsol_transverse_bbox_tolerance_m": 1e-12,
+      "geometry_sha256": "42bc6871549c4cc10b0ffdab53b4256cba4d8d0b54978873159da3dd6eed3a85",
+      "receipt_sha256": {
+        "comsol": "46e62c4e1f6bac51097e7dc2cf0520606851073312b4679fb4f57d37dc0e07a2",
+        "lumerical": "7d412b197adbf383d347f2175046fae11c5f30a48b8743ff629779e155e4c420"
+      },
+      "lumerical_diagnostic_passed": true,
+      "complex_phase_comparable": false,
+      "complex_phase_comparison": "not asserted; independent native modal gauges are not aligned",
+      "boundary_implementations": {
+        "comsol": "finite exterior scattering boundary",
+        "lumerical": "extended waveguide/PML backing"
+      },
+      "transformations_applied": [],
+      "physics_accepted": false,
+      "limits": [
+        "Agreement is restricted to declared selected-mode powers and the tested samples.",
+        "Boundary, modal truncation, mesh and finite-time errors require independent budgets.",
+        "No claim of equal complex phase, group delay, runtime or production qualification."
+      ]
+    },
+    "coupler_expanded": {
+      "schema_version": "1.0",
+      "family": "directional-coupler",
+      "model_level": "2d-scalar-index-surrogate",
+      "status": "within_declared_power_tolerance",
+      "power_agreement_passed": true,
+      "power_tolerance": 0.03,
+      "max_absolute_power_change": 0.022558184555035776,
+      "rms_absolute_power_change": 0.008146244787548499,
+      "per_wavelength_max_power_change": [
+        0.022558184555035776,
+        0.003522984770238824,
+        0.011338571200132902,
+        0.017412663483528767,
+        0.005955755165099719
+      ],
+      "wavelengths_nm": [
+        1500.0,
+        1523.8095238095239,
+        1548.3870967741937,
+        1573.7704918032787,
+        1600.0
+      ],
+      "port_order": [
+        "upper_left",
+        "lower_left",
+        "upper_right",
+        "lower_right"
+      ],
+      "matrix_element_count": 80,
+      "comsol_guided_power_per_source": [
+        [
+          0.8567241454131838,
+          0.8567245729209639,
+          0.8567250429859449,
+          0.8567236721766552
+        ],
+        [
+          0.8404241784992589,
+          0.8404217799900666,
+          0.8404228066442327,
+          0.8404225907313159
+        ],
+        [
+          0.8299556723115977,
+          0.8299545311925205,
+          0.8299556514899398,
+          0.8299549650182743
+        ],
+        [
+          0.8422552266792636,
+          0.8422528825777496,
+          0.8422532877632755,
+          0.842254378890008
+        ],
+        [
+          0.848244010198707,
+          0.8482437124589498,
+          0.84824330051214,
+          0.8482445617914343
+        ]
+      ],
+      "lumerical_guided_power_per_source": [
+        [
+          0.8452710428289243,
+          0.8452710364191459,
+          0.8452633017523168,
+          0.8452632486293651
+        ],
+        [
+          0.8384033845725174,
+          0.8384033095986181,
+          0.8383965608120336,
+          0.8383964994489577
+        ],
+        [
+          0.8291716171470914,
+          0.8291717089471662,
+          0.8291649672539605,
+          0.8291649049042924
+        ],
+        [
+          0.8296676863314623,
+          0.8296676827646348,
+          0.8296613550228498,
+          0.8296612650978398
+        ],
+        [
+          0.8484682489588034,
+          0.8484684141779522,
+          0.8484659201194186,
+          0.8484658393251812
+        ]
+      ],
+      "max_reference_plane_roundoff_m": 1.1858461261560205e-19,
+      "reference_plane_roundoff_tolerance_m": 1e-15,
+      "comsol_transverse_bbox_tolerance_m": 1e-12,
+      "geometry_sha256": "6f74a71023655534cf068c06031e7daa4ebb64b43502c79dcd0f143393cf5f1f",
+      "receipt_sha256": {
+        "comsol": "1667e7ab89e749de8fde3573cf2929f1542ba1b7ef71a177a0132c69608d70b2",
+        "lumerical": "2ea4cea38733b656e12b0aaeeabc999fae778452e1da5c755ea97d80cf10b02a"
+      },
+      "lumerical_diagnostic_passed": true,
+      "complex_phase_comparable": false,
+      "complex_phase_comparison": "not asserted; independent native modal gauges are not aligned",
+      "boundary_implementations": {
+        "comsol": "finite exterior scattering boundary",
+        "lumerical": "extended waveguide/PML backing"
+      },
+      "transformations_applied": [],
+      "physics_accepted": false,
+      "limits": [
+        "Agreement is restricted to declared selected-mode powers and the tested samples.",
+        "Boundary, modal truncation, mesh and finite-time errors require independent budgets.",
+        "No claim of equal complex phase, group delay, runtime or production qualification."
+      ]
+    }
+  },
+  "retained_negative_configurations": [
+    "coupler_baseline",
+    "coupler_fine"
+  ],
+  "tested_final_control_powers_within_budget": true,
+  "offline_regression": {
+    "passed": 1718,
+    "skipped": 6,
+    "seconds": 37.8,
+    "skip_reason": "Windows symlink privilege"
+  },
+  "installed_stdio_smoke": {
+    "status": "passed",
+    "transport": "installed JSON-RPC stdio",
+    "native_execution": false,
+    "tool_count": 18,
+    "resource_count": 43,
+    "all_five_lumerical_tools_passed": true,
+    "lsf_recipe_rendered": true,
+    "native_source_bytes_preserved": true,
+    "native_source_sha256": "cb82581f9bb787e27943aafdc1e2b1f177e7e4077bb1b0cf724fb2537f044534",
+    "receipt_sha256": "17af6cfcdd4b81cd2b31fe8db59b61adf316f106694dad76ca3b85c4ddc87341",
+    "physics_accepted": false
+  },
+  "physics_accepted": false,
+  "limits": [
+    "Selected-mode powers only; no independent modal-phase alignment.",
+    "Expanded-window pass is not full boundary/mesh/time convergence.",
+    "No general superiority in accuracy, speed, 3D or multiphysics is claimed.",
+    "MCP and generic adapter are nonexecuting; explicit CLI owns native execution."
+  ]
+}

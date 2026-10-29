@@ -13,6 +13,9 @@ reliable domain operations where their contracts fit the task.
 | Geometry/material/port/S diagnostic recipe | MCP `list_recipes` -> `inspect_recipe` -> `render_recipe`; CLI `photonic recipe` is equivalent | Exact version, parameter units/limits, supported renderer, recipe claim boundary |
 | Validate/compose complex S networks | MCP `validate_circuit`/`compose_circuit` or CLI `photonic circuit` | Complete matrices, conventions, grid, connections and applicability |
 | COMSOL model construction and solve | Reviewed Java source plus `scripts/invoke-waveguide-java-batch.ps1` | Dry-run plan, compiler/batch availability, authorized budget and resulting artifacts |
+| Lumerical discovery, native diagnostic solve or model/data migration | `photonic lumerical` and [lumerical-workflows.md](lumerical-workflows.md) | Matched installation/API, product license, geometry/material readback, complete complex data and declared diagnostic scope |
+| Lumerical discovery/planning and saved-result processing through MCP | `discover_lumerical_install`, `plan_lumerical_run`, `inspect_lumerical_result`, `compare_lumerical_results`, `export_lumerical_result` | Explicit read/write roots; these share CLI services and never start a vendor process |
+| Compare COMSOL and Lumerical under one physical question | `photonic lumerical plan-benchmark` / `compare-solvers`; [dual-solver workflows](dual-solver-workflows.md) | Same geometry, model level, material, channels and spectral grid; retain a declared budget and failed configurations |
 | Diagnose MATLAB integration | CLI `photonic matlab check`, `doctor`, `plan`; installed MATLAB tools if available and authorized | Local version, products, session identity, wrapper/result parity |
 | Live COMSOL state, plotting, GUI inspection | Available vendor API or computer-use tool suited to the task | Current model/dataset, session ownership, supported host; do not assume a GUI-control tool exists |
 | Find an optional integration | Discover current tools first, then consult the primary sources below | Tool callable now vs documented, environment/license vs physics acceptance |
@@ -24,7 +27,8 @@ environment can use `python -m photonic_workflow.cli`; check its dependencies fi
 
 MCP `render_recipe` takes an absolute `request_file` and `output` path. It
 evaluates an exact-version strict JSON request and writes a new canonical JSON
-artifact, or a fixed `comsol-java-fragment` with `instance_id`. It returns a
+artifact, a fixed `comsol-java-fragment` with `instance_id`, or supported
+`lumerical-lsf-fragment` geometry with an explicit instance, height and index. It returns a
 compact receipt with hash, byte count and claim limits, leaving arrays/code in
 the file. It refuses overwrites and output symlinks/junctions. It neither
 compiles nor solves nor changes gates. If the host exposes an older server,

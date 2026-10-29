@@ -1,0 +1,17 @@
+{
+  "contract_type": "OptimizationSpec",
+  "schema_version": "1.0",
+  "stable_id": "optimization:lumerical-coupler-gap",
+  "name": "Native FDTD coupler gap screening",
+  "source": "bounded reusable device workflow example",
+  "created_at": "2026-10-29T00:00:00Z",
+  "solver_backend": "lumerical-fdtd-device",
+  "fidelity": "full-wave-2d-scalar",
+  "variables": [{"name": "gap", "lower": 0.15, "upper": 0.25, "unit": "um"}],
+  "objectives": [{"name": "cross_power", "sense": "maximize"}],
+  "constraints": [{"name": "max_singular_value", "upper": 1.005, "scale": 0.005}],
+  "evaluation_budget": 6,
+  "timeout_s": 300,
+  "random_seed": 29,
+  "promotion_rule": {"validation_reserve": 1}
+}

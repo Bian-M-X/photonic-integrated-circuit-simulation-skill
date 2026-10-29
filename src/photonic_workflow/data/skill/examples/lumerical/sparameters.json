@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "producer": {"product": "FDTD", "version": "synthetic-fixture-not-a-solver-run"},
+  "model_level": "reduced",
+  "passive": true,
+  "spectral_axis": {"quantity": "wavelength", "unit": "nm", "values": [1560.0, 1540.0]},
+  "channels": [
+    {"id": "left", "port": "port 1", "mode": "TE0", "incoming_direction": "Forward", "outgoing_direction": "Backward", "reference_plane": "synthetic left component endpoint"},
+    {"id": "right", "port": "port 2", "mode": "TE0", "incoming_direction": "Backward", "outgoing_direction": "Forward", "reference_plane": "synthetic right component endpoint"}
+  ],
+  "conventions": {
+    "time_dependence": "exp(-iwt)",
+    "sparameter_normalization": "power-wave",
+    "matrix_axes": ["spectral", "outgoing", "incoming"],
+    "amplitude_encoding": "real-imaginary"
+  },
+  "s_matrices": [
+    [[[0.0, 0.0], [0.4, -0.3]], [[0.6, 0.2], [0.0, 0.0]]],
+    [[[0.0, 0.0], [0.3, -0.4]], [[0.5, 0.3], [0.0, 0.0]]]
+  ]
+}

@@ -8,6 +8,11 @@ $repositoryRoot = (Split-Path -Parent $PSScriptRoot)
 $packageRoot = Join-Path $repositoryRoot 'src\photonic_workflow\data\skill'
 $resourceSets = @(
     @{
+        Source = Join-Path $repositoryRoot 'examples\lumerical'
+        Target = Join-Path $packageRoot 'examples\lumerical'
+        Filter = '*.json'
+    },
+    @{
         Source = Join-Path $repositoryRoot 'examples\native-devices'
         Target = Join-Path $packageRoot 'examples\native-devices'
         Filter = '*.json'

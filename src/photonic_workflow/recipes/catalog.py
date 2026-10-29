@@ -8,7 +8,7 @@ from typing import cast
 
 from photonic_workflow.exceptions import InvalidInputError
 
-from .renderers import COMSOL_RECIPE_BINDINGS
+from .renderers import COMSOL_RECIPE_BINDINGS, LUMERICAL_RECIPE_IDS
 from .types import (
     JSONValue,
     ParameterJsonType,
@@ -311,6 +311,8 @@ def _descriptor(
     renderers = (RecipeRenderer.CANONICAL_JSON,)
     if recipe_id in COMSOL_RECIPE_BINDINGS:
         renderers += (RecipeRenderer.COMSOL_JAVA_FRAGMENT,)
+    if recipe_id in LUMERICAL_RECIPE_IDS:
+        renderers += (RecipeRenderer.LUMERICAL_LSF_FRAGMENT,)
     return RecipeDescriptor(
         recipe_id=recipe_id,
         recipe_version="1.0.0",

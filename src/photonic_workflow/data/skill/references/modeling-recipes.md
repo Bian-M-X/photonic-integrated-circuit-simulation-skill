@@ -13,6 +13,7 @@ solver, accept a physical result, or change a G/M gate.
 - [CLI Examples](#cli-examples)
 - [Python API](#python-api)
 - [COMSOL Java Fragments](#comsol-java-fragments)
+- [Lumerical LSF Fragments](#lumerical-lsf-fragments)
 - [Provenance And Claim Boundaries](#provenance-and-claim-boundaries)
 - [Maintenance Rules](#maintenance-rules)
 
@@ -44,8 +45,9 @@ MCP also exposes `list_recipes`, `inspect_recipe`, and `render_recipe`. List
 returns compact identities; inspect returns one full parameter/provenance
 contract. Render takes an absolute `request_file` and new absolute `output`
 under separately allowed read/write roots, plus optional `renderer` and
-`instance_id`. The default renderer is `canonical-json`; Java uses the same
-fixed renderer and limits as the CLI. A successful render returns an artifact
+`instance_id`. The default renderer is `canonical-json`; native fragments use the
+same fixed renderer and limits as the CLI. Lumerical geometry additionally
+requires explicit `height_um` and `core_index` renderer options. A successful render returns an artifact
 path, SHA-256, byte count, output field names and claim limits. Read the file
 for arrays or source; the response intentionally omits those large payloads.
 No project scaffold is required for MCP recipe evaluation. Existing outputs
@@ -225,6 +227,69 @@ The historical `emit-analytic-bend-java-helper.py --output` path is retired
 because it lacked project-root and no-overwrite enforcement. Use the recipe CLI
 for bounded file creation; invoking the legacy helper without `--output` still
 prints its compatibility skeleton to standard output.
+
+## Lumerical LSF Fragments
+
+The circular-route and symmetric-Euler recipes also support
+`lumerical-lsf-fragment`. Their original planar request JSON remains unchanged;
+the target extrusion height and constant core index are explicit renderer
+options, so selecting a renderer cannot silently invent a vertical stack:
+
+```powershell
+photonic recipe render geometry.circular-route `
+  --input examples/recipes/circular-route.json `
+  --renderer lumerical-lsf-fragment `
+  --instance-id route-main `
+  --height-um 0.22 --core-index 3.476 `
+  --output generated/route-main.lsf --project-root . --json
+```
+
+Python uses the same arguments:
+
+```python
+rendered = render_recipe(
+    "geometry.symmetric-euler-bend",
+    {"turn_angle_deg": 90, "minimum_radius_um": 5, "width_um": 0.5, "samples": 64},
+    renderer="lumerical-lsf-fragment", instance_id="euler-main",
+    height_um=0.22, core_index=3.476,
+)
+assert rendered.to_payload()["renderer_options"] == {"height_um": 0.22, "core_index": 3.476}
+```
+
+The LSF contains fixed native object-construction commands with finite numeric
+values in SI metres. Circular routes use exact straight offset polygons and
+analytic annular sectors, splitting sectors that cross 0 degrees. Euler
+geometry uses every point in the existing canonical boundary table as a
+polygon: no new curve fitting or point reduction is performed. This does not
+assert that a polygon equals another solver's interpolated curve.
+
+A safe unique instance namespace is required. Height and core index must be
+positive and finite; these options are rejected for other renderers rather
+than ignored. LSF output accepts at most 128 circular input vertices and is
+capped at 1,000,000 UTF-8 bytes. The fragment contains no model-load, save,
+solve, filesystem or arbitrary script command. Rendering neither imports
+`lumapi` nor opens a licensed product session.
+
+Read back native object coordinates, vertices, radii, sector angles, extrusion
+and index after importing a reviewed fragment into a fresh CAD model. The
+`lumerical_geometry_plan` helper in `photonic_workflow.recipes.lumerical`
+provides those expected native primitives from a fresh `evaluate_recipe`
+result and the same renderer options. Native geometry readback is separate
+from modal/field validation. Background/cladding, PML, mesh, sources, ports and
+the simulation level remain the target model's responsibility. The full
+device runner's supported family list is separate from these geometry
+fragments; an arbitrary rendered bend is not automatically an `fdtd-device`
+request.
+
+All six recipes retain their canonical JSON output. Material formulas are
+already consumed by the native sampled-material adapter, which checks the
+FDTD fit over a wavelength band. A single-wavelength material recipe is not a
+time-domain dispersion fit. The segmented-port recipe retains its numeric
+window plan, but its COMSOL exterior-boundary subtraction is not converted
+into Lumerical ports or PML by this renderer. The two-port common-basis recipe
+retains its explicit data and basis requirements without generating a solver
+script. See [Lumerical device workflow](lumerical-device-workflow.md) for actual
+source sweeps and complete complex-S extraction.
 
 ## Provenance And Claim Boundaries
 
