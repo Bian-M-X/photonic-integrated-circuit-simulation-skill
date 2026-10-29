@@ -52,6 +52,10 @@ EXPECTED_CLI_SURFACE = {
     ),
     "measurement": ("inspect",),
     "model": ("build", "compare", "ingest", "inspect", "release", "validate"),
+    "native": (
+        "calibrate", "compare", "list", "pn-calibrate", "pn-prepare", "pn-response", "pn-run",
+        "prepare", "run", "verify",
+    ),
     "netlist": ("backannotate", "compare", "extract", "validate"),
     "optimize": ("compare", "inspect", "plan", "promote", "resume", "run", "suggest"),
     "package": ("inspect",),

@@ -16,6 +16,16 @@ NATIVE_EXAMPLE_NAMES = {
 }
 
 WHEEL_REQUIRED_SUFFIXES = (
+    "photonic_workflow/native_backend.py",
+    "photonic_workflow/native_devices.py",
+    "photonic_workflow/native_geometry.py",
+    "photonic_workflow/native_pn.py",
+    "photonic_workflow/ring_modulator.py",
+    "photonic_workflow/native_cli.py",
+    "photonic_workflow/data/skill/examples/native-devices/crossing.json",
+    "photonic_workflow/data/skill/examples/native-devices/ring-modulator.json",
+    "photonic_workflow/data/skill/references/native-device-library.md",
+    "photonic_workflow/data/skill/references/pn-ring-model.md",
     "photonic_workflow/data/skill/examples/comsol-device-canary/DeviceCanary.java",
     "photonic_workflow/data/skill/examples/comsol-device-canary/run.py",
     "photonic_workflow/data/skill/examples/comsol-device-canary/audit.py",
@@ -47,6 +57,14 @@ WHEEL_REQUIRED_SUFFIXES = (
 )
 
 SDIST_REQUIRED_RELATIVE_PATHS = (
+    "examples/native-devices/crossing.json",
+    "examples/native-devices/ring-modulator.json",
+    "examples/native-devices/pn-depletion.json",
+    "tests/unit/test_native_devices.py",
+    "tests/unit/test_native_backend.py",
+    "tests/unit/test_native_geometry.py",
+    "tests/unit/test_ring_modulator.py",
+    "tests/unit/test_native_pn.py",
     "examples/comsol-device-canary/DeviceCanary.java",
     "examples/comsol-device-canary/run.py",
     "examples/comsol-device-canary/audit.py",
@@ -88,6 +106,8 @@ SDIST_REQUIRED_RELATIVE_PATHS = (
     "photonic.toml.example",
     "docs/maintenance.md",
     "docs/research/workflow-upgrade-2026-09-results.json",
+    "docs/research/native-library-v08-results.json",
+    "docs/research/native-library-v08-spectrum.png",
     "docs/research/literature-methods-2026-10.md",
     "references/fabrication-aware-robust-design.md",
     "examples/optimization/fabrication_robustness.py",

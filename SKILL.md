@@ -57,6 +57,7 @@ do not load the entire reference library or all agent cards by default.
 | Geometry, port-window, dispersion or two-port diagnostic code | `references/modeling-recipes.md`; bends also `references/smooth-bend-geometry.md` |
 | Waveguide, bend, taper, coupler, ring or grating design | `references/device-family-workflows.md` |
 | Evaluate or export analytic/reduced complex S, including ideal MMI and Y splitters | `references/executable-device-models.md` |
+| Prepare, run or calibrate native crossing/coupler/MMI/Y/ring device code or a PN-depletion probe | `references/native-device-library.md`; requests in `examples/native-devices/` |
 | MZI/aMZI/LT-aMZI, imbalance, FSR | `references/interferometer-workflows.md`; quantum-source work also `references/quantum-photonic-knowledge-base.md` |
 | Complex-S circuit composition or layout/connectivity | `references/hierarchical-device-workflow.md` |
 | Sweeps, optimization, corners or reports | `references/optimization-and-reporting.md` |

@@ -2094,7 +2094,9 @@
       "photonic://skill/reference/low-cost-optimization",
       "photonic://skill/reference/modeling-recipes",
       "photonic://skill/reference/multifidelity-and-error-budgets",
+      "photonic://skill/reference/native-device-library",
       "photonic://skill/reference/optimization-and-reporting",
+      "photonic://skill/reference/pn-ring-model",
       "photonic://skill/reference/project-structure-and-git",
       "photonic://skill/reference/quantum-photonic-knowledge-base",
       "photonic://skill/reference/smooth-bend-geometry",
@@ -4264,6 +4266,450 @@
           "default": null,
           "options": [
             "card"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic native": {
+      "kind": "Group",
+      "parameters": []
+    },
+    "photonic native calibrate": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "receipt",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "receipt"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "output",
+          "kind": "Option",
+          "type": "file",
+          "required": false,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--output"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "csv_output",
+          "kind": "Option",
+          "type": "file",
+          "required": false,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--csv-output"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic native compare": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "coarse",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "coarse"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "fine",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "fine"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic native list": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic native pn-calibrate": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "receipt",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "receipt"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic native pn-prepare": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "request",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "request"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "output",
+          "kind": "Option",
+          "type": "path",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--output"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic native pn-response": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "request",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "request"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic native pn-run": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "bundle",
+          "kind": "Argument",
+          "type": "directory",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "bundle"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "solver_root",
+          "kind": "Option",
+          "type": "directory",
+          "required": false,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--solver-root"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "timeout_s",
+          "kind": "Option",
+          "type": "float range",
+          "required": false,
+          "nargs": 1,
+          "default": 180.0,
+          "options": [
+            "--timeout"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "cores",
+          "kind": "Option",
+          "type": "integer range",
+          "required": false,
+          "nargs": 1,
+          "default": 4,
+          "options": [
+            "--cores"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic native prepare": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "request",
+          "kind": "Argument",
+          "type": "file",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "request"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "output",
+          "kind": "Option",
+          "type": "path",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--output"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic native run": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "bundle",
+          "kind": "Argument",
+          "type": "directory",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "bundle"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "solver_root",
+          "kind": "Option",
+          "type": "directory",
+          "required": false,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "--solver-root"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "timeout_s",
+          "kind": "Option",
+          "type": "float range",
+          "required": false,
+          "nargs": 1,
+          "default": 600.0,
+          "options": [
+            "--timeout"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "cores",
+          "kind": "Option",
+          "type": "integer range",
+          "required": false,
+          "nargs": 1,
+          "default": 4,
+          "options": [
+            "--cores"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        },
+        {
+          "name": "json_output",
+          "kind": "Option",
+          "type": "boolean",
+          "required": false,
+          "nargs": 1,
+          "default": false,
+          "options": [
+            "--json"
+          ],
+          "secondary_options": [],
+          "multiple": false
+        }
+      ]
+    },
+    "photonic native verify": {
+      "kind": "Command",
+      "parameters": [
+        {
+          "name": "bundle",
+          "kind": "Argument",
+          "type": "directory",
+          "required": true,
+          "nargs": 1,
+          "default": null,
+          "options": [
+            "bundle"
           ],
           "secondary_options": [],
           "multiple": false

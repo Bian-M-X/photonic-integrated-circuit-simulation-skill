@@ -1,0 +1,1972 @@
+{
+  "schema_version": "1.0",
+  "snapshot_date": "2026-10-29",
+  "scope": "Completed native 2D scalar-index optical surrogate and 1D prescribed-charge Poisson diagnostics. No experimental authentication or full-device physical qualification.",
+  "power_definition": "abs(S[output, source])^2, incident guided mode normalized to one; diagnostics maxima span each case grid and all sources.",
+  "phase_scope": "Cross-run phase basis is not aligned; no coherent passivity or phase-convergence claim.",
+  "cases": [
+    {
+      "case_id": "crossing-portrefine-01",
+      "model_level": "2d-scalar-index-surrogate",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "f432b666de0a5244a6b665cbe4ab81ff10cb0a92cf0ad6de1953ab42efc69c3b",
+        "console_sha256": "d2000d9bfc74558bd21c368432dab6389dc50dc5f9ee280827cebeb0515509cb",
+        "manifest_sha256": "3cc9e1ee1946844d68b4ff80c5c2c82da6f62adc7bbb23d9c2a0a3a8280bad0e",
+        "input_java_sha256": "b8a729201cfd8103ead659882489f1bdde0f65e634598edcb26d75a23d6b5dc8",
+        "executed_java_sha256": "b8a729201cfd8103ead659882489f1bdde0f65e634598edcb26d75a23d6b5dc8",
+        "executed_class_sha256": "cbec6cf82a896b3d83948f52e56788d2465b95ead16eb2d969e83c9eb457b48c",
+        "inputs_sha256": {
+          "config.json": "c56da3b524aebd7ba97cd56cd60e4dff77f73fc12069051d74ecca7c19f74c7c",
+          "geometry.json": "a7df2ba9ca4cbbda76a50fa27235f4ba5c53b5cde3f74ce679fe04328847e882"
+        },
+        "artifact_and_manifest_checks_passed": 13,
+        "calibration_sha256": "8b1be7e54142355799c4cbc5748cd15b92c11e7edf4522472a9c32ff14992e66"
+      },
+      "family": "crossing",
+      "parameters": {
+        "arm_length_um": 3.0,
+        "center_width_um": 0.3,
+        "clearance_um": 1.2,
+        "port_window_um": 2.4,
+        "width_um": 0.3
+      },
+      "materials": {
+        "core_index": 2.6,
+        "cladding_index": 1.45,
+        "active_index": 2.6,
+        "active_extinction": 0.0
+      },
+      "mesh": {
+        "cladding_mesh_um": 0.16,
+        "core_mesh_um": 0.015,
+        "port_mesh_um": 0.01
+      },
+      "port_order": [
+        "west",
+        "east",
+        "south",
+        "north"
+      ],
+      "spectral_grid": {
+        "count": 3,
+        "min_nm": 1540.0,
+        "max_nm": 1560.0,
+        "step_nm": 10.0
+      },
+      "backend_checks": {
+        "geometry_readback_passed": true,
+        "port_readback_passed": true,
+        "actual_source_rows_verified": 12,
+        "complex_s_rows_verified": 48,
+        "s_axis_semantics": "S[output, source]",
+        "calibration_matches_raw_console": true
+      },
+      "numeric": {
+        "source_1_power_at_1550_nm": {
+          "west": 0.002350179470748651,
+          "east": 0.8571294626504723,
+          "south": 0.05480748492150355,
+          "north": 0.05480613257464575
+        },
+        "max_guided_column_power": 0.9699551002266329,
+        "max_power_reciprocity_gap": 2.1984576270561718e-08,
+        "max_port_flux_modal_gap": 0.0004839528578821639,
+        "max_abs_signed_power_balance": 0.0005262938312739725
+      }
+    },
+    {
+      "case_id": "directional-coupler-portrefine-01",
+      "model_level": "2d-scalar-index-surrogate",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "bc92d7f5de5b406920e68dc0ff3edbf5f33adedad59964befaa88dbe9db73d69",
+        "console_sha256": "9d6425e274fc431082c69d5d7ec698e4d541bc4ce5f4bfd77fcec1310c488188",
+        "manifest_sha256": "76e7c1153ba003804ab67381c6d57055f692c9cc549f5c3d30870a33a702ebcc",
+        "input_java_sha256": "8aa7ab551b8d682e1298812651ec8cb3af7a4d95e11223f1d3d07ed85a889116",
+        "executed_java_sha256": "8aa7ab551b8d682e1298812651ec8cb3af7a4d95e11223f1d3d07ed85a889116",
+        "executed_class_sha256": "318036105541b233cd574ab6dc1246ca1593fd305f5ff546e1ac6d9677e4d262",
+        "inputs_sha256": {
+          "config.json": "c56da3b524aebd7ba97cd56cd60e4dff77f73fc12069051d74ecca7c19f74c7c",
+          "geometry.json": "0c45fe970a88865b614e362f1b7e6672f2a507355ba30d9eacc5da4b663b6953"
+        },
+        "artifact_and_manifest_checks_passed": 13,
+        "calibration_sha256": "da6b927c101c986c986396d49137b0ca3687452d456edb7b5012a6de14068257"
+      },
+      "family": "directional-coupler",
+      "parameters": {
+        "clearance_um": 1.2,
+        "coupling_length_um": 6.0,
+        "gap_um": 0.2,
+        "lead_um": 2.0,
+        "port_offset_um": 1.5,
+        "port_window_um": 2.4,
+        "samples": 32,
+        "transition_um": 3.0,
+        "width_um": 0.3
+      },
+      "materials": {
+        "core_index": 2.6,
+        "cladding_index": 1.45,
+        "active_index": 2.6,
+        "active_extinction": 0.0
+      },
+      "mesh": {
+        "cladding_mesh_um": 0.16,
+        "core_mesh_um": 0.015,
+        "port_mesh_um": 0.01
+      },
+      "port_order": [
+        "upper_left",
+        "lower_left",
+        "upper_right",
+        "lower_right"
+      ],
+      "spectral_grid": {
+        "count": 3,
+        "min_nm": 1540.0,
+        "max_nm": 1560.0,
+        "step_nm": 10.0
+      },
+      "backend_checks": {
+        "geometry_readback_passed": true,
+        "port_readback_passed": true,
+        "actual_source_rows_verified": 12,
+        "complex_s_rows_verified": 48,
+        "s_axis_semantics": "S[output, source]",
+        "calibration_matches_raw_console": true
+      },
+      "numeric": {
+        "source_1_power_at_1550_nm": {
+          "upper_left": 0.0012745387174271127,
+          "lower_left": 0.0022129474729973403,
+          "upper_right": 0.2274655357499121,
+          "lower_right": 0.6306115123783923
+        },
+        "max_guided_column_power": 0.8737170153523696,
+        "max_power_reciprocity_gap": 2.1875664502069014e-08,
+        "max_port_flux_modal_gap": 0.00047950246674910435,
+        "max_abs_signed_power_balance": 0.0013331197500748967
+      }
+    },
+    {
+      "case_id": "mmi2x2-portrefine-01",
+      "model_level": "2d-scalar-index-surrogate",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "efb07c6c642cbebda13292376dee84dbc07d2503f5632cbb285de3440c526f1f",
+        "console_sha256": "970cd19164952673f57afd40be259e28318ac26203e71cc24f1a459c2e5ba818",
+        "manifest_sha256": "b9053c26b63f7abc06a712c41e28bcf17b69f79e19921fdb413e5710a210c67c",
+        "input_java_sha256": "e95bec04d0b603d580cfa0919676af33a982b31511fe85cf737cbb7ee5213345",
+        "executed_java_sha256": "e95bec04d0b603d580cfa0919676af33a982b31511fe85cf737cbb7ee5213345",
+        "executed_class_sha256": "35a56582d2a5bbe9cd43787aa01ea567951b52139825cdcb2ea166d71c654e07",
+        "inputs_sha256": {
+          "config.json": "c56da3b524aebd7ba97cd56cd60e4dff77f73fc12069051d74ecca7c19f74c7c",
+          "geometry.json": "653e4c50b6eeb9baf0aa4da51d408fe8bfa362e1dab509eb78f179ffd7570fba"
+        },
+        "artifact_and_manifest_checks_passed": 13,
+        "calibration_sha256": "5640baad18650f32701cd478f629ee6059421132ba0cf13ace57ac34426f53e7"
+      },
+      "family": "mmi2x2",
+      "parameters": {
+        "access_offset_um": 0.4,
+        "body_length_um": 4.5,
+        "body_width_um": 1.5,
+        "clearance_um": 1.2,
+        "lead_um": 2.0,
+        "port_offset_um": 1.5,
+        "port_window_um": 2.4,
+        "samples": 32,
+        "transition_um": 3.0,
+        "width_um": 0.3
+      },
+      "materials": {
+        "core_index": 2.6,
+        "cladding_index": 1.45,
+        "active_index": 2.6,
+        "active_extinction": 0.0
+      },
+      "mesh": {
+        "cladding_mesh_um": 0.16,
+        "core_mesh_um": 0.015,
+        "port_mesh_um": 0.01
+      },
+      "port_order": [
+        "upper_left",
+        "lower_left",
+        "upper_right",
+        "lower_right"
+      ],
+      "spectral_grid": {
+        "count": 3,
+        "min_nm": 1540.0,
+        "max_nm": 1560.0,
+        "step_nm": 10.0
+      },
+      "backend_checks": {
+        "geometry_readback_passed": true,
+        "port_readback_passed": true,
+        "actual_source_rows_verified": 12,
+        "complex_s_rows_verified": 48,
+        "s_axis_semantics": "S[output, source]",
+        "calibration_matches_raw_console": true
+      },
+      "numeric": {
+        "source_1_power_at_1550_nm": {
+          "upper_left": 0.001599290344269584,
+          "lower_left": 0.005587507650131591,
+          "upper_right": 0.12487743429520234,
+          "lower_right": 0.6588844869594113
+        },
+        "max_guided_column_power": 0.8129780453648823,
+        "max_power_reciprocity_gap": 2.3560155049118237e-08,
+        "max_port_flux_modal_gap": 0.00047581274060759515,
+        "max_abs_signed_power_balance": 0.0010564123944709035
+      }
+    },
+    {
+      "case_id": "ybranch-portrefine-01",
+      "model_level": "2d-scalar-index-surrogate",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "98f414cb9d37782710459d6db2a17c669ed88ee3f870a117ef1df3e40aad8f79",
+        "console_sha256": "4fd7355b529c6e65f3370d53f37d33a1850c07b28b5a95dafade64af59303d44",
+        "manifest_sha256": "9569a4209af136212ecc1833472163ebc14577ddae1a6f2d971ecc68be4056bc",
+        "input_java_sha256": "12a362a1ba4ab7337db52a248f0b7a9bec01234ba0c14dcc795299842cdd717e",
+        "executed_java_sha256": "12a362a1ba4ab7337db52a248f0b7a9bec01234ba0c14dcc795299842cdd717e",
+        "executed_class_sha256": "853b4c9a532910fc6913af92c878bc85501f7445246d803bda2f75a837f12347",
+        "inputs_sha256": {
+          "config.json": "c56da3b524aebd7ba97cd56cd60e4dff77f73fc12069051d74ecca7c19f74c7c",
+          "geometry.json": "209421749d23f851afae1ee670ebaeea076bdd975b034fd251789ec0c0349c16"
+        },
+        "artifact_and_manifest_checks_passed": 13,
+        "calibration_sha256": "2956f162db178c3b17e874fc9244a67b21c201bdbda04b6852b2bdec01b054d8"
+      },
+      "family": "ybranch",
+      "parameters": {
+        "branch_length_um": 5.0,
+        "clearance_um": 1.2,
+        "lead_um": 2.0,
+        "port_offset_um": 1.5,
+        "port_window_um": 2.4,
+        "samples": 32,
+        "width_um": 0.3
+      },
+      "materials": {
+        "core_index": 2.6,
+        "cladding_index": 1.45,
+        "active_index": 2.6,
+        "active_extinction": 0.0
+      },
+      "mesh": {
+        "cladding_mesh_um": 0.16,
+        "core_mesh_um": 0.015,
+        "port_mesh_um": 0.01
+      },
+      "port_order": [
+        "trunk",
+        "upper",
+        "lower"
+      ],
+      "spectral_grid": {
+        "count": 3,
+        "min_nm": 1540.0,
+        "max_nm": 1560.0,
+        "step_nm": 10.0
+      },
+      "backend_checks": {
+        "geometry_readback_passed": true,
+        "port_readback_passed": true,
+        "actual_source_rows_verified": 9,
+        "complex_s_rows_verified": 27,
+        "s_axis_semantics": "S[output, source]",
+        "calibration_matches_raw_console": true
+      },
+      "numeric": {
+        "source_1_power_at_1550_nm": {
+          "trunk": 0.0003570503574623562,
+          "upper": 0.48873075782554787,
+          "lower": 0.48875497978908483
+        },
+        "max_guided_column_power": 0.9781089598748476,
+        "max_power_reciprocity_gap": 4.66228619862008e-05,
+        "max_port_flux_modal_gap": 0.0007845053666172275,
+        "max_abs_signed_power_balance": 0.003377396332628292
+      }
+    },
+    {
+      "case_id": "ybranch-longlead-01",
+      "model_level": "2d-scalar-index-surrogate",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "d5b212ce1d8ed1d03e59d4d4e2e9155b8f94d4309be12f5b98cd9c26a34e3a96",
+        "console_sha256": "79c6eeb5b3a9a307a78835921c8dfa113a180b08285273bdb53d351fe04512fa",
+        "manifest_sha256": "30442742a5e19db38446351b5bc7a3555b5a0530ffb17430175e7a9c7fb1732b",
+        "input_java_sha256": "4356657209dbe09b9bdfaafedb8a634426ae17ca80ace55a6cdb209697a94e88",
+        "executed_java_sha256": "4356657209dbe09b9bdfaafedb8a634426ae17ca80ace55a6cdb209697a94e88",
+        "executed_class_sha256": "413c95254dfbca788ce126f885e6b8118d26421805d4654c5626b622ac6e0289",
+        "inputs_sha256": {
+          "config.json": "24da17c88b7f424bc9f7e2583b634345a20de0ab35286438a3f5af293cff3498",
+          "geometry.json": "39e26ebf7fe78c2a226eadf479f2a496179ea5560f0d758d2438184ba7e3ac4b"
+        },
+        "artifact_and_manifest_checks_passed": 15,
+        "calibration_sha256": "314c8a94f4b46863104281f47437c49c781965edbc8cb19ab55261ca5d40ca4f"
+      },
+      "family": "ybranch",
+      "parameters": {
+        "branch_length_um": 10.0,
+        "clearance_um": 1.2,
+        "lead_um": 4.0,
+        "port_offset_um": 1.5,
+        "port_window_um": 2.4,
+        "samples": 32,
+        "width_um": 0.3
+      },
+      "materials": {
+        "core_index": 2.6,
+        "cladding_index": 1.45,
+        "active_index": 2.6,
+        "active_extinction": 0.0
+      },
+      "mesh": {
+        "cladding_mesh_um": 0.16,
+        "core_mesh_um": 0.015,
+        "port_mesh_um": 0.01
+      },
+      "port_order": [
+        "trunk",
+        "upper",
+        "lower"
+      ],
+      "spectral_grid": {
+        "count": 3,
+        "min_nm": 1540.0,
+        "max_nm": 1560.0,
+        "step_nm": 10.0
+      },
+      "backend_checks": {
+        "geometry_readback_passed": true,
+        "port_readback_passed": true,
+        "actual_source_rows_verified": 9,
+        "complex_s_rows_verified": 27,
+        "s_axis_semantics": "S[output, source]",
+        "calibration_matches_raw_console": true
+      },
+      "numeric": {
+        "source_1_power_at_1550_nm": {
+          "trunk": 2.6420445721499183e-05,
+          "upper": 0.4968292240945137,
+          "lower": 0.49680927068631825
+        },
+        "max_guided_column_power": 0.9937621984942775,
+        "max_power_reciprocity_gap": 2.1170157374295062e-05,
+        "max_port_flux_modal_gap": 0.0005092133563500134,
+        "max_abs_signed_power_balance": 0.00579321431644983
+      }
+    },
+    {
+      "case_id": "straight-solve-04",
+      "model_level": "2d-scalar-index-surrogate",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "e1c4e8908f9eddba27c155ffaf75599974abe11522ea91a8c88dd42f2fc71adf",
+        "console_sha256": "5e0694730a31d5f3819a89d7df63e0aa9d2c35b708c48d5c6f5a27859adf19e5",
+        "manifest_sha256": "e5973394ee6c70cf3e43e6737c86a1ff2577740ef2b6d3c1dabb68dbde64d1bc",
+        "input_java_sha256": "34b64b1aef4c24984fb35ded39ab3ad8f5e3c39aca171eb1fed519844d6fa950",
+        "executed_java_sha256": "34b64b1aef4c24984fb35ded39ab3ad8f5e3c39aca171eb1fed519844d6fa950",
+        "executed_class_sha256": "9cde6bab2ece58f31938bec6be92b7bb21d263a02f3e5dd073d3fc69d36fe7d9",
+        "inputs_sha256": {
+          "config.json": "663b4d9b74bdbda5e2453f1f2f3f88c9ddde635e231ff775bee0cbf41adc5736",
+          "geometry.json": "0b8ece7284149bc30c4fb4451e0df1d421f8fb769b2e5f2537d0137015471176"
+        },
+        "artifact_and_manifest_checks_passed": 15
+      },
+      "family": "straight",
+      "parameters": {
+        "clearance_um": 1.2,
+        "length_um": 6.0,
+        "port_window_um": 2.4,
+        "width_um": 0.3
+      },
+      "materials": {
+        "core_index": 2.6,
+        "cladding_index": 1.45,
+        "active_index": 2.6,
+        "active_extinction": 0.0
+      },
+      "mesh": {
+        "cladding_mesh_um": 0.28,
+        "core_mesh_um": 0.08
+      },
+      "port_order": [
+        "left",
+        "right"
+      ],
+      "spectral_grid": {
+        "count": 3,
+        "min_nm": 1540.0,
+        "max_nm": 1560.0,
+        "step_nm": 10.0
+      },
+      "backend_checks": {
+        "geometry_readback_passed": true,
+        "port_readback_passed": true,
+        "actual_source_rows_verified": 6,
+        "complex_s_rows_verified": 12,
+        "s_axis_semantics": "S[output, source]",
+        "calibration_matches_raw_console": false
+      },
+      "numeric": {
+        "source_1_power_at_1550_nm": {
+          "left": 1.3368245329145978e-08,
+          "right": 0.9999958724869761
+        },
+        "max_guided_column_power": 0.9999964535557067,
+        "max_power_reciprocity_gap": 1.1431847890541746e-07,
+        "max_port_flux_modal_gap": 0.02141955627292802,
+        "max_abs_signed_power_balance": 0.000743498883726827
+      }
+    },
+    {
+      "case_id": "straight-fine-01",
+      "model_level": "2d-scalar-index-surrogate",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "ed07448be2153f528be0a9cb43e01b6260f6343fb9731c61901ecfc0b3dcf3ed",
+        "console_sha256": "4a03b2174c1e2c9891d31292648d14a859029737eebc752be8de934f464a168c",
+        "manifest_sha256": "b603b9b8b17adbf7825598b89293d10bb715745e162345ef6c0cc8dbc53be490",
+        "input_java_sha256": "ffb6f34e2a640881a2388231ded6b5a446cb4a3da331034978ce0199afc27628",
+        "executed_java_sha256": "ffb6f34e2a640881a2388231ded6b5a446cb4a3da331034978ce0199afc27628",
+        "executed_class_sha256": "f801fe4a0daccac284f323575c062917ea6b235d69e51413f06bb93501cafc89",
+        "inputs_sha256": {
+          "config.json": "60e8db25b0551b869a078b0d29c204d7c41fa9eb7fdb1e2d8b15f2ea7f102e3d",
+          "geometry.json": "0b8ece7284149bc30c4fb4451e0df1d421f8fb769b2e5f2537d0137015471176"
+        },
+        "artifact_and_manifest_checks_passed": 13,
+        "calibration_sha256": "9b8bb68b9454b429af750e70d6843604bff1d734dea6d44c1ce145a605341708"
+      },
+      "family": "straight",
+      "parameters": {
+        "clearance_um": 1.2,
+        "length_um": 6.0,
+        "port_window_um": 2.4,
+        "width_um": 0.3
+      },
+      "materials": {
+        "core_index": 2.6,
+        "cladding_index": 1.45,
+        "active_index": 2.6,
+        "active_extinction": 0.0
+      },
+      "mesh": {
+        "cladding_mesh_um": 0.16,
+        "core_mesh_um": 0.015
+      },
+      "port_order": [
+        "left",
+        "right"
+      ],
+      "spectral_grid": {
+        "count": 3,
+        "min_nm": 1540.0,
+        "max_nm": 1560.0,
+        "step_nm": 10.0
+      },
+      "backend_checks": {
+        "geometry_readback_passed": true,
+        "port_readback_passed": true,
+        "actual_source_rows_verified": 6,
+        "complex_s_rows_verified": 12,
+        "s_axis_semantics": "S[output, source]",
+        "calibration_matches_raw_console": true
+      },
+      "numeric": {
+        "source_1_power_at_1550_nm": {
+          "left": 4.4201053972065795e-11,
+          "right": 0.9999959643988218
+        },
+        "max_guided_column_power": 0.9999965462683544,
+        "max_power_reciprocity_gap": 1.7370302196617615e-08,
+        "max_port_flux_modal_gap": 0.0025799831793738015,
+        "max_abs_signed_power_balance": 0.0001457638990927019
+      }
+    },
+    {
+      "case_id": "straight-portrefine-01",
+      "model_level": "2d-scalar-index-surrogate",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "17747f4b0c727795ce9d009ac56b97617937046d1f78564ab054884cbb8906d5",
+        "console_sha256": "f68a447720bad4ce3bb9edee176db531229bdd34516640042a0b8632d7110a0c",
+        "manifest_sha256": "dd672109d81ef93dfadd3e07d7b8956abde077de40927b33e07a891f99290991",
+        "input_java_sha256": "6dd3afbc637cb785205adfe30db7aaf60b302bc1b8964fb4c675aabd08723821",
+        "executed_java_sha256": "6dd3afbc637cb785205adfe30db7aaf60b302bc1b8964fb4c675aabd08723821",
+        "executed_class_sha256": "0ffb194eb6779859ff460740dacff019f2a528cbb0424e9ba0af0eb7b81acd0b",
+        "inputs_sha256": {
+          "config.json": "c56da3b524aebd7ba97cd56cd60e4dff77f73fc12069051d74ecca7c19f74c7c",
+          "geometry.json": "0b8ece7284149bc30c4fb4451e0df1d421f8fb769b2e5f2537d0137015471176"
+        },
+        "artifact_and_manifest_checks_passed": 13,
+        "calibration_sha256": "6c11cf74ce5e915b45d813a9f6c7940f4296e55cbd1ee9821aa3e6f85c7fe17d"
+      },
+      "family": "straight",
+      "parameters": {
+        "clearance_um": 1.2,
+        "length_um": 6.0,
+        "port_window_um": 2.4,
+        "width_um": 0.3
+      },
+      "materials": {
+        "core_index": 2.6,
+        "cladding_index": 1.45,
+        "active_index": 2.6,
+        "active_extinction": 0.0
+      },
+      "mesh": {
+        "cladding_mesh_um": 0.16,
+        "core_mesh_um": 0.015,
+        "port_mesh_um": 0.01
+      },
+      "port_order": [
+        "left",
+        "right"
+      ],
+      "spectral_grid": {
+        "count": 3,
+        "min_nm": 1540.0,
+        "max_nm": 1560.0,
+        "step_nm": 10.0
+      },
+      "backend_checks": {
+        "geometry_readback_passed": true,
+        "port_readback_passed": true,
+        "actual_source_rows_verified": 6,
+        "complex_s_rows_verified": 12,
+        "s_axis_semantics": "S[output, source]",
+        "calibration_matches_raw_console": true
+      },
+      "numeric": {
+        "source_1_power_at_1550_nm": {
+          "left": 7.445881920881908e-12,
+          "right": 0.9999959891449816
+        },
+        "max_guided_column_power": 0.9999965518276702,
+        "max_power_reciprocity_gap": 2.382423924807142e-09,
+        "max_port_flux_modal_gap": 0.0005065664074068721,
+        "max_abs_signed_power_balance": 1.1490281408087535e-05
+      }
+    },
+    {
+      "case_id": "straight-portcheck-02",
+      "model_level": "2d-scalar-index-surrogate",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "4278304983c561afbe26415cad563d0145ca4d2929e1d510aeac3f3930f6402c",
+        "console_sha256": "5b98ceaf99837c512fe1b44b0cc4b876964466c84aeca428829ea956087779e3",
+        "manifest_sha256": "0473c1837234d8eaaee9c534d85b8137e4d6bf6fb8ed484495a0d2601886e383",
+        "input_java_sha256": "9d7a90efe29233c3c67b6241b29a233c1ac7da42eb5bb051311d0558d5b973d4",
+        "executed_java_sha256": "9d7a90efe29233c3c67b6241b29a233c1ac7da42eb5bb051311d0558d5b973d4",
+        "executed_class_sha256": "50517dfa6e25f20485b1a3fe0dd370633931441f1b247b6c2be3c51851fc0b9d",
+        "inputs_sha256": {
+          "config.json": "1d31e6801f00cc2b1c8fc9287030a7b9f05deb187c74fe55280cf258fa688070",
+          "geometry.json": "0b8ece7284149bc30c4fb4451e0df1d421f8fb769b2e5f2537d0137015471176"
+        },
+        "artifact_and_manifest_checks_passed": 13,
+        "calibration_sha256": "1a41d44e90a6bfc1422bdbf1136e44ad852c43a03524dda4f016eb535a63f7e4"
+      },
+      "family": "straight",
+      "parameters": {
+        "clearance_um": 1.2,
+        "length_um": 6.0,
+        "port_window_um": 2.4,
+        "width_um": 0.3
+      },
+      "materials": {
+        "core_index": 2.6,
+        "cladding_index": 1.45,
+        "active_index": 2.6,
+        "active_extinction": 0.0
+      },
+      "mesh": {
+        "cladding_mesh_um": 0.12,
+        "core_mesh_um": 0.01,
+        "port_mesh_um": 0.005
+      },
+      "port_order": [
+        "left",
+        "right"
+      ],
+      "spectral_grid": {
+        "count": 3,
+        "min_nm": 1540.0,
+        "max_nm": 1560.0,
+        "step_nm": 10.0
+      },
+      "backend_checks": {
+        "geometry_readback_passed": true,
+        "port_readback_passed": true,
+        "actual_source_rows_verified": 6,
+        "complex_s_rows_verified": 12,
+        "s_axis_semantics": "S[output, source]",
+        "calibration_matches_raw_console": true
+      },
+      "numeric": {
+        "source_1_power_at_1550_nm": {
+          "left": 7.015286442778284e-12,
+          "right": 0.999996000928784
+        },
+        "max_guided_column_power": 0.999996561872866,
+        "max_power_reciprocity_gap": 2.0096230235466805e-09,
+        "max_port_flux_modal_gap": 0.00012781276065843006,
+        "max_abs_signed_power_balance": 1.6968965484680316e-06
+      }
+    },
+    {
+      "case_id": "ring-allpass-03",
+      "model_level": "2d-scalar-index-surrogate",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "9086ef5dcd819d29d33d1707d4a3e1faa0a46f2d95804b86ebc4dc3e08274b17",
+        "console_sha256": "f711becd929f9e2f113c3b5864da299c006fda136a9a9386a6abde74f5a9aa38",
+        "manifest_sha256": "8eb9478cdafc06edb457224f74f3e06e04a11664026728355c964ac265e97dba",
+        "input_java_sha256": "915318629aeb0398f40007c1d2bf80d9642c02ae6edc160828623b49c45d9dcb",
+        "executed_java_sha256": "915318629aeb0398f40007c1d2bf80d9642c02ae6edc160828623b49c45d9dcb",
+        "executed_class_sha256": "1c199d44c45990923d4a7b682e928feee4b59585e892d0a06d89e0d455d289d6",
+        "inputs_sha256": {
+          "config.json": "8e081102f6e41fbfeee7278128e72ecbc6fdbdffdaae72a00906a890550bae20",
+          "geometry.json": "481c065fffc37e3cfe17b97ad583bcbe0b4de0ccf95a0b45f93fdc64217b0e29"
+        },
+        "artifact_and_manifest_checks_passed": 15,
+        "calibration_sha256": "2dc7715b27bb03596fbf133b52c8455a5691ccbf5e1070e29f8b8162bc38fcc2"
+      },
+      "family": "ring",
+      "parameters": {
+        "bus_count": 1.0,
+        "clearance_um": 1.2,
+        "gap_um": 0.2,
+        "lead_um": 2.5,
+        "port_window_um": 2.4,
+        "radius_um": 3.0,
+        "width_um": 0.3
+      },
+      "materials": {
+        "core_index": 2.6,
+        "cladding_index": 1.45,
+        "active_index": 2.6,
+        "active_extinction": 0.0
+      },
+      "mesh": {
+        "cladding_mesh_um": 0.24,
+        "core_mesh_um": 0.04,
+        "port_mesh_um": 0.02
+      },
+      "port_order": [
+        "input",
+        "through"
+      ],
+      "spectral_grid": {
+        "count": 3,
+        "min_nm": 1540.0,
+        "max_nm": 1560.0,
+        "step_nm": 10.0
+      },
+      "backend_checks": {
+        "geometry_readback_passed": true,
+        "port_readback_passed": true,
+        "actual_source_rows_verified": 6,
+        "complex_s_rows_verified": 12,
+        "s_axis_semantics": "S[output, source]",
+        "calibration_matches_raw_console": true
+      },
+      "numeric": {
+        "source_1_power_at_1550_nm": {
+          "input": 4.436504874989569e-10,
+          "through": 0.9998449400996532
+        },
+        "max_guided_column_power": 0.9998449405433036,
+        "max_power_reciprocity_gap": 4.133103170822494e-08,
+        "max_port_flux_modal_gap": 0.0017891571800112693,
+        "max_abs_signed_power_balance": 0.00012599155962699245,
+        "integrated_mesh_area_um2": {
+          "core": 9.044866776988162,
+          "active": 5.654866776988177,
+          "bg": 94.9151332230119,
+          "all": 103.96000000000008
+        },
+        "render_evaluation_area_um2": {
+          "core": 9.044345093790156,
+          "active": 5.6543449018631975,
+          "bg": 94.91565537468486,
+          "all": 103.96000046847502
+        }
+      }
+    },
+    {
+      "case_id": "ring-adddrop-scan-01",
+      "model_level": "2d-scalar-index-surrogate",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "8ea56dfad28d024efb6f111c96bdabd351439d77a3da3b9b8c9546cf981698ae",
+        "console_sha256": "c37d573b39c5b7315622e188e6061d0cf8f7a81635f9706e83b21a42b88b6954",
+        "manifest_sha256": "35d83611d40966f2dace7d669cbe73db816d92dcf6dd4105a9a9d456f08a4046",
+        "input_java_sha256": "857b8deca5ee5c9ddeb6af10754969ff37d8af253e74a4512335949bfeb4cb20",
+        "executed_java_sha256": "857b8deca5ee5c9ddeb6af10754969ff37d8af253e74a4512335949bfeb4cb20",
+        "executed_class_sha256": "63f3f0ec47d96489b0c97fa7384775e624e8b09c4b38e45dfcf28fb3f0fc3b38",
+        "inputs_sha256": {
+          "config.json": "4afafacdba46db96a63011e6c54a454f38b726989e585bfd0a9d925d089d334f",
+          "geometry.json": "3c3385539bc471f55d14dccf340cc15d5e1f4026f1dc9ff06a97fae709291826"
+        },
+        "artifact_and_manifest_checks_passed": 13,
+        "calibration_sha256": "93642be24f77e7d4cf9700dfb431807454d959387c56579cdd2ce954db897c0b"
+      },
+      "family": "ring",
+      "parameters": {
+        "bus_count": 2.0,
+        "clearance_um": 1.2,
+        "gap_um": 0.2,
+        "lead_um": 2.5,
+        "port_window_um": 2.4,
+        "radius_um": 3.0,
+        "width_um": 0.3
+      },
+      "materials": {
+        "core_index": 2.6,
+        "cladding_index": 1.45,
+        "active_index": 2.6,
+        "active_extinction": 0.0
+      },
+      "mesh": {
+        "cladding_mesh_um": 0.24,
+        "core_mesh_um": 0.04,
+        "port_mesh_um": 0.02
+      },
+      "port_order": [
+        "input",
+        "through",
+        "add",
+        "drop"
+      ],
+      "spectral_grid": {
+        "count": 41,
+        "min_nm": 1500.0,
+        "max_nm": 1600.0,
+        "step_nm": 2.5
+      },
+      "backend_checks": {
+        "geometry_readback_passed": true,
+        "port_readback_passed": true,
+        "actual_source_rows_verified": 164,
+        "complex_s_rows_verified": 656,
+        "s_axis_semantics": "S[output, source]",
+        "calibration_matches_raw_console": true
+      },
+      "numeric": {
+        "source_1_power_at_1550_nm": {
+          "input": 9.610260074308047e-10,
+          "through": 0.9842891110169127,
+          "add": 1.0803534336132406e-10,
+          "drop": 0.015549865427973824
+        },
+        "max_guided_column_power": 0.9999061820418995,
+        "max_power_reciprocity_gap": 1.3931424425184247e-07,
+        "max_port_flux_modal_gap": 0.0018513153983031883,
+        "max_abs_signed_power_balance": 9.826212531655412e-05,
+        "integrated_mesh_area_um2": {
+          "core": 12.434866777024805,
+          "active": 5.654866777024903,
+          "bg": 97.17513322297496,
+          "all": 109.60999999999976
+        },
+        "render_evaluation_area_um2": {
+          "core": 12.434653051669201,
+          "active": 5.654650647217792,
+          "bg": 97.17535401388903,
+          "all": 109.61000706555822
+        },
+        "sampled_drop_local_peaks": [
+          {
+            "wavelength_nm": 1530.0,
+            "power": 0.9940879050379928
+          },
+          {
+            "wavelength_nm": 1577.5,
+            "power": 0.9140989146962633
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "pn-zero-05",
+      "model_level": "1d-prescribed-abrupt-depletion-poisson",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "1f02e7adb350d89431889e0ff92c65906bee854c6747ebfa5804bb85a061bfef",
+        "console_sha256": "2044fb3b7797abda96f25e7003f9ccb1afb884aea4f6df7541a7234cb507692b",
+        "manifest_sha256": "f73e5824feeeb405fc278dc22a5f4896fe4953da669d87121bf980bb84c4b15e",
+        "input_java_sha256": "6a6d4ac9354247a920a35f697456969680c71c73d743f9dac975f59abc90c2f2",
+        "executed_java_sha256": "6a6d4ac9354247a920a35f697456969680c71c73d743f9dac975f59abc90c2f2",
+        "executed_class_sha256": "4af1a6ce905a59f6b0b624608b611fbcbb63f4522a2c1c8d1df471fd3d3f5830",
+        "inputs_sha256": {
+          "pn.json": "e3d6935deeadacd618e9630a36345aad4e85d6b27b4c7f5602a70bfa8e379903"
+        },
+        "artifact_and_manifest_checks_passed": 11,
+        "calibration_sha256": "01c4617eb9025f2050073b73d358e31a5a089581fcd72f5fc806bf72d74ea483"
+      },
+      "parameters": {
+        "acceptor_cm3": 1e+17,
+        "active_fraction": 1.0,
+        "donor_cm3": 1e+17,
+        "intrinsic_cm3": 10000000000.0,
+        "junction_height_um": 0.22,
+        "junction_length_um": 18.84955592153876,
+        "junction_offset_um": 0.0,
+        "n_region_width_um": 1.0,
+        "optical_overlap": 0.8,
+        "optical_width_um": 0.3,
+        "p_region_width_um": 1.0,
+        "relative_permittivity": 11.7,
+        "reverse_bias_v": 0.0,
+        "temperature_k": 300.0,
+        "wavelength_nm": 1550.0
+      },
+      "mesh": {
+        "maximum_element_size_rule": "min(Wpn/12, 0.01 um)"
+      },
+      "backend_checks": {
+        "actual_native_solution_field": true,
+        "actual_readback_matches_calibration": true,
+        "sample_rows_match_calibration": 101,
+        "benchmark_checks": {
+          "depletion_widths": true,
+          "built_in_and_total_potential": true,
+          "sampled_potential": true,
+          "sampled_field": true,
+          "sampled_charge": true,
+          "positive_charge_quadrature": true,
+          "negative_charge_quadrature": true,
+          "charge_neutrality": true,
+          "depletion_law_capacitance": true
+        }
+      },
+      "numeric": {
+        "native_xp_um": 0.07340591104971733,
+        "native_xn_um": 0.07340591104971733,
+        "native_total_potential_v": 0.833370010652644,
+        "native_charge_positive_c_per_m2": 0.001176092354813371,
+        "native_charge_negative_c_per_m2": -0.0011760923548133715,
+        "native_capacitance_per_area_f_per_m2": 0.000705624356396223,
+        "max_potential_error_v": 7.038608584863937e-11,
+        "max_field_error_v_per_m": 0.003863763064146042,
+        "max_charge_density_error_c_per_m3": 0.0
+      }
+    },
+    {
+      "case_id": "pn-bias099-01",
+      "model_level": "1d-prescribed-abrupt-depletion-poisson",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "5370e3ddb03ef5aecf68961a4263447abf033758fab191975afb0e2ada975da9",
+        "console_sha256": "908510283d0a8f2b07b93943ffae2af99e87b4730369fa4336a500592103df50",
+        "manifest_sha256": "77dd40a0903262e3368ec68e8f7779cc3a1148eb048d2ed731d4b2cab5b71d4e",
+        "input_java_sha256": "4118bb0b664a55d849131bb99e6be1e3aaedc99c348950cd4a31c84a40cf8099",
+        "executed_java_sha256": "4118bb0b664a55d849131bb99e6be1e3aaedc99c348950cd4a31c84a40cf8099",
+        "executed_class_sha256": "d5cac427dfa517d23d993b8cccb8b25509e5f382894beabd3ea768e7a96f71bc",
+        "inputs_sha256": {
+          "pn.json": "ff7c3ba38e6470b55f0c75893f04edcfeb665968e70b85916af61dabac2e05cd"
+        },
+        "artifact_and_manifest_checks_passed": 11,
+        "calibration_sha256": "3511abd25a7b99dfa42df6e81006599220a877590504a1c7f55d7494054034b5"
+      },
+      "parameters": {
+        "acceptor_cm3": 1e+17,
+        "active_fraction": 1.0,
+        "donor_cm3": 1e+17,
+        "intrinsic_cm3": 10000000000.0,
+        "junction_height_um": 0.22,
+        "junction_length_um": 18.84955592153876,
+        "junction_offset_um": 0.0,
+        "n_region_width_um": 1.0,
+        "optical_overlap": 0.8,
+        "optical_width_um": 0.3,
+        "p_region_width_um": 1.0,
+        "relative_permittivity": 11.7,
+        "reverse_bias_v": 0.99,
+        "temperature_k": 300.0,
+        "wavelength_nm": 1550.0
+      },
+      "mesh": {
+        "maximum_element_size_rule": "min(Wpn/12, 0.01 um)"
+      },
+      "backend_checks": {
+        "actual_native_solution_field": true,
+        "actual_readback_matches_calibration": true,
+        "sample_rows_match_calibration": 101,
+        "benchmark_checks": {
+          "depletion_widths": true,
+          "built_in_and_total_potential": true,
+          "sampled_potential": true,
+          "sampled_field": true,
+          "sampled_charge": true,
+          "positive_charge_quadrature": true,
+          "negative_charge_quadrature": true,
+          "charge_neutrality": true,
+          "depletion_law_capacitance": true
+        }
+      },
+      "numeric": {
+        "native_xp_um": 0.1085799163880393,
+        "native_xn_um": 0.1085799163880393,
+        "native_total_potential_v": 1.823370010652644,
+        "native_charge_positive_c_per_m2": 0.0017396420495858662,
+        "native_charge_negative_c_per_m2": -0.0017396420495858662,
+        "native_capacitance_per_area_f_per_m2": 0.0004770403262701439,
+        "max_potential_error_v": 1.5561280042319936e-10,
+        "max_field_error_v_per_m": 0.0057133957743644714,
+        "max_charge_density_error_c_per_m3": 0.0
+      }
+    },
+    {
+      "case_id": "pn-bias101-01",
+      "model_level": "1d-prescribed-abrupt-depletion-poisson",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "edc908c4dba834b030ad19e45240be7fa1f137d669a8967f37c885a66ecd5563",
+        "console_sha256": "5fc9542b70a88193cd57f8f3e13f0fbd50d5124832ba51116f470fe8cc1d1881",
+        "manifest_sha256": "cec1acb471ab870c22dc46339f3090f0f3fd0caab39c118de120916755705a1e",
+        "input_java_sha256": "56c84a71f2a10a9ac25bd9195c37f060521bc1d3db20ce9c0c3df34e1838c55d",
+        "executed_java_sha256": "56c84a71f2a10a9ac25bd9195c37f060521bc1d3db20ce9c0c3df34e1838c55d",
+        "executed_class_sha256": "a6ee54955f3e9b0ce1674e82b02f9d5c8df97fd87ff637e13a658558fefb130e",
+        "inputs_sha256": {
+          "pn.json": "d238d959376ebbfd9c46aad03ae2ecf5637ea74882fd409d91435b6142acbaf0"
+        },
+        "artifact_and_manifest_checks_passed": 11,
+        "calibration_sha256": "d828b73726bc9f0182a672b3a95949785f5bfa9edf7b33e6cae023a1e1a37c21"
+      },
+      "parameters": {
+        "acceptor_cm3": 1e+17,
+        "active_fraction": 1.0,
+        "donor_cm3": 1e+17,
+        "intrinsic_cm3": 10000000000.0,
+        "junction_height_um": 0.22,
+        "junction_length_um": 18.84955592153876,
+        "junction_offset_um": 0.0,
+        "n_region_width_um": 1.0,
+        "optical_overlap": 0.8,
+        "optical_width_um": 0.3,
+        "p_region_width_um": 1.0,
+        "relative_permittivity": 11.7,
+        "reverse_bias_v": 1.01,
+        "temperature_k": 300.0,
+        "wavelength_nm": 1550.0
+      },
+      "mesh": {
+        "maximum_element_size_rule": "min(Wpn/12, 0.01 um)"
+      },
+      "backend_checks": {
+        "actual_native_solution_field": true,
+        "actual_readback_matches_calibration": true,
+        "sample_rows_match_calibration": 101,
+        "benchmark_checks": {
+          "depletion_widths": true,
+          "built_in_and_total_potential": true,
+          "sampled_potential": true,
+          "sampled_field": true,
+          "sampled_charge": true,
+          "positive_charge_quadrature": true,
+          "negative_charge_quadrature": true,
+          "charge_neutrality": true,
+          "depletion_law_capacitance": true
+        }
+      },
+      "numeric": {
+        "native_xp_um": 0.10917378264904151,
+        "native_xn_um": 0.10917378264904151,
+        "native_total_potential_v": 1.843370010652644,
+        "native_charge_positive_c_per_m2": 0.0017491568360568546,
+        "native_charge_negative_c_per_m2": -0.0017491568360568541,
+        "native_capacitance_per_area_f_per_m2": 0.0004744453978172203,
+        "max_potential_error_v": 1.5725307167535618e-10,
+        "max_field_error_v_per_m": 0.005744557827711105,
+        "max_charge_density_error_c_per_m3": 0.0
+      }
+    },
+    {
+      "case_id": "pn-bias2-01",
+      "model_level": "1d-prescribed-abrupt-depletion-poisson",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "d0b8e8fc965b751c24979fa17a2aac99b127c07ad29ad7df6c6a8606a420406f",
+        "console_sha256": "c2662431865ba0c56b9296566be2d6531fbc54470d201f629450084a093ba469",
+        "manifest_sha256": "70681585d8c8931ac3d6e96362b3a3b3304cf7c1f9835b88c89c907de7e5795f",
+        "input_java_sha256": "290dd766fc7fdfd0e3b4cf2f4fdf331390282282052d40954765e58785f41f73",
+        "executed_java_sha256": "290dd766fc7fdfd0e3b4cf2f4fdf331390282282052d40954765e58785f41f73",
+        "executed_class_sha256": "5b59ba1b93939e4e18e1a428daa78e4a8005c6b15f51290877f6824e4400f6bb",
+        "inputs_sha256": {
+          "pn.json": "edce113165365d81d4a397a758ef608cc6e1a3c49b8e13c50ef0f4b3dea2cfe3"
+        },
+        "artifact_and_manifest_checks_passed": 11,
+        "calibration_sha256": "b37c78127d08390da82db5c50f8f9bc458d3392e523fc57da4c9a11c302431c9"
+      },
+      "parameters": {
+        "acceptor_cm3": 1e+17,
+        "active_fraction": 1.0,
+        "donor_cm3": 1e+17,
+        "intrinsic_cm3": 10000000000.0,
+        "junction_height_um": 0.22,
+        "junction_length_um": 18.84955592153876,
+        "junction_offset_um": 0.0,
+        "n_region_width_um": 1.0,
+        "optical_overlap": 0.8,
+        "optical_width_um": 0.3,
+        "p_region_width_um": 1.0,
+        "relative_permittivity": 11.7,
+        "reverse_bias_v": 2.0,
+        "temperature_k": 300.0,
+        "wavelength_nm": 1550.0
+      },
+      "mesh": {
+        "maximum_element_size_rule": "min(Wpn/12, 0.01 um)"
+      },
+      "backend_checks": {
+        "actual_native_solution_field": true,
+        "actual_readback_matches_calibration": true,
+        "sample_rows_match_calibration": 101,
+        "benchmark_checks": {
+          "depletion_widths": true,
+          "built_in_and_total_potential": true,
+          "sampled_potential": true,
+          "sampled_field": true,
+          "sampled_charge": true,
+          "positive_charge_quadrature": true,
+          "negative_charge_quadrature": true,
+          "charge_neutrality": true,
+          "depletion_law_capacitance": true
+        }
+      },
+      "numeric": {
+        "native_xp_um": 0.13535170957063952,
+        "native_xn_um": 0.13535170957063952,
+        "native_total_potential_v": 2.833370010652644,
+        "native_charge_positive_c_per_m2": 0.0021685734644602845,
+        "native_charge_negative_c_per_m2": -0.0021685734644602836,
+        "native_capacitance_per_area_f_per_m2": 0.00038268448107855335,
+        "max_potential_error_v": 2.4473795212642813e-10,
+        "max_field_error_v_per_m": 0.007117539644241333,
+        "max_charge_density_error_c_per_m3": 0.0
+      }
+    },
+    {
+      "case_id": "pn-asymmetric-01",
+      "model_level": "1d-prescribed-abrupt-depletion-poisson",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "b6cb3f3ae50b90baa44768b28aabbf20af3aa554187e3be0b1225fff93f083e3",
+        "console_sha256": "813bb543cb5ae9e2502e16ccceaf6a8e3163ca568fdba2c75c4b148e247ddd44",
+        "manifest_sha256": "2e573a9b4646e35525938ea043aae276294d2703dcdc7aa5eec1e65e0c7935e5",
+        "input_java_sha256": "c5698dce8ac1e77f5a29e471403ae6432c2378f9afede5b1e7949a3c843f5ca2",
+        "executed_java_sha256": "c5698dce8ac1e77f5a29e471403ae6432c2378f9afede5b1e7949a3c843f5ca2",
+        "executed_class_sha256": "42356328004fc5ff3aabca5762432ddf4593adbbcfafeb7de314f4ba33ac008f",
+        "inputs_sha256": {
+          "pn.json": "41288c10949e23f7b46fabddb276c5a82660b3dfa44e95f2717fdc2f6ec406f6"
+        },
+        "artifact_and_manifest_checks_passed": 11,
+        "calibration_sha256": "51a8da4be0bcad4ec421d115f66399f438339e2b6bd2537d4c44a0f63805cfd0"
+      },
+      "parameters": {
+        "acceptor_cm3": 3e+17,
+        "active_fraction": 1.0,
+        "donor_cm3": 1e+17,
+        "intrinsic_cm3": 10000000000.0,
+        "junction_height_um": 0.22,
+        "junction_length_um": 18.84955592153876,
+        "junction_offset_um": 0.0,
+        "n_region_width_um": 1.0,
+        "optical_overlap": 0.8,
+        "optical_width_um": 0.3,
+        "p_region_width_um": 1.0,
+        "relative_permittivity": 11.7,
+        "reverse_bias_v": 1.0,
+        "temperature_k": 300.0,
+        "wavelength_nm": 1550.0
+      },
+      "mesh": {
+        "maximum_element_size_rule": "min(Wpn/12, 0.01 um)"
+      },
+      "backend_checks": {
+        "actual_native_solution_field": true,
+        "actual_readback_matches_calibration": true,
+        "sample_rows_match_calibration": 101,
+        "benchmark_checks": {
+          "depletion_widths": true,
+          "built_in_and_total_potential": true,
+          "sampled_potential": true,
+          "sampled_field": true,
+          "sampled_charge": true,
+          "positive_charge_quadrature": true,
+          "negative_charge_quadrature": true,
+          "charge_neutrality": true,
+          "depletion_law_capacitance": true
+        }
+      },
+      "numeric": {
+        "native_xp_um": 0.04479191636879459,
+        "native_xn_um": 0.13437574910638378,
+        "native_total_potential_v": 1.8617713353046674,
+        "native_charge_positive_c_per_m2": 0.0021529368539449016,
+        "native_charge_negative_c_per_m2": -0.002152936853944901,
+        "native_capacitance_per_area_f_per_m2": 0.0005781958324094045,
+        "max_potential_error_v": 2.3490565048689405e-10,
+        "max_field_error_v_per_m": 0.007072847336530685,
+        "max_charge_density_error_c_per_m3": 1.4551915228366852e-11
+      }
+    },
+    {
+      "case_id": "ring-radius-tune-01",
+      "model_level": "2d-scalar-index-surrogate",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "8a61a66fbd436ce847e2bcb873f9b0f7246d86981de79772573914a853280bb8",
+        "console_sha256": "b93a91d84e35fced9d131034e6f358ee7f53b9c07f150590195cec1ad60c8636",
+        "manifest_sha256": "3f4264b9c9054fbe8210619ca78814b84289a25464f69bf9e95ec717cf1ed0ab",
+        "input_java_sha256": "0d6386d05368821212f99c1672e7d254ae5ea174bb17861db752816b314b1696",
+        "executed_java_sha256": "0d6386d05368821212f99c1672e7d254ae5ea174bb17861db752816b314b1696",
+        "executed_class_sha256": "55801fda422b6c8e87fd354b2b07207f78ae4d5d0b5f228e4dfdea6eabf8b5e5",
+        "inputs_sha256": {
+          "config.json": "281d4e3a1104483197e3872a5ce4c03b64421eabc49d5c2502ab3d9327540c3d",
+          "geometry.json": "9dab7889c9988dc0c3ac279c97edb0a2d5dc44b8503aa42121be327cc2cf600a"
+        },
+        "artifact_and_manifest_checks_passed": 13,
+        "calibration_sha256": "bd4579a50b354de97c998fef4bbb9de9dd145c8a737dead7fe8d1433bdd0d174"
+      },
+      "family": "ring",
+      "parameters": {
+        "bus_count": 2.0,
+        "clearance_um": 1.2,
+        "gap_um": 0.2,
+        "lead_um": 2.5,
+        "port_window_um": 2.4,
+        "radius_um": 3.048,
+        "width_um": 0.3
+      },
+      "materials": {
+        "core_index": 2.6,
+        "cladding_index": 1.45,
+        "active_index": 2.6,
+        "active_extinction": 0.0
+      },
+      "mesh": {
+        "core_mesh_um": 0.02,
+        "cladding_mesh_um": 0.16,
+        "port_mesh_um": 0.01
+      },
+      "port_order": [
+        "input",
+        "through",
+        "add",
+        "drop"
+      ],
+      "spectral_grid": {
+        "count": 21,
+        "min_nm": 1548.0,
+        "max_nm": 1552.0,
+        "step_nm": 0.2
+      },
+      "backend_checks": {
+        "geometry_readback_passed": true,
+        "port_readback_passed": true,
+        "native_mesh_elements": 148688,
+        "actual_source_rows_verified": 84,
+        "complex_s_rows_verified": 336,
+        "s_axis_semantics": "S[output, source]",
+        "calibration_matches_raw_console": true
+      },
+      "numeric": {
+        "max_guided_column_power": 0.9974688904370137,
+        "max_power_reciprocity_gap": 6.032719424009514e-08,
+        "max_port_flux_modal_gap": 0.0004917153657991724,
+        "max_abs_signed_power_balance": 3.1132666050649346e-05,
+        "integrated_mesh_area_um2": {
+          "core": 12.582944644914104,
+          "active": 5.745344644914207,
+          "bg": 99.05227135508574,
+          "all": 111.63521599999984
+        },
+        "render_evaluation_area_um2": {
+          "core": 12.582697038006344,
+          "active": 5.745100217508806,
+          "bg": 99.05251999336816,
+          "all": 111.63521703137451
+        },
+        "source_1_spectrum": {
+          "wavelengths_nm": [
+            1548.0,
+            1548.2,
+            1548.4,
+            1548.6,
+            1548.8,
+            1549.0,
+            1549.2,
+            1549.4,
+            1549.6,
+            1549.8,
+            1550.0,
+            1550.2,
+            1550.4,
+            1550.6,
+            1550.8,
+            1551.0,
+            1551.2,
+            1551.4,
+            1551.6,
+            1551.8,
+            1552.0
+          ],
+          "drop_power": [
+            0.4561873769336554,
+            0.5081042684543676,
+            0.565761003787592,
+            0.6287723519932868,
+            0.6960300997378547,
+            0.7654154202771352,
+            0.8335702884045045,
+            0.8958842208107393,
+            0.9468856339296716,
+            0.981142327743034,
+            0.9945246168259443,
+            0.9853724877968407,
+            0.9550038163881662,
+            0.9072901504344038,
+            0.8475344476299129,
+            0.7812026470760505,
+            0.7129852353274256,
+            0.6463611317712447,
+            0.5835763348045635,
+            0.525852676496294,
+            0.4736676551319822
+          ],
+          "through_power": [
+            0.5412697861898589,
+            0.48907479469348264,
+            0.4311100171216117,
+            0.36776299134541296,
+            0.300148134427394,
+            0.23039588281463566,
+            0.16188244671500496,
+            0.09924306383756978,
+            0.047978463479140004,
+            0.013549508235267816,
+            0.00010731864576069629,
+            0.009319976872185769,
+            0.03986176073218596,
+            0.08783979534049968,
+            0.14792241252110763,
+            0.2146143649412454,
+            0.2832002134765934,
+            0.3501826858367958,
+            0.4133040674235514,
+            0.4713362784428336,
+            0.5237995176765102
+          ]
+        },
+        "drop_peak": {
+          "sampled_wavelength_nm": 1550.0,
+          "sampled_power": 0.9945246168259443,
+          "three_point_parabolic_estimate_nm": 1550.018771995943
+        }
+      }
+    },
+    {
+      "case_id": "ring-modulator-bias0-01",
+      "model_level": "2d-scalar-index-surrogate",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "cba358bef643672afa3420390a1c0ce3e750a7ef69fedb02958f05f534e5e1a4",
+        "console_sha256": "6147b744e6b2b5be3414e08aa52ff9bce1f60f626b5f0f1a49912f3641f59a6f",
+        "manifest_sha256": "c94d898312c2be2b2ae0d60aae4662d1323f42b0269a8fd8030a77830f10072f",
+        "input_java_sha256": "8454815411d2f2cae1d060e674e7370ade201c3bb80280f14bd23e8f681ce6cb",
+        "executed_java_sha256": "8454815411d2f2cae1d060e674e7370ade201c3bb80280f14bd23e8f681ce6cb",
+        "executed_class_sha256": "b083314111e604631b5bb32fa8a47a3ab0d3d45ce33f3434b24d1812ed814d9a",
+        "inputs_sha256": {
+          "config.json": "9c79f7b98bf294be22686405cdcc2d9a35c9600e0755f2029eca46f13b858d13",
+          "geometry.json": "53a3aabeb25df4735e6914263f6620a51c2d2679fbd702b67e25cc4c11c7daf8"
+        },
+        "artifact_and_manifest_checks_passed": 13,
+        "calibration_sha256": "fa8acee61ddba7837560eae049b124e9ca31500ab87a882ce81fec5c24b4b3bc"
+      },
+      "family": "ring-modulator",
+      "parameters": {
+        "bus_count": 2.0,
+        "clearance_um": 1.2,
+        "gap_um": 0.2,
+        "lead_um": 2.5,
+        "port_window_um": 2.4,
+        "radius_um": 3.048,
+        "width_um": 0.3
+      },
+      "materials": {
+        "core_index": 2.6,
+        "cladding_index": 1.45,
+        "active_index": 2.6,
+        "active_extinction": 3.653034918986149e-06
+      },
+      "mesh": {
+        "core_mesh_um": 0.015,
+        "cladding_mesh_um": 0.12,
+        "port_mesh_um": 0.005
+      },
+      "port_order": [
+        "input",
+        "through",
+        "add",
+        "drop"
+      ],
+      "spectral_grid": {
+        "count": 21,
+        "min_nm": 1549.02,
+        "max_nm": 1551.02,
+        "step_nm": 0.1
+      },
+      "backend_checks": {
+        "geometry_readback_passed": true,
+        "port_readback_passed": true,
+        "native_mesh_elements": 252486,
+        "actual_source_rows_verified": 84,
+        "complex_s_rows_verified": 336,
+        "s_axis_semantics": "S[output, source]",
+        "calibration_matches_raw_console": true
+      },
+      "numeric": {
+        "max_guided_column_power": 0.994162676974157,
+        "max_power_reciprocity_gap": 2.1496570745682675e-08,
+        "max_port_flux_modal_gap": 0.00013051147520937167,
+        "max_abs_signed_power_balance": 1.9437902989649387e-05,
+        "integrated_mesh_area_um2": {
+          "core": 12.58294464489351,
+          "active": 5.745344644893764,
+          "bg": 99.05227135510627,
+          "all": 111.63521599999977
+        },
+        "render_evaluation_area_um2": {
+          "core": 12.582697038006344,
+          "active": 5.745100217508806,
+          "bg": 99.05251999336816,
+          "all": 111.63521703137451
+        },
+        "source_1_spectrum": {
+          "wavelengths_nm": [
+            1549.02,
+            1549.12,
+            1549.22,
+            1549.32,
+            1549.42,
+            1549.52,
+            1549.62,
+            1549.72,
+            1549.82,
+            1549.92,
+            1550.02,
+            1550.12,
+            1550.22,
+            1550.32,
+            1550.42,
+            1550.52,
+            1550.62,
+            1550.72,
+            1550.82,
+            1550.92,
+            1551.02
+          ],
+          "drop_power": [
+            0.7684090565064828,
+            0.8027136399620309,
+            0.8361143438495136,
+            0.8679894864558686,
+            0.8976623310093702,
+            0.9244264798263534,
+            0.9475795230881081,
+            0.9664630587168082,
+            0.9805056779779979,
+            0.9892642662252,
+            0.9924584009234468,
+            0.9899930382492423,
+            0.9819661218802669,
+            0.968659971614324,
+            0.9505178049349136,
+            0.9281089101992203,
+            0.9020873369122339,
+            0.8731492782751689,
+            0.8419936812754653,
+            0.809289342517745,
+            0.7756502351317812
+          ],
+          "through_power": [
+            0.2257128814211603,
+            0.19115297468402687,
+            0.1575042343537542,
+            0.12539302788940673,
+            0.095501177920638,
+            0.06854037455620139,
+            0.0452182717581598,
+            0.026198165883579098,
+            0.012055687701171028,
+            0.0032371935997470235,
+            2.511301167340112e-05,
+            0.0025150965732928703,
+            0.01060835615516701,
+            0.024020347017560312,
+            0.042304428108583286,
+            0.0648869548164809,
+            0.09110890180539429,
+            0.12026880176906628,
+            0.15166243090273274,
+            0.18461595872230444,
+            0.21851080416924237
+          ]
+        },
+        "drop_peak": {
+          "sampled_wavelength_nm": 1550.02,
+          "sampled_power": 0.9924584009234468,
+          "three_point_parabolic_estimate_nm": 1550.0264384871666
+        }
+      },
+      "pn_parameters": {
+        "acceptor_cm3": 1e+17,
+        "active_fraction": 1.0,
+        "donor_cm3": 1e+17,
+        "intrinsic_cm3": 10000000000.0,
+        "junction_height_um": 0.22,
+        "junction_length_um": 19.151148816283378,
+        "junction_offset_um": 0.0,
+        "n_region_width_um": 1.0,
+        "optical_overlap": 0.8,
+        "optical_width_um": 0.3,
+        "p_region_width_um": 1.0,
+        "relative_permittivity": 11.7,
+        "reverse_bias_v": 0.0,
+        "temperature_k": 300.0,
+        "wavelength_nm": 1550.0
+      },
+      "pn_projection": {
+        "delta_n_eff": 0.0,
+        "absolute_k_eff": 3.653034918986149e-06,
+        "depletion_width_um": 0.14681182204947005
+      }
+    },
+    {
+      "case_id": "ring-modulator-bias2-01",
+      "model_level": "2d-scalar-index-surrogate",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "08f3339d3a82737b9d64377c752066219aecab40e521f6c567b0a35405797681",
+        "console_sha256": "8bcdd0e18113159153974fb5ecdee8c569fdee695e223fa2ede311b78d01729f",
+        "manifest_sha256": "dc12422c08a5c405aa222970ea1877af54b49c1543d4bf9288c106a3cd2c8c2c",
+        "input_java_sha256": "ae002ee8b021c672b43b886bf2006ad2d4926d49b1311e7b3cbd9ddc6d0832f2",
+        "executed_java_sha256": "ae002ee8b021c672b43b886bf2006ad2d4926d49b1311e7b3cbd9ddc6d0832f2",
+        "executed_class_sha256": "69d9f20423ec98bc33680b618f6594845e1d4fb201b291c2bc4cc2a1dd9b99ed",
+        "inputs_sha256": {
+          "config.json": "3f0bb0d3959a40fdc18368a9e9a190fbdf6813906475dd02d7cce940b91c76f9",
+          "geometry.json": "a6f4712c8b7585c427818745769fad4bbbcc50f9ee45d67cd1e5797c37620c78"
+        },
+        "artifact_and_manifest_checks_passed": 13,
+        "calibration_sha256": "ea3f9fdd9e6ee5b7fbbcebd548ddd755f4079f0eb10ad6bcbccb6a578e208863"
+      },
+      "family": "ring-modulator",
+      "parameters": {
+        "bus_count": 2.0,
+        "clearance_um": 1.2,
+        "gap_um": 0.2,
+        "lead_um": 2.5,
+        "port_window_um": 2.4,
+        "radius_um": 3.048,
+        "width_um": 0.3
+      },
+      "materials": {
+        "core_index": 2.6,
+        "cladding_index": 1.45,
+        "active_index": 2.6000704350316033,
+        "active_extinction": 6.98627235157271e-07
+      },
+      "mesh": {
+        "core_mesh_um": 0.015,
+        "cladding_mesh_um": 0.12,
+        "port_mesh_um": 0.005
+      },
+      "port_order": [
+        "input",
+        "through",
+        "add",
+        "drop"
+      ],
+      "spectral_grid": {
+        "count": 21,
+        "min_nm": 1549.02,
+        "max_nm": 1551.02,
+        "step_nm": 0.1
+      },
+      "backend_checks": {
+        "geometry_readback_passed": true,
+        "port_readback_passed": true,
+        "native_mesh_elements": 252486,
+        "actual_source_rows_verified": 84,
+        "complex_s_rows_verified": 336,
+        "s_axis_semantics": "S[output, source]",
+        "calibration_matches_raw_console": true
+      },
+      "numeric": {
+        "max_guided_column_power": 0.9955427751315092,
+        "max_power_reciprocity_gap": 2.1586093135184115e-08,
+        "max_port_flux_modal_gap": 0.00013051331984959003,
+        "max_abs_signed_power_balance": 1.9647803327954528e-05,
+        "integrated_mesh_area_um2": {
+          "core": 12.582944644893512,
+          "active": 5.745344644893764,
+          "bg": 99.05227135510624,
+          "all": 111.63521599999976
+        },
+        "render_evaluation_area_um2": {
+          "core": 12.582697038006344,
+          "active": 5.745100217508806,
+          "bg": 99.05251999336816,
+          "all": 111.63521703137451
+        },
+        "source_1_spectrum": {
+          "wavelengths_nm": [
+            1549.02,
+            1549.12,
+            1549.22,
+            1549.32,
+            1549.42,
+            1549.52,
+            1549.62,
+            1549.72,
+            1549.82,
+            1549.92,
+            1550.02,
+            1550.12,
+            1550.22,
+            1550.32,
+            1550.42,
+            1550.52,
+            1550.62,
+            1550.72,
+            1550.82,
+            1550.92,
+            1551.02
+          ],
+          "drop_power": [
+            0.7561591075391718,
+            0.790743619154235,
+            0.824646723079782,
+            0.8572712214410636,
+            0.8879570659067787,
+            0.9160034371995707,
+            0.9406994546523589,
+            0.9613622116758933,
+            0.9773792972075552,
+            0.9882515535075305,
+            0.9936309403951666,
+            0.9933483831363341,
+            0.9874275429599476,
+            0.9760824318680296,
+            0.9596992702996763,
+            0.9388053620872344,
+            0.9140294770938377,
+            0.8860589504556224,
+            0.8555984029948848,
+            0.823333902074558,
+            0.7899049038563878
+          ],
+          "through_power": [
+            0.23938109502738797,
+            0.20459971050530867,
+            0.1705041399259839,
+            0.13769503801260052,
+            0.10683625943826563,
+            0.07863264931554213,
+            0.05379915451376391,
+            0.033022567865539684,
+            0.01691876192581584,
+            0.005989686641838868,
+            0.0005852904245782513,
+            0.0008755166925096868,
+            0.006836459826160902,
+            0.018252770185695745,
+            0.03473590662922253,
+            0.05575544548712263,
+            0.08067892931161068,
+            0.10881501630092272,
+            0.13945499765774025,
+            0.1719088418802344,
+            0.20553341191421587
+          ]
+        },
+        "drop_peak": {
+          "sampled_wavelength_nm": 1550.02,
+          "sampled_power": 0.9936309403951666,
+          "three_point_parabolic_estimate_nm": 1550.0650095364504
+        }
+      },
+      "pn_parameters": {
+        "acceptor_cm3": 1e+17,
+        "active_fraction": 1.0,
+        "donor_cm3": 1e+17,
+        "intrinsic_cm3": 10000000000.0,
+        "junction_height_um": 0.22,
+        "junction_length_um": 19.151148816283378,
+        "junction_offset_um": 0.0,
+        "n_region_width_um": 1.0,
+        "optical_overlap": 0.8,
+        "optical_width_um": 0.3,
+        "p_region_width_um": 1.0,
+        "relative_permittivity": 11.7,
+        "reverse_bias_v": 2.0,
+        "temperature_k": 300.0,
+        "wavelength_nm": 1550.0
+      },
+      "pn_projection": {
+        "delta_n_eff": 7.04350316031123e-05,
+        "absolute_k_eff": 6.98627235157271e-07,
+        "depletion_width_um": 0.2707034190491502
+      }
+    },
+    {
+      "case_id": "ring-modulator-peak0-01",
+      "model_level": "2d-scalar-index-surrogate",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "793861f3efab94e4e63f7e37a8816c23a6daf735b8c3dfad784b1b13678d3be1",
+        "console_sha256": "b7efca0aed0e6e4230a9dc8cbe9a7028968c37ca0af0e909baedbe0ba9f847e1",
+        "manifest_sha256": "c9b6d5cc97600bd50c0bd6c059ddb04f99887742eadb399232917555b7fc67cf",
+        "input_java_sha256": "12905bc5549c7de4d00e22cc946061832b683618442ad165b645beef9b7f6df8",
+        "executed_java_sha256": "12905bc5549c7de4d00e22cc946061832b683618442ad165b645beef9b7f6df8",
+        "executed_class_sha256": "19b73176e0aa453ad4225a034b2deb3148f59ad08401aac4c4b40e1d47c530b5",
+        "inputs_sha256": {
+          "config.json": "14ba9c9cc1be2daac022fe1b182158fe3bdbdf4ddcd48e9737a06f16803d3f31",
+          "geometry.json": "53a3aabeb25df4735e6914263f6620a51c2d2679fbd702b67e25cc4c11c7daf8"
+        },
+        "artifact_and_manifest_checks_passed": 13,
+        "calibration_sha256": "4b9ae208fd804d1e045620e8010076314ed0cb29a066709ab84460cb87bba1ce"
+      },
+      "family": "ring-modulator",
+      "parameters": {
+        "bus_count": 2.0,
+        "clearance_um": 1.2,
+        "gap_um": 0.2,
+        "lead_um": 2.5,
+        "port_window_um": 2.4,
+        "radius_um": 3.048,
+        "width_um": 0.3
+      },
+      "materials": {
+        "core_index": 2.6,
+        "cladding_index": 1.45,
+        "active_index": 2.6,
+        "active_extinction": 3.653034918986149e-06
+      },
+      "mesh": {
+        "core_mesh_um": 0.015,
+        "cladding_mesh_um": 0.12,
+        "port_mesh_um": 0.005
+      },
+      "port_order": [
+        "input",
+        "through",
+        "add",
+        "drop"
+      ],
+      "spectral_grid": {
+        "count": 5,
+        "min_nm": 1550.01,
+        "max_nm": 1550.09,
+        "step_nm": 0.02
+      },
+      "backend_checks": {
+        "geometry_readback_passed": true,
+        "port_readback_passed": true,
+        "native_mesh_elements": 252486,
+        "actual_source_rows_verified": 20,
+        "complex_s_rows_verified": 80,
+        "s_axis_semantics": "S[output, source]",
+        "calibration_matches_raw_console": true
+      },
+      "numeric": {
+        "max_guided_column_power": 0.9924987838399889,
+        "max_power_reciprocity_gap": 2.068591220538707e-08,
+        "max_port_flux_modal_gap": 0.00013023907687725877,
+        "max_abs_signed_power_balance": 1.933528912311574e-05,
+        "integrated_mesh_area_um2": {
+          "core": 12.58294464489351,
+          "active": 5.7453446448937635,
+          "bg": 99.05227135510626,
+          "all": 111.63521599999979
+        },
+        "render_evaluation_area_um2": {
+          "core": 12.582697038006344,
+          "active": 5.745100217508806,
+          "bg": 99.05251999336816,
+          "all": 111.63521703137451
+        },
+        "source_1_spectrum": {
+          "wavelengths_nm": [
+            1550.01,
+            1550.03,
+            1550.05,
+            1550.07,
+            1550.09
+          ],
+          "drop_power": [
+            0.9923936099681847,
+            0.9924664358641808,
+            0.9923123027328694,
+            0.9919315360342569,
+            0.9913247728055019
+          ],
+          "through_power": [
+            8.978166260759668e-05,
+            1.7627254140132647e-05,
+            0.00017413846138892658,
+            0.0005589865023778745,
+            0.0011715286781046992
+          ]
+        },
+        "drop_peak": {
+          "sampled_wavelength_nm": 1550.03,
+          "sampled_power": 0.9924664358641808,
+          "three_point_parabolic_estimate_nm": 1550.0264175368445
+        }
+      },
+      "pn_parameters": {
+        "acceptor_cm3": 1e+17,
+        "active_fraction": 1.0,
+        "donor_cm3": 1e+17,
+        "intrinsic_cm3": 10000000000.0,
+        "junction_height_um": 0.22,
+        "junction_length_um": 19.151148816283378,
+        "junction_offset_um": 0.0,
+        "n_region_width_um": 1.0,
+        "optical_overlap": 0.8,
+        "optical_width_um": 0.3,
+        "p_region_width_um": 1.0,
+        "relative_permittivity": 11.7,
+        "reverse_bias_v": 0.0,
+        "temperature_k": 300.0,
+        "wavelength_nm": 1550.0
+      },
+      "pn_projection": {
+        "delta_n_eff": 0.0,
+        "absolute_k_eff": 3.653034918986149e-06,
+        "depletion_width_um": 0.14681182204947005
+      }
+    },
+    {
+      "case_id": "ring-modulator-peak2-01",
+      "model_level": "2d-scalar-index-surrogate",
+      "backend": "COMSOL 6.4 native Java batch",
+      "receipt_status": "completed",
+      "physical_qualification": "not_established",
+      "hash_binding": {
+        "receipt_sha256": "758eec4563fd9c430be9b718b39527c7009f7dfc0573c680785f0b8794a48e68",
+        "console_sha256": "1179b96d84114e4ddf03e867adbcc459602a603c665b97c45cdcc4b2633a1955",
+        "manifest_sha256": "bf02c81cf3a6defa1d4781daafa86032bebe295d01c2848d9db419462d1d39bf",
+        "input_java_sha256": "e97f0bdff0fc7de1219a374dacab2c054581b1983b21c767d379966e356a1f72",
+        "executed_java_sha256": "e97f0bdff0fc7de1219a374dacab2c054581b1983b21c767d379966e356a1f72",
+        "executed_class_sha256": "c13bb7e3974c8cf47bbb964a343192db0269c44c03f940b0800082bcfd03590b",
+        "inputs_sha256": {
+          "config.json": "472ef4847379989bf6dbf12eb85abb3f77acd6f786a5c6a8744faf1d999e52d6",
+          "geometry.json": "a6f4712c8b7585c427818745769fad4bbbcc50f9ee45d67cd1e5797c37620c78"
+        },
+        "artifact_and_manifest_checks_passed": 13,
+        "calibration_sha256": "de3941e55555a56020f926c0e88a847e185593c3bb8121fd54d540f1690d5a35"
+      },
+      "family": "ring-modulator",
+      "parameters": {
+        "bus_count": 2.0,
+        "clearance_um": 1.2,
+        "gap_um": 0.2,
+        "lead_um": 2.5,
+        "port_window_um": 2.4,
+        "radius_um": 3.048,
+        "width_um": 0.3
+      },
+      "materials": {
+        "core_index": 2.6,
+        "cladding_index": 1.45,
+        "active_index": 2.6000704350316033,
+        "active_extinction": 6.98627235157271e-07
+      },
+      "mesh": {
+        "core_mesh_um": 0.015,
+        "cladding_mesh_um": 0.12,
+        "port_mesh_um": 0.005
+      },
+      "port_order": [
+        "input",
+        "through",
+        "add",
+        "drop"
+      ],
+      "spectral_grid": {
+        "count": 5,
+        "min_nm": 1550.01,
+        "max_nm": 1550.09,
+        "step_nm": 0.02
+      },
+      "backend_checks": {
+        "geometry_readback_passed": true,
+        "port_readback_passed": true,
+        "native_mesh_elements": 252486,
+        "actual_source_rows_verified": 20,
+        "complex_s_rows_verified": 80,
+        "s_axis_semantics": "S[output, source]",
+        "calibration_matches_raw_console": true
+      },
+      "numeric": {
+        "max_guided_column_power": 0.9942206352490602,
+        "max_power_reciprocity_gap": 2.0984976423221724e-08,
+        "max_port_flux_modal_gap": 0.00013024173063092004,
+        "max_abs_signed_power_balance": 1.9493277072055713e-05,
+        "integrated_mesh_area_um2": {
+          "core": 12.582944644893509,
+          "active": 5.7453446448937635,
+          "bg": 99.05227135510626,
+          "all": 111.63521599999976
+        },
+        "render_evaluation_area_um2": {
+          "core": 12.582697038006344,
+          "active": 5.745100217508806,
+          "bg": 99.05251999336816,
+          "all": 111.63521703137451
+        },
+        "source_1_spectrum": {
+          "wavelengths_nm": [
+            1550.01,
+            1550.03,
+            1550.05,
+            1550.07,
+            1550.09
+          ],
+          "drop_power": [
+            0.9933464897559985,
+            0.9938586107696338,
+            0.9941433727424154,
+            0.99420049591025,
+            0.9940300147958823
+          ],
+          "through_power": [
+            0.0008707771777391393,
+            0.00035691164827495494,
+            7.171694563358648e-05,
+            1.547357645388855e-05,
+            0.00018814594865690693
+          ]
+        },
+        "drop_peak": {
+          "sampled_wavelength_nm": 1550.07,
+          "sampled_power": 0.99420049591025,
+          "three_point_parabolic_estimate_nm": 1550.0650195160902
+        }
+      },
+      "pn_parameters": {
+        "acceptor_cm3": 1e+17,
+        "active_fraction": 1.0,
+        "donor_cm3": 1e+17,
+        "intrinsic_cm3": 10000000000.0,
+        "junction_height_um": 0.22,
+        "junction_length_um": 19.151148816283378,
+        "junction_offset_um": 0.0,
+        "n_region_width_um": 1.0,
+        "optical_overlap": 0.8,
+        "optical_width_um": 0.3,
+        "p_region_width_um": 1.0,
+        "relative_permittivity": 11.7,
+        "reverse_bias_v": 2.0,
+        "temperature_k": 300.0,
+        "wavelength_nm": 1550.0
+      },
+      "pn_projection": {
+        "delta_n_eff": 7.04350316031123e-05,
+        "absolute_k_eff": 6.98627235157271e-07,
+        "depletion_width_um": 0.2707034190491502
+      }
+    }
+  ],
+  "ring_bias_comparison": {
+    "case_ids": [
+      "ring-modulator-bias0-01",
+      "ring-modulator-bias2-01"
+    ],
+    "same_native_geometry_and_mesh_settings": true,
+    "voltage_v": [
+      0,
+      2
+    ],
+    "three_point_peak_redshift_estimate_nm": 0.038571049283746106,
+    "sampled_drop_peak_shift_nm": 0.0,
+    "max_abs_sampled_through_power_change": 0.013668213606227664,
+    "wavelength_of_max_abs_through_change_nm": 1549.02,
+    "through_power_at_max_change_0v_2v": [
+      0.2257128814211603,
+      0.23938109502738797
+    ],
+    "estimate_limits": "Sub-grid three-point parabolic peak estimates on a 0.1 nm grid; no uncertainty or mesh-converged electro-optic shift is established. Carrier index and absolute absorption both change.",
+    "spectral_resolution_control": {
+      "case_ids": [
+        "ring-modulator-peak0-01",
+        "ring-modulator-peak2-01"
+      ],
+      "same_geometry_mesh_settings_and_materials_as_broad_bias_scans": true,
+      "grid_step_nm": 0.02,
+      "sampled_drop_peak_wavelengths_nm_0v_2v": [
+        1550.03,
+        1550.07
+      ],
+      "sampled_drop_peak_redshift_nm": 0.03999999999996362,
+      "three_point_peak_wavelengths_nm_0v_2v": [
+        1550.0264175368445,
+        1550.0650195160902
+      ],
+      "three_point_peak_redshift_estimate_nm": 0.038601979245640905,
+      "limits": "Spectral-resolution control only; no mesh/domain/model uncertainty bound or physical SOI calibration."
+    }
+  }
+}

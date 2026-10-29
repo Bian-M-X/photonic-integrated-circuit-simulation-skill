@@ -62,6 +62,7 @@ from .models.io import (
     revalidate_internal,
     write_contract,
 )
+from .native_cli import native_group
 from .optimization import plan_optimization, suggest_candidate
 from .packaging import assert_tapeout_editable
 from .pdk import validate_pdk_manifest
@@ -1533,6 +1534,9 @@ def matlab_inspect(result: Path, json_output: bool) -> None:
 
     parsed = load_matlab_result(result)
     _emit("photonic matlab inspect", contract_payload(parsed), json_output=json_output)
+
+
+cli.add_command(native_group)
 
 
 def main(argv: list[str] | None = None) -> int:
