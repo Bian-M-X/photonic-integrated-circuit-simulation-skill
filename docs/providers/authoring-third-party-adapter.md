@@ -12,7 +12,7 @@ a backend, license, solver, model, or physical result is available or valid.
 
 Track these independently:
 
-1. host package range, such as `photonic-workflow>=0.5,<0.9`;
+1. host package range, such as `photonic-workflow>=0.5,<0.10`;
 2. exact provider SPI, currently the literal string `"1.0"`;
 3. canonical schema version for each named input/output contract;
 4. provider distribution version;
@@ -32,7 +32,7 @@ Declare one zero-argument provider function:
 name = "acme-photonic-adapter"
 version = "0.1.0"
 requires-python = ">=3.11"
-dependencies = ["photonic-workflow>=0.5,<0.9"]
+dependencies = ["photonic-workflow>=0.5,<0.10"]
 
 [project.entry-points."photonic_workflow.adapters"]
 acme = "acme_photonic_adapter:provide_adapters"

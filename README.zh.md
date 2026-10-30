@@ -4,7 +4,7 @@
 
 [English](README.md) · [版本与兼容性](#版本与兼容性) · [项目结构](#项目结构) · [快速开始](#快速开始) · [COMSOL](#原生-comsol-工作流) · [Lumerical](#原生-lumerical-工作流) · [实际图样](#实际仿真图样) · [文档导航](#文档导航)
 
-[![Version: 0.8.0 alpha](https://img.shields.io/badge/0.8.0-alpha-71866b)](CHANGELOG.md)
+[![Version: 0.9.0 alpha](https://img.shields.io/badge/0.9.0-alpha-71866b)](CHANGELOG.md)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-9a765a?logo=python&logoColor=white)](pyproject.toml)
 [![Python compatibility](https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/python-compat.yml/badge.svg)](https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/python-compat.yml)
 [![Platform compatibility](https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/platform-compat.yml/badge.svg)](https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/platform-compat.yml)
@@ -20,15 +20,15 @@
 - **明确后端实现**：分别构建各求解器的原生对象、模态、边界和网格。
 - **检查实际证据**：保留每个声明输入的源列、原始数组、模型文件及文件哈希。
 
-当前包版本：**0.8.0 · alpha**。下述双求解器扩展属于 **Unreleased**，详见 [CHANGELOG](CHANGELOG.md)。
+当前包版本：**0.9.0 · alpha**。本版包含下述 COMSOL/Lumerical 共享工作流，详见 [CHANGELOG](CHANGELOG.md)。
 核心功能无需商业求解器；原生运行需要另外安装相应产品并具备可用许可。
 
 ## 版本与兼容性
 
 | 项目 | 当前 checkout | 依据 |
 |---|---|---|
-| 运行时包 | **`photonic-workflow` 0.8.0 · alpha** | [版本源](src/photonic_workflow/_version.py) · [包元数据](pyproject.toml) |
-| 开发增量 | `main` 包含 **Unreleased** 的 COMSOL/Lumerical 扩展 | [CHANGELOG](CHANGELOG.md) · [GitHub 发布页面](https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/releases) |
+| 运行时包 | **`photonic-workflow` 0.9.0 · alpha** | [版本源](src/photonic_workflow/_version.py) · [包元数据](pyproject.toml) |
+| 当前版本内容 | **0.9.0** 包含 COMSOL/Lumerical 并列工作流与共享工具 | [CHANGELOG](CHANGELOG.md) · [GitHub 发布页面](https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/releases) |
 | Python | **3.11+**；Windows CI：3.11–3.14；Ubuntu/macOS portable-core CI：3.11、3.14 | [Python 检查](.github/workflows/python-compat.yml) · [平台检查](.github/workflows/platform-compat.yml) |
 | MCP | 协议 **`2025-06-18`**；**18 个工具 / 43 个资源** | [MCP 服务](src/photonic_workflow/mcp/server.py) · [接入说明](references/comsol-mcp-evaluation.md) |
 | 数据接口 | API envelope **1.0**、默认合同 schema **1.0**、适配器 SPI **1.0** | [兼容性常量](src/photonic_workflow/compatibility.py)；具体合同按自身声明的 schema 解释 |
@@ -36,7 +36,7 @@
 
 自 0.7.0 起，skill 名为 `photonic-integrated-circuit-simulation`；Python 分发包、导入路径与
 `photonic` CLI 名称保持兼容。已有 `assembly.json` 1.0、复数 S CSV 和旧脚本入口见
-[迁移与兼容说明](docs/migration.md)。[下方版本记录](#版本记录)分别列出开发增量与已有里程碑。
+[迁移与兼容说明](docs/migration.md)。[下方版本记录](#版本记录)列出当前版本与早期源码里程碑。
 
 ## 项目结构
 
@@ -340,7 +340,7 @@ CI 检查代码、合同、资源镜像、分发包和安装后的行为。
 
 | 版本 / 日期 | 主要变化 |
 |---|---|
-| **Unreleased · `main`** | COMSOL/Lumerical 并列工作流；原生 MODE/FDTD 器件源扫描、LSF 配方、新增五个 MCP 工具、匹配功率对照与有预算的候选评估 |
+| **0.9.0 · 2026-10-30** | COMSOL/Lumerical 并列工作流；原生 MODE/FDTD 器件源扫描、LSF 配方、新增五个 MCP 工具、匹配功率对照与有预算的候选评估 |
 | **0.8.0 · 2026-10-29** | COMSOL 原生无源/环/PN 几何、显式执行、完整复数 S/通量校准与规定耗尽电荷 Poisson 控制 |
 | **0.7.0 · 2026-10-28** | PIC skill 名称、七种可执行器件基线、读回诊断、canary/弯曲工具与制造约束工作流指导 |
 | **0.6.0 · 2026-10-10** | 有预算的候选建议、降低评估成本的逆向设计工具，以及原生 COMSOL Hadamard 伴随/MMA 示例 |
