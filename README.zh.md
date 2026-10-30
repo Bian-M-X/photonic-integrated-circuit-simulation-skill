@@ -1,16 +1,17 @@
 # 光子集成电路仿真 · Photonic Integrated Circuit Simulation
 
-**建立光子器件模型，调用本地求解器，再把真实复数 S 矩阵用于电路和优化。**
+**面向集成光子学的建模、仿真、验证与工具复用 skill。COMSOL 与 Lumerical 是其中并列的求解器子项目。**
 
-[English](README.md) · [快速开始](#快速开始) · [Lumerical](#原生-lumerical-工作流) · [实际图样](#实际仿真图样) · [文档导航](#文档导航)
+[English](README.md) · [项目结构](#项目结构) · [快速开始](#快速开始) · [COMSOL](#原生-comsol-工作流) · [Lumerical](#原生-lumerical-工作流) · [实际图样](#实际仿真图样) · [文档导航](#文档导航)
 
 [![Python compatibility](https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/python-compat.yml/badge.svg)](https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/python-compat.yml)
 [![Agent compatibility](https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/agent-compat.yml/badge.svg)](https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/agent-compat.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-`photonic-workflow` 包含 Python 运行时、CLI、MCP 服务和 agent skill，
-把可复用几何与材料配方、原生 **COMSOL / Ansys Lumerical** 求解、
-完整复数 S 参数、电路组合、有预算的优化与可复核证据连接起来。
+`photonic-integrated-circuit-simulation` 是总项目和 agent skill，涵盖器件与电路建模、
+知识库、工程工作流及仿真证据管理。`photonic-workflow` 是配套 Python 运行时，
+通过共享 CLI、MCP、几何与材料配方、电路工具和优化合同支撑这些工作。
+**COMSOL 与 Ansys Lumerical** 分别承担原生建模和求解，按各自实现与证据范围接入共同流程。
 
 - **复用已有积累**：共享数值几何、材料公式、数据合同和电路工具。
 - **明确后端实现**：分别构建各求解器的原生对象、模态、边界和网格。
@@ -18,6 +19,17 @@
 
 当前包版本：**0.8.0 · alpha**。下述双求解器扩展属于 **Unreleased**，详见 [CHANGELOG](CHANGELOG.md)。
 核心功能无需商业求解器；原生运行需要另外安装相应产品并具备可用许可。
+
+## 项目结构
+
+| 层次 | 内容 | 入口 |
+|---|---|---|
+| Skill 总项目 | 器件、电路、量子光子学知识库，工程判断、验证与报告工作流 | [SKILL.md](SKILL.md) · [工程工作流](references/engineering-workflow.md) |
+| 共享工具层 | Python API、`photonic` CLI、MCP、建模配方、复数 S 电路、优化与来源记录 | [建模配方](references/modeling-recipes.md) · [层次组合](references/hierarchical-device-workflow.md) |
+| COMSOL 子项目 | Java 原生建模与执行、模态端口、完整源扫描、器件校准、PN 基准与伴随示例 | [原生器件库](references/native-device-library.md) · [环境与运行器](references/environment-and-runner.md) |
+| Lumerical 子项目 | 原生 API、MODE/FDTD、共享几何与材料、完整源扫描、结果交换与候选评估 | [安装与诊断](references/lumerical-workflows.md) · [完整器件](references/lumerical-device-workflow.md) |
+
+两条求解器路线复用工程经验与数据工具；原生物理接口、边界、网格、优化方法和验收证据分别说明。
 
 ## 快速开始
 
@@ -48,6 +60,44 @@ photonic status --project-root demo-mzi --json
 如需使用 agent skill，将 checkout 安装到智能体可发现的 skills 目录，
 加载作为[操作路由](SKILL.md)的 `SKILL.md`。skill 名为 `photonic-integrated-circuit-simulation`，
 Python 包与命令行名称保持为 `photonic-workflow` 和 `photonic`。
+
+## 原生 COMSOL 工作流
+
+COMSOL 子项目提供从参数化模型、局部诊断到原生器件求解和逆向设计的工具与参考：
+
+| 能力 | 当前实现与入口 | 适用范围 |
+|---|---|---|
+| 原生无源器件 | 直波导、交叉、定向耦合器、2×2 MMI、Y 分支、单/双总线环及环调制器几何；[JSON 请求](examples/native-devices/)与固定 Java 源生成 | 默认光学模型为二维标量折射率替代模型 |
+| 模态与完整复数 S | 几何/材料读回、边界模态、同模型逐输入激励、端口/开放边界/吸收通量校准；[源扫描](references/frequency-domain-source-sweeps.md) | 保留端口顺序、相位约定、参考面与逐源功率；收敛需单独检查 |
+| PN 与电光近似 | 一维突变耗尽 Poisson 原生基准、解析对照及载流子折射率投影；[PN 环模型](references/pn-ring-model.md) | 不等于漂移扩散、接触/RF 或真实 SOI 肋波导电光验证 |
+| 伴随逆向设计 | 原生密度法、滤波/投影、MMA 与冻结掩膜验证；[Hadamard 可执行示例](examples/comsol-hadamard-inverse/README.md) | 需相应科学计算依赖及 Wave Optics/Optimization 许可；按具体二维案例验收 |
+| 建模与调试知识 | 材料、实体选择、端口、网格、求解和场图审计；[波动光学](references/wave-optics-port-models.md)与[物理场审计](references/comsol-field-physical-audit.md) | 多物理场和三维扩展按具体模型构建、验证 |
+
+先离线生成并核验直波导控制包，再显式调用本地 COMSOL：
+
+```powershell
+python -m pip install -e ".[comsol]"
+photonic native list --json
+photonic native prepare examples/native-devices/straight.json `
+  --output runs/comsol-straight-001 --json
+photonic native verify runs/comsol-straight-001 --json
+photonic native run runs/comsol-straight-001 `
+  --solver-root D:/Path/To/COMSOL/Multiphysics --cores 2 --timeout 600 --json
+```
+
+`prepare` 与 `verify` 不启动求解器。将安装路径替换为本机目录；`run` 核验固定源代码后，
+使用匹配的 COMSOL 编译器与本地许可执行，并返回实际 `receipt` 路径。
+用该路径替换下面的 `COMSOL_RECEIPT.json`，校准并导出完整复数 S：
+
+```powershell
+photonic native calibrate COMSOL_RECEIPT.json `
+  --output runs/comsol-straight-result-001.json `
+  --csv-output runs/comsol-straight-s-001.csv --json
+```
+
+原生请求可选择 `configure`、`modes`、`solve` 阶段；示例的 `solve` 在同一模型内逐端口求解。
+校准会保留完整矩阵与逐输入有符号功率记录，不把进程成功或一次网格结果当作器件验收。
+网格比较使用 `photonic native compare`，完整流程和 PN 命令见[原生器件库](references/native-device-library.md)。
 
 ## 原生 Lumerical 工作流
 
@@ -89,6 +139,25 @@ photonic lumerical device-export runs/coupler-001/receipt.json `
 
 ## 实际仿真图样
 
+### COMSOL：逆向设计与 Euler 分束器
+
+| Hadamard 等效器件 · 1550 nm | SOI Euler 耦合器 · 1550 nm |
+|---|---|
+| [![COMSOL Hadamard 器件原生场预览](docs/showcases/hadamard-2d/figures/field-linear.png)](docs/showcases/hadamard-2d/figures/field-linear.png) | [![COMSOL SOI Euler 耦合器电场](docs/images/showcase/soi-euler-50-50/field-linear.png)](docs/images/showcase/soi-euler-50-50/field-linear.png) |
+
+Hadamard 案例保留二维体材料折射率替代模型、五波长伴随优化、固定掩膜、
+八源模态读出与独立验证记录。记录中的 19 项固定掩膜检查和 13 组收敛比较通过；
+公开复核器验证数值自洽，**不重新核验私有原生回执或重跑 COMSOL**。
+场图按显示窗口峰值归一化，模型不代表三维 SOI 或实验量子过程层析。
+详见[设计、光谱与复现说明](docs/showcases/hadamard-2d/README.md)。
+
+Euler 图来自 **单输入、单波长的二维有效折射率模型**，记录的收集输出比例为
+48.5839% / 51.4161%。四输入完整复数 S、带宽及边界敏感性尚未完成验收，
+不据此宣称三维或工艺鲁棒性。详见[场图、配置与证据范围](docs/legacy-readme-zh.md#euler-splitter)。
+另见[原生无源器件与 PN 基准记录](docs/research/native-library-v08.md)。
+
+### Lumerical：定向耦合器与双总线环
+
 以下图像来自本机 Lumerical 原生 DFT 场监视器，光场由实际求解导出。
 
 | 定向耦合器 · 1548.39 nm | 双总线环 · 1573.77 nm |
@@ -100,12 +169,6 @@ photonic lumerical device-export runs/coupler-001/receipt.json `
 该图尚不能证明共振、Q 值或稳态已收敛。监视器添加在模型副本中，
 对应输入的原生 S 源列与原记录完全一致。
 详见[器件验证报告](docs/research/lumerical-device-workflow-2026-10-29.md)。
-
-已有 COMSOL 结果继续保留：
-
-- [二维 Hadamard 逆向设计与数值复核器](docs/showcases/hadamard-2d/README.md)。
-- [SOI Euler 耦合器场图与 50:50 案例](docs/legacy-readme-zh.md#euler-splitter)。
-- [原生无源器件与 PN 基准记录](docs/research/native-library-v08.md)。
 
 ## 哪些共享，哪些由求解器实现？
 
@@ -126,21 +189,41 @@ FDTD 中的 `ring-modulator` 当前构建**光学外形**，不包含电压驱�
 
 ## 复用建模配方
 
-发现版本化配方，并将同一份数值几何渲染到 Lumerical：
+先发现版本化配方，查看同一份数值几何的通用结果：
 
 ```powershell
 photonic recipe list --json
 photonic recipe inspect geometry.symmetric-euler-bend --json
 photonic recipe render geometry.symmetric-euler-bend `
   --input examples/recipes/symmetric-euler-bend.json `
-  --renderer lumerical-lsf-fragment --instance-id euler-main `
-  --height-um 0.22 --core-index 3.476 `
-  --output generated/euler-main.lsf --project-root . --json
+  --renderer canonical-json --json
 ```
 
-挤出高度与折射率由调用者显式给出。圆弧使用原生解析环扇区，
-Euler 弯保留通用结果中的全部边界采样点。片段只提供几何，
-包层、PML、模式和器件验收仍由目标模型负责。
+按目标后端渲染同一配方：
+
+| 输出 | 渲染器 | 使用范围 |
+|---|---|---|
+| 通用数值结果 | `canonical-json` | 六个内置配方，适合检查和跨工具复用 |
+| COMSOL Java 片段 | `comsol-java-fragment` | 明确支持的几何/端口配方，需要安全实例名 |
+| Lumerical LSF 片段 | `lumerical-lsf-fragment` | 圆弧路线与 Euler 几何，需要显式高度、折射率和实例名 |
+
+```powershell
+photonic init demo-recipes --device-family mzi --json
+photonic recipe render geometry.symmetric-euler-bend `
+  --input examples/recipes/symmetric-euler-bend.json `
+  --renderer comsol-java-fragment --instance-id euler_main `
+  --output generated/euler-main.java --project-root demo-recipes --json
+photonic recipe render geometry.symmetric-euler-bend `
+  --input examples/recipes/symmetric-euler-bend.json `
+  --renderer lumerical-lsf-fragment --instance-id euler_main `
+  --height-um 0.22 --core-index 3.476 `
+  --output generated/euler-main.lsf --project-root demo-recipes --json
+```
+
+输出路径相对于 `demo-recipes`。LSF 的挤出高度与折射率由调用者显式给出。
+圆弧使用原生解析环扇区，
+Euler 弯保留通用结果中的全部边界采样点。原生片段提供建模构件，
+完整堆栈、边界/PML、模式、求解和器件验收仍由目标模型负责。
 材料、端口窗口等配方在原生脚本会改变其含义时保留数值输出。
 详见[配方合同、Python API 与渲染器限制](references/modeling-recipes.md)。
 
@@ -150,18 +233,20 @@ Euler 弯保留通用结果中的全部边界采样点。片段只提供几何�
 
 ```powershell
 photonic-mcp --read-root D:/Path/To/Project `
-  --read-root D:/Path/To/Lumerical --write-root D:/Path/To/Project/runs
+  --write-root D:/Path/To/Project/runs
 ```
 
 在 MCP 客户端的 stdio 配置中接入该命令。服务使用同一份包逻辑，
-安装后的 wheel 也包含只读参考资源。更新后请重启正在运行的服务，
-使工具与资源目录刷新。
+安装后的 wheel 也包含 COMSOL、Lumerical 和共同工作流的只读参考资源。
+如需发现本地 Lumerical 安装，可额外添加 `--read-root D:/Path/To/Lumerical`。
+更新后请重启正在运行的服务，使工具与资源目录刷新。
 
 | 任务 | MCP 工具 |
 |---|---|
 | 复用配方 | `list_recipes`、`inspect_recipe`、`render_recipe` |
+| 准备 COMSOL Java 批任务 | `run_java_batch`，只生成计划 |
 | 准备 Lumerical 任务 | `discover_lumerical_install`、`plan_lumerical_run` |
-| 检查、导出实际结果 | `inspect_lumerical_result`、`compare_lumerical_results`、`export_lumerical_result` |
+| 检查、导出 Lumerical 结果 | `inspect_lumerical_result`、`compare_lumerical_results`、`export_lumerical_result` |
 | 使用完整矩阵 | `validate_circuit`、`compose_circuit`、`validate_contract` |
 | 检查项目证据 | `inspect_project`、`gate_status`、`audit_project_artifacts` |
 
@@ -170,6 +255,22 @@ photonic-mcp --read-root D:/Path/To/Project `
 详见 [MCP 配置与接入边界](references/comsol-mcp-evaluation.md)。
 
 ## 对照、优化与验证
+
+共享优化合同管理参数、目标、约束、评估预算和试验历史。
+`photonic optimize suggest SPEC --trials TRIAL_DIRECTORY --json` 从已有冻结试验中只读提出候选，
+不会启动求解器。不同后端、模型层级或目标定义的结果分别保存，不能直接混入同一历史。
+详见[低成本优化](references/low-cost-optimization.md)和[优化与报告](references/optimization-and-reporting.md)。
+
+COMSOL 的伴随/MMA 路线提供独立原生梯度和冻结掩膜验证流程。查看不执行求解的计划：
+
+```powershell
+python -m pip install -e ".[inverse-design]"
+python examples/comsol-hadamard-inverse/campaign.py --output runs/comsol-hadamard-plan-001
+```
+
+实际原生运行需按[可执行示例](examples/comsol-hadamard-inverse/README.md)提供 COMSOL 路径并添加
+`--execute`，保留其预算、重启检查和模型适用范围。Lumerical 的 `optimize-step` 则将共享预算
+接到逐个 FDTD 候选评估；它不实现 COMSOL 伴随梯度。
 
 在查看两端结果前固定共同基准：
 
@@ -183,9 +284,9 @@ photonic lumerical optimize-step examples/lumerical/device-optimization.json `
 
 上面的回执路径为占位符。比较要求几何、材料、通道、模型层级和波长网格匹配。
 容差应在求解前声明，未通过的比较保留原结果；功率一致不表示跨求解器相位一致。
-优化默认写入计划，`--execute` 才实际评估一个有预算的候选。
+Lumerical 优化默认写入计划，`--execute` 才实际评估一个有预算的候选。
 
-已有本机记录包括 **16 次器件评估 / 51 个输入源列**、两次真实候选评估与历史续跑，
+Lumerical 子项目的本机记录包括 **16 次器件评估 / 51 个输入源列**、两次真实候选评估与历史续跑，
 以及 **3 个原生 LSF CAD 案例 / 114 项属性检查**。
 这些属于限定范围的诊断，不是对所有器件或后端的验收。
 最新统一工具测试、两端比较和未解决偏差见
@@ -194,7 +295,7 @@ photonic lumerical optimize-step examples/lumerical/device-optimization.json `
 开发环境验证：
 
 ```powershell
-python -m pip install -e ".[dev,lumerical]"
+python -m pip install -e ".[dev,comsol,lumerical]"
 python -m pytest -q
 python -m ruff check src tests scripts
 python scripts/test_skill_metadata.py
@@ -210,8 +311,8 @@ CI 检查代码、合同、资源镜像、分发包和安装后的行为。
 |---|---|
 | 智能体路由与工具选择 | [SKILL.md](SKILL.md) · [工具选择](references/tool-selection.md) |
 | 共同工程流程 | [工程工作流](references/engineering-workflow.md) · [双求解器对应](references/dual-solver-workflows.md) |
+| COMSOL 运行和器件 | [环境与运行器](references/environment-and-runner.md) · [原生器件库](references/native-device-library.md) · [端口与波动光学](references/wave-optics-port-models.md) |
 | Lumerical 运行和器件 | [安装与诊断](references/lumerical-workflows.md) · [完整器件](references/lumerical-device-workflow.md) |
-| COMSOL 环境与物理模型 | [环境与运行器](references/environment-and-runner.md) · [端口与波动光学](references/wave-optics-port-models.md) |
 | 可复用数值工具 | [建模配方](references/modeling-recipes.md) · [可执行器件模型](references/executable-device-models.md) |
 | 电路与量子光子学 | [层次组合](references/hierarchical-device-workflow.md) · [量子知识库](references/quantum-photonic-knowledge-base.md) |
 | PN 与逆向设计 | [PN 环模型](references/pn-ring-model.md) · [COMSOL 伴随](references/comsol-adjoint-inverse-design.md) |

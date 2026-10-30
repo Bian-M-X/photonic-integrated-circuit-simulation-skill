@@ -5,6 +5,11 @@ workflow visible before the detailed capability and historical evidence map.
 This change reorganizes documentation; it does not change the scientific
 acceptance level or claim a new release beyond package version 0.8.0.
 
+The same-day revision restores the skill as the parent project, with COMSOL
+and Lumerical as peer solver subprojects. COMSOL has a full capability and
+execution section, native field previews, and Java recipe/MCP planning entries.
+Shared knowledge, workflows and tools are introduced before the solver routes.
+
 ## Primary README references
 
 The following upstream project pages were inspected on 2026-10-30. GitHub star
@@ -23,12 +28,12 @@ for documentation structure, not comparative benchmarks of this runtime.
 
 ## Resulting information order
 
-1. Concrete purpose, stable project/package/command names and actual CI links.
+1. Skill-level purpose, shared layers, peer solver subprojects and actual CI links.
 2. A solver-free MZI quick start using the installable core.
-3. Optional native Lumerical installation, plan, run, inspection and export.
-4. Real native field images with the 2D and finite-time-window limits visible.
+3. COMSOL and Lumerical capabilities, native execution and result-processing routes.
+4. COMSOL and Lumerical field images with their model and verification limits visible.
 5. Shared versus backend-specific capability table.
-6. Numeric recipe reuse, MCP discovery/data tools, paired controls and bounded optimization.
+6. Canonical recipes plus Java/LSF renderers, MCP planning/data tools, paired controls and bounded optimization.
 7. Compact documentation map, contribution inputs, licensing and source notes.
 
 The MCP counts reflect the current development registry: 18 tools and 43
@@ -48,7 +53,7 @@ adjusted for the new directory, and one former literal local-profile path in
 the original prompt example was replaced with a portable skill link. The
 archive header explains that historical status counts are not current.
 
-The two gallery PNGs were copied byte-for-byte from native DFT field exports:
+The two Lumerical gallery PNGs were copied byte-for-byte from native DFT field exports:
 
 | Preview | Bytes | SHA-256 |
 |---|---:|---|
