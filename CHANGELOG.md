@@ -6,6 +6,10 @@ the host package version.
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-10-30
+
+### Added
+
 - Add five non-executing Lumerical MCP tools sharing CLI discovery, planning,
   receipt inspection, power comparison and lossless export (18 tools total).
   Register the shared dual-solver workflow reference (43 resources total).
@@ -42,6 +46,30 @@ the host package version.
 - Add explicit temporary local-license operation and child-only license endpoint
   selection. Preserve system settings and stop only owned processes. FDTD phase
   diagnostics use actual sampled monitor coordinates and retain requested planes.
+
+### Changed
+
+- Present the integrated-photonics skill as the parent project, with COMSOL
+  and Lumerical as peer solver subprojects sharing knowledge, recipes, CLI/MCP,
+  circuit contracts, bounded optimization and engineering workflows.
+- Restore COMSOL capabilities, native execution examples and field previews in
+  the bilingual README, alongside Lumerical examples. Include current version,
+  compatibility information and source-version history.
+- Advance the runtime, CLI/MCP server and release-facing documentation to
+  0.9.0 while retaining the alpha development status.
+
+### Compatibility and limits
+
+- Existing canonical recipe results, COMSOL fragments and persisted interface
+  schemas retain their declared versions. Native construction and verification
+  remain backend-specific; MCP remains non-executing.
+- The recorded cross-solver checks compare selected-mode powers in matched 2D
+  scalar straight/coupler models. Native LSF readback checks CAD properties.
+  Neither establishes general cross-solver phase equivalence, full convergence,
+  or native EME, CHARGE/HEAT and INTERCONNECT validation.
+- Historical experiment records retain the package version used when they were
+  produced. This version milestone does not relabel those results or broaden
+  their physics claims.
 
 ## [0.8.0] - 2026-10-29
 
@@ -370,7 +398,8 @@ Implementation and validation: OpenAI Codex.
   required normal interactive Windows context. LiveLink, Lumerical, instruments,
   and real PDK/DRC/LVS integrations remain separate Phase C adoption gates.
 
-[0.8.0]: https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/compare/75a1840...main
+[0.9.0]: https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/compare/369fa6dd44074cf0a36209ab23596f3b4afc852b...main
+[0.8.0]: https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/compare/75a1840...369fa6dd44074cf0a36209ab23596f3b4afc852b
 [0.7.0]: https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/compare/10508ed...75a1840
 [0.6.0]: https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/compare/v0.5.0...10508ed
 [0.5.0]: https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/compare/v0.4.0...v0.5.0

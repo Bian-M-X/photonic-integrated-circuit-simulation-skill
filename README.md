@@ -4,7 +4,7 @@
 
 [简体中文](README.zh.md) · [Versions](#version-and-compatibility) · [Project structure](#project-structure) · [Quick start](#quick-start) · [COMSOL](#comsol-subproject) · [Lumerical](#lumerical-subproject) · [Examples](#real-simulation-examples) · [Documentation](#documentation)
 
-[![Version: 0.8.0 alpha](https://img.shields.io/badge/0.8.0-alpha-71866b)](CHANGELOG.md)
+[![Version: 0.9.0 alpha](https://img.shields.io/badge/0.9.0-alpha-71866b)](CHANGELOG.md)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-9a765a?logo=python&logoColor=white)](pyproject.toml)
 [![Python compatibility](https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/python-compat.yml/badge.svg)](https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/python-compat.yml)
 [![Platform compatibility](https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/platform-compat.yml/badge.svg)](https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/actions/workflows/platform-compat.yml)
@@ -21,15 +21,15 @@ circuit composition, bounded optimization and reproducible evidence between mode
 - **Keep solver details explicit:** native objects, modes, boundaries and mesh are built for each backend.
 - **Inspect the evidence:** retain every declared source column, raw arrays, model files and artifact hashes.
 
-Package version: **0.8.0 · alpha**. The dual-solver additions below are **Unreleased**; see the [changelog](CHANGELOG.md).
+Package version: **0.9.0 · alpha**. This version includes the shared COMSOL/Lumerical workflows below; see the [changelog](CHANGELOG.md).
 The core works without a commercial solver. Native runs require a separately installed, licensed product.
 
 ## Version and compatibility
 
 | Item | Current checkout | Reference |
 |---|---|---|
-| Runtime package | **`photonic-workflow` 0.8.0 · alpha** | [Version source](src/photonic_workflow/_version.py) · [Package metadata](pyproject.toml) |
-| Development changes | `main` includes the **Unreleased** COMSOL/Lumerical additions | [Changelog](CHANGELOG.md) · [GitHub Releases](https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/releases) |
+| Runtime package | **`photonic-workflow` 0.9.0 · alpha** | [Version source](src/photonic_workflow/_version.py) · [Package metadata](pyproject.toml) |
+| Current milestone | **0.9.0** includes the peer COMSOL/Lumerical workflows and shared tools | [Changelog](CHANGELOG.md) · [GitHub Releases](https://github.com/Bian-M-X/photonic-integrated-circuit-simulation-skill/releases) |
 | Python | **3.11+**; Windows CI: 3.11–3.14; Ubuntu/macOS portable-core CI: 3.11 and 3.14 | [Python workflow](.github/workflows/python-compat.yml) · [Platform workflow](.github/workflows/platform-compat.yml) |
 | MCP | Protocol **`2025-06-18`**; **18 tools / 43 resources** | [MCP server](src/photonic_workflow/mcp/server.py) · [MCP guide](references/comsol-mcp-evaluation.md) |
 | Data interfaces | API envelope **1.0**, default contract schema **1.0**, adapter SPI **1.0** | [Compatibility constants](src/photonic_workflow/compatibility.py); individual contracts declare their own schema |
@@ -38,7 +38,7 @@ The core works without a commercial solver. Native runs require a separately ins
 Since 0.7.0 the skill is named `photonic-integrated-circuit-simulation`; the distribution,
 Python imports and `photonic` CLI names remain compatible. Existing `assembly.json` 1.0
 and complex-S CSV workflows have a [migration and legacy-interface guide](docs/migration.md).
-The [version history](#version-history) below separates development changes from earlier milestones.
+The [version history](#version-history) below records the current and earlier source milestones.
 
 ## Project structure
 
@@ -356,7 +356,7 @@ These CI checks verify software compatibility. Native solver and device evidence
 
 | Version / date | Main changes |
 |---|---|
-| **Unreleased · `main`** | Peer COMSOL/Lumerical workflows; native MODE/FDTD device sweeps, LSF recipes, five additional MCP tools, matched power controls and bounded candidate evaluation |
+| **0.9.0 · 2026-10-30** | Peer COMSOL/Lumerical workflows; native MODE/FDTD device sweeps, LSF recipes, five additional MCP tools, matched power controls and bounded candidate evaluation |
 | **0.8.0 · 2026-10-29** | COMSOL native passive/ring/PN geometry, explicit execution, complete complex-S/flux calibration and prescribed-depletion Poisson controls |
 | **0.7.0 · 2026-10-28** | PIC skill name, seven executable device baselines, readback diagnostics, canary/bend tools and fabrication-aware workflow guidance |
 | **0.6.0 · 2026-10-10** | Budgeted candidate suggestions, lower-cost inverse-design tools and the native COMSOL Hadamard adjoint/MMA example |
